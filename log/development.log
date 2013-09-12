@@ -1,0 +1,277 @@
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+  [1m[36m (0.2ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (148.1ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36m (122.7ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.2ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations" 
+Migrating to DeviseCreateUsers (20130906031849)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.3ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.7ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130906031849')[0m
+  [1m[35m (142.2ms)[0m  commit transaction
+Migrating to AddNameToUsers (20130906031852)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  ALTER TABLE "users" ADD "name" varchar(255)
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130906031852')[0m
+  [1m[35m (162.0ms)[0m  commit transaction
+Migrating to RolifyCreateRoles (20130906031900)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  CREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "resource_id" integer, "resource_type" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users_roles" ("user_id" integer, "role_id" integer) [0m
+  [1m[35m (0.4ms)[0m  CREATE INDEX "index_roles_on_name" ON "roles" ("name")
+  [1m[36m (0.4ms)[0m  [1mCREATE INDEX "index_roles_on_name_and_resource_type_and_resource_id" ON "roles" ("name", "resource_type", "resource_id")[0m
+  [1m[35m (0.4ms)[0m  CREATE INDEX "index_users_roles_on_user_id_and_role_id" ON "users_roles" ("user_id", "role_id")
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130906031900')[0m
+  [1m[35m (153.4ms)[0m  commit transaction
+  [1m[36m (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Connecting to database specified by database.yml
+  [1m[36m (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+  [1m[35m (0.3ms)[0m  select sqlite_version(*)
+  [1m[36m (177.7ms)[0m  [1mCREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "resource_id" integer, "resource_type" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (132.3ms)[0m  CREATE INDEX "index_roles_on_name_and_resource_type_and_resource_id" ON "roles" ("name", "resource_type", "resource_id")
+  [1m[36m (132.3ms)[0m  [1mCREATE INDEX "index_roles_on_name" ON "roles" ("name")[0m
+  [1m[35m (124.1ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar(255)) 
+  [1m[36m (132.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (143.1ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (143.1ms)[0m  [1mCREATE TABLE "users_roles" ("user_id" integer, "role_id" integer) [0m
+  [1m[35m (235.1ms)[0m  CREATE INDEX "index_users_roles_on_user_id_and_role_id" ON "users_roles" ("user_id", "role_id")
+  [1m[36m (144.6ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (133.9ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.1ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (110.6ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20130906031900')
+  [1m[36m (134.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20130906031852')[0m
+  [1m[35m (123.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20130906031849')
+Connecting to database specified by database.yml
+  [1m[36m (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+  [1m[35mRole Load (0.2ms)[0m  SELECT "roles".* FROM "roles" WHERE "roles"."name" = 'admin' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (4.5ms)[0m  INSERT INTO "roles" ("created_at", "name", "resource_id", "resource_type", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", Fri, 06 Sep 2013 03:19:48 UTC +00:00], ["name", "admin"], ["resource_id", nil], ["resource_type", nil], ["updated_at", Fri, 06 Sep 2013 03:19:48 UTC +00:00]]
+  [1m[36m (158.7ms)[0m  [1mcommit transaction[0m
+  [1m[35mRole Load (0.5ms)[0m  SELECT "roles".* FROM "roles" WHERE "roles"."name" = 'user' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  INSERT INTO "roles" ("created_at", "name", "resource_id", "resource_type", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", Fri, 06 Sep 2013 03:19:48 UTC +00:00], ["name", "user"], ["resource_id", nil], ["resource_type", nil], ["updated_at", Fri, 06 Sep 2013 03:19:48 UTC +00:00]]
+  [1m[36m (147.6ms)[0m  [1mcommit transaction[0m
+  [1m[35mRole Load (0.4ms)[0m  SELECT "roles".* FROM "roles" WHERE "roles"."name" = 'VIP' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO "roles" ("created_at", "name", "resource_id", "resource_type", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", Fri, 06 Sep 2013 03:19:48 UTC +00:00], ["name", "VIP"], ["resource_id", nil], ["resource_type", nil], ["updated_at", Fri, 06 Sep 2013 03:19:48 UTC +00:00]]
+  [1m[36m (130.0ms)[0m  [1mcommit transaction[0m
+  [1m[35mUser Load (0.5ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'user@example.com' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'user@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "name", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["created_at", Fri, 06 Sep 2013 03:19:48 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "user@example.com"], ["encrypted_password", "$2a$10$piIW52JuwwYvgo1dv/xqDuwpcyitiYpNCo09veZtSZRzRt7O3Ekfq"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["name", "First User"], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 06 Sep 2013 03:19:48 UTC +00:00]]
+  [1m[35m (132.2ms)[0m  commit transaction
+  [1m[36mRole Load (0.5ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE "roles"."name" = 'admin' AND "roles"."resource_type" IS NULL AND "roles"."resource_id" IS NULL LIMIT 1[0m
+  [1m[35mRole Exists (0.1ms)[0m  SELECT 1 AS one FROM "roles" INNER JOIN "users_roles" ON "roles"."id" = "users_roles"."role_id" WHERE "users_roles"."user_id" = 1 AND "roles"."id" = 1 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT "roles".id FROM "roles" INNER JOIN "users_roles" ON "roles"."id" = "users_roles"."role_id" WHERE "users_roles"."user_id" = 1[0m
+  [1m[35mRole Load (0.2ms)[0m  SELECT "roles".* FROM "roles" WHERE "roles"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1mSELECT "roles".* FROM "roles" INNER JOIN "users_roles" ON "roles"."id" = "users_roles"."role_id" WHERE "users_roles"."user_id" = 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO "users_roles" ("user_id", "role_id") VALUES (1, 1)[0m
+  [1m[35m (121.6ms)[0m  commit transaction
+Connecting to database specified by database.yml
+  [1m[36m (129.9ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (267.1ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`)
+  [1m[36m (0.8ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations` [0m
+Migrating to DeviseCreateUsers (20130906031849)
+  [1m[35m (112.8ms)[0m  CREATE TABLE `users` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int(11) DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (176.0ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_email` ON `users` (`email`)[0m
+  [1m[35m (166.6ms)[0m  CREATE UNIQUE INDEX `index_users_on_reset_password_token` ON `users` (`reset_password_token`)
+  [1m[36m (55.5ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20130906031849')[0m
+Migrating to AddNameToUsers (20130906031852)
+  [1m[35m (468.2ms)[0m  ALTER TABLE `users` ADD `name` varchar(255)
+  [1m[36m (54.6ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20130906031852')[0m
+Migrating to RolifyCreateRoles (20130906031900)
+  [1m[35m (107.8ms)[0m  CREATE TABLE `roles` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255), `resource_id` int(11), `resource_type` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (133.1ms)[0m  [1mCREATE TABLE `users_roles` (`user_id` int(11), `role_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (187.8ms)[0m  CREATE INDEX `index_roles_on_name` ON `roles` (`name`)
+  [1m[36m (211.7ms)[0m  [1mCREATE INDEX `index_roles_on_name_and_resource_type_and_resource_id` ON `roles` (`name`, `resource_type`, `resource_id`)[0m
+  [1m[35m (177.0ms)[0m  CREATE INDEX `index_users_roles_on_user_id_and_role_id` ON `users_roles` (`user_id`, `role_id`)
+  [1m[36m (55.0ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20130906031900')[0m
+  [1m[35m (0.6ms)[0m  SELECT `schema_migrations`.`version` FROM `schema_migrations` 
+Connecting to database specified by database.yml
+  [1m[36m (0.5ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations` [0m
+  [1m[35mRole Load (1.1ms)[0m  SELECT `roles`.* FROM `roles` WHERE `roles`.`name` = 'admin' LIMIT 1
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  INSERT INTO `roles` (`created_at`, `name`, `resource_id`, `resource_type`, `updated_at`) VALUES ('2013-09-06 03:52:34', 'admin', NULL, NULL, '2013-09-06 03:52:34')
+  [1m[36m (364.9ms)[0m  [1mCOMMIT[0m
+  [1m[35mRole Load (1.0ms)[0m  SELECT `roles`.* FROM `roles` WHERE `roles`.`name` = 'user' LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  INSERT INTO `roles` (`created_at`, `name`, `resource_id`, `resource_type`, `updated_at`) VALUES ('2013-09-06 03:52:35', 'user', NULL, NULL, '2013-09-06 03:52:35')
+  [1m[36m (44.5ms)[0m  [1mCOMMIT[0m
+  [1m[35mRole Load (1.4ms)[0m  SELECT `roles`.* FROM `roles` WHERE `roles`.`name` = 'VIP' LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO `roles` (`created_at`, `name`, `resource_id`, `resource_type`, `updated_at`) VALUES ('2013-09-06 03:52:35', 'VIP', NULL, NULL, '2013-09-06 03:52:35')
+  [1m[36m (35.9ms)[0m  [1mCOMMIT[0m
+  [1m[35mUser Load (0.9ms)[0m  SELECT `users`.* FROM `users` WHERE `users`.`email` = 'user@example.com' LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mUser Exists (0.6ms)[0m  SELECT 1 AS one FROM `users` WHERE `users`.`email` = BINARY 'user@example.com' LIMIT 1
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO `users` (`created_at`, `current_sign_in_at`, `current_sign_in_ip`, `email`, `encrypted_password`, `last_sign_in_at`, `last_sign_in_ip`, `name`, `remember_created_at`, `reset_password_sent_at`, `reset_password_token`, `sign_in_count`, `updated_at`) VALUES ('2013-09-06 03:52:35', NULL, NULL, 'user@example.com', '$2a$10$HOo.wyqTV0L6NvtuUj2PoeoPPtoZE4B5r.tvxgbbfh62xhWEtUX8e', NULL, NULL, 'First User', NULL, NULL, NULL, 0, '2013-09-06 03:52:35')[0m
+  [1m[35m (73.3ms)[0m  COMMIT
+  [1m[36mRole Load (1.1ms)[0m  [1mSELECT `roles`.* FROM `roles` WHERE `roles`.`name` = 'admin' AND `roles`.`resource_type` IS NULL AND `roles`.`resource_id` IS NULL LIMIT 1[0m
+  [1m[35mRole Exists (1.0ms)[0m  SELECT 1 AS one FROM `roles` INNER JOIN `users_roles` ON `roles`.`id` = `users_roles`.`role_id` WHERE `users_roles`.`user_id` = 1 AND `roles`.`id` = 1 LIMIT 1
+  [1m[36m (0.9ms)[0m  [1mSELECT `roles`.id FROM `roles` INNER JOIN `users_roles` ON `roles`.`id` = `users_roles`.`role_id` WHERE `users_roles`.`user_id` = 1[0m
+  [1m[35mRole Load (0.8ms)[0m  SELECT `roles`.* FROM `roles` WHERE `roles`.`id` = 1 LIMIT 1
+  [1m[36mRole Load (0.7ms)[0m  [1mSELECT `roles`.* FROM `roles` INNER JOIN `users_roles` ON `roles`.`id` = `users_roles`.`role_id` WHERE `users_roles`.`user_id` = 1[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.8ms)[0m  [1mINSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (1, 1)[0m
+  [1m[35m (45.8ms)[0m  COMMIT
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-06 01:06:32 -0300
+Processing by HomeController#index as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1mSELECT `users`.* FROM `users` [0m
+  Rendered home/index.html.erb within layouts/application (8.2ms)
+Compiled bootstrap_and_overrides.css  (4045ms)  (pid 2279)
+Compiled home.css  (2ms)  (pid 2279)
+Compiled application.css  (4338ms)  (pid 2279)
+Compiled jquery.js  (10ms)  (pid 2279)
+Compiled jquery_ujs.js  (0ms)  (pid 2279)
+Compiled bootstrap-transition.js  (0ms)  (pid 2279)
+Compiled bootstrap-affix.js  (0ms)  (pid 2279)
+Compiled bootstrap-alert.js  (0ms)  (pid 2279)
+Compiled bootstrap-button.js  (0ms)  (pid 2279)
+Compiled bootstrap-carousel.js  (0ms)  (pid 2279)
+Compiled bootstrap-collapse.js  (0ms)  (pid 2279)
+Compiled bootstrap-dropdown.js  (0ms)  (pid 2279)
+Compiled bootstrap-modal.js  (0ms)  (pid 2279)
+Compiled bootstrap-scrollspy.js  (0ms)  (pid 2279)
+Compiled bootstrap-tab.js  (0ms)  (pid 2279)
+Compiled bootstrap-tooltip.js  (0ms)  (pid 2279)
+Compiled bootstrap-popover.js  (0ms)  (pid 2279)
+Compiled bootstrap-typeahead.js  (0ms)  (pid 2279)
+Compiled bootstrap.js  (998ms)  (pid 2279)
+Compiled home.js  (267ms)  (pid 2279)
+Compiled application.js  (1712ms)  (pid 2279)
+  Rendered layouts/_navigation.html.erb (5.2ms)
+  Rendered layouts/_messages.html.erb (1.8ms)
+Completed 200 OK in 6644ms (Views: 6530.8ms | ActiveRecord: 3.4ms)
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-11 22:48:15 -0300
+Processing by HomeController#index as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1mSELECT `users`.* FROM `users` [0m
+  Rendered home/index.html.erb within layouts/application (4.3ms)
+Compiled jquery.js  (48ms)  (pid 5415)
+Compiled jquery_ujs.js  (0ms)  (pid 5415)
+Compiled bootstrap-transition.js  (1ms)  (pid 5415)
+Compiled bootstrap-affix.js  (0ms)  (pid 5415)
+Compiled bootstrap-alert.js  (0ms)  (pid 5415)
+Compiled bootstrap-button.js  (0ms)  (pid 5415)
+Compiled bootstrap-carousel.js  (1ms)  (pid 5415)
+Compiled bootstrap-collapse.js  (0ms)  (pid 5415)
+Compiled bootstrap-dropdown.js  (0ms)  (pid 5415)
+Compiled bootstrap-modal.js  (0ms)  (pid 5415)
+Compiled bootstrap-scrollspy.js  (0ms)  (pid 5415)
+Compiled bootstrap-tab.js  (1ms)  (pid 5415)
+Compiled bootstrap-tooltip.js  (0ms)  (pid 5415)
+Compiled bootstrap-popover.js  (1ms)  (pid 5415)
+Compiled bootstrap-typeahead.js  (0ms)  (pid 5415)
+Compiled bootstrap.js  (967ms)  (pid 5415)
+Compiled application.js  (1280ms)  (pid 5415)
+  Rendered layouts/_navigation.html.erb (2.6ms)
+  Rendered layouts/_messages.html.erb (1.0ms)
+Completed 200 OK in 1555ms (Views: 1477.5ms | ActiveRecord: 4.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-11 22:52:24 -0300
+Processing by HomeController#index as HTML
+  [1m[35mUser Load (0.7ms)[0m  SELECT `users`.* FROM `users` 
+  Rendered home/index.html.erb within layouts/application (0.8ms)
+  Rendered layouts/_navigation.html.erb (1.0ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 77ms (Views: 72.9ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2013-09-11 22:52:32 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.erb (2.2ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (161.1ms)
+  Rendered layouts/_navigation.html.erb (1.1ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 239ms (Views: 236.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2013-09-11 22:55:49 -0300
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+Completed 401 Unauthorized in 1ms
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2013-09-11 22:55:49 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.7ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (49.8ms)
+  Rendered layouts/_navigation.html.erb (1.1ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 89ms (Views: 87.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2013-09-11 22:55:56 -0300
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.6ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (38.3ms)
+  Rendered layouts/_navigation.html.erb (1.1ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 114ms (Views: 113.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2013-09-11 22:55:58 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.5ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (12.0ms)
+  Rendered layouts/_navigation.html.erb (0.9ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 48ms (Views: 46.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2013-09-11 22:56:00 -0300
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.5ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (13.1ms)
+  Rendered layouts/_navigation.html.erb (1.1ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 53ms (Views: 51.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/password/new" for 127.0.0.1 at 2013-09-11 22:56:04 -0300
+Processing by Devise::PasswordsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.7ms)
+  Rendered /home/federicogodan/.rvm/gems/ruby-2.0.0-p247/gems/devise-3.1.0/app/views/devise/passwords/new.html.erb within layouts/application (8.8ms)
+  Rendered layouts/_navigation.html.erb (1.0ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 48ms (Views: 47.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2013-09-11 22:56:10 -0300
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.6ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (16.3ms)
+  Rendered layouts/_navigation.html.erb (1.0ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 93ms (Views: 91.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/password/new" for 127.0.0.1 at 2013-09-11 22:56:14 -0300
+Processing by Devise::PasswordsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.5ms)
+  Rendered /home/federicogodan/.rvm/gems/ruby-2.0.0-p247/gems/devise-3.1.0/app/views/devise/passwords/new.html.erb within layouts/application (3.1ms)
+  Rendered layouts/_navigation.html.erb (1.5ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 82ms (Views: 80.4ms | ActiveRecord: 0.0ms)
