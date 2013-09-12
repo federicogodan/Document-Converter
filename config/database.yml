@@ -5,14 +5,14 @@
 #   gem 'sqlite3'
 development:
   adapter: mysql2
-# host: docconvdev.cl2jpzx35aen.us-west-2.rds.amazonaws.com
-  host: localhost
+  host: docconvdev.cl2jpzx35aen.us-west-2.rds.amazonaws.com
+#  host: localhost
   port: 3306
-# database: docconvdev
-  database: doconvdev
+  database: docconvdev
+#  database: doconvdev
   username: root
-# password: pis2013pis
-  password: pis2013
+  password: pis2013pis
+#  password: pis2013
   pool: 5
   timeout: 5000
 
