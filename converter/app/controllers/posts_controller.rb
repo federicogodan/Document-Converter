@@ -5,6 +5,9 @@ class PostsController < ApplicationController
 	end
   
   def create
+      #obtener archivo y combo box 
+      
+      #esto nose donde va ! (supuestamente esta medio mal que vaya aca)
       require 'socket'
       # establish connection
       ##Telling the client where to connect

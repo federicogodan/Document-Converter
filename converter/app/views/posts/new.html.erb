@@ -1,6 +1,8 @@
-<h1>Press the bottom to convert your document!</h1>
-<%= form_for :post, url: posts_path do |f| %>
-  <p>
-    <%= f.submit %>
-  </p>
+<h1>Press the botton to convert your document</h1><br><br>
+<h3>Please upload your file and choose the format</h3><br><br>
+<%= form_for :post, :multipart => true  do |f|  %>
+  <%= f.file_field :uploaded_file %><br><br>
+  <%=f.radio_button(:content_type, 'pdf')%> pdf
+  <%= f.radio_button(:content_type, 'txt')%> txt
+  <%= f.submit %>
 <% end %>
