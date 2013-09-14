@@ -9,10 +9,13 @@ while (session = server.accept)
  #start new thread conversation
  ## Here we establish a new thread for a connection client
  Thread.start do
-   puts "log: Connection from #{session.peeraddr[2]} at
-          #{session.peeraddr[3]}"
+   puts "log: Connection from #{session.peeraddr[2]}"
    puts "log: got input from client"
-   format = session.gets
+   #getting the parameters from the input of the socket
+   input = session.gets.split
+   format = input[0]
+   file = input[1]
+   puts format + "\n" + file +"\n"
    format = format.rstrip
    format = format.lstrip
    if (format=="txt") #txt is a particular case that needs :Text after
@@ -22,9 +25,9 @@ while (session = server.accept)
     to_send = '/usr/bin/libreoffice --headless --invisible --convert-to ' + format + ' ' + 'Untitled.odt'
    puts to_send
    system(to_send)
-   session.puts "Server: Welcome #{session.peeraddr[2]}\n"
+   session.puts "ACK"
    # reply   
-   puts "log: sending Completed"
-   session.puts "Completed"
- end  #end thread conversation
+   puts "log: sending completed"
+   session.puts "completed"
+ end  #end thread 
 end   #end loop
