@@ -33,10 +33,27 @@ Donde host y puerto corresponden a los del servidor.
 Se envían mesajes a través del socket mediante la función 
 puts del socket. Donde "s" es un socket y deseamos enviar el 
 mensaje "message", siendo este un string.
+Cuando se desea enviar algo de mayor tamaño se utiliza en vez de puts write
+hay que investigar acerca de esta función, dado que el archivo deberá ser enviado
+de a poco (en un while) según lo que se ha investigado hasta el momento quedaría 
+algo del estilo: 
+while chunk = file.read(SIZE)
+      socket.write(chunk)
+end 
+Donde file es el archivo a enviar.
 
 * recepción : s.gets
 Se reciben mensajes a través del socket mediante la función gets
 del socket. 
+Para futuro: debemos de recibir en un while:
+File.open('ruta', 'w') do |file|
+while chunk = client.read(SIZE)
+     file.write(chunk)
+end
+Donde en 'ruta' tenemos creado un archivo temporal. De esta manera escribiríamos sobre
+este archivo y luego podríamos enviarle a libreoffice la petición de conversión con dicha
+ruta. 
+
 
 * cierre de conexión : s.closed
 
