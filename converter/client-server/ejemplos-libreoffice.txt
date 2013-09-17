@@ -1,0 +1,24 @@
+pruebas de conversión de archivos utlizando libreoffice en modo servidor
+-------------------------------------------------------------------------
+
+* convertir .doc a .text
+
+/usr/bin/libreoffice --headless --invisible --convert-to txt:Text Untitled.odt 
+
+* convertir un .doc a un .pdf
+
+/usr/bin/libreoffice --headless --invisible --convert-to pdf Untitled.odt 
+
+* convertir un .doc a un .html
+
+/usr/bin/libreoffice --headless --invisible --convert-to html Untitled.odt 
+
+* convertir un .pdf a un .html (queda deformado)
+
+/usr/bin/libreoffice --headless --invisible --convert-to html libro.pdf
+
+* convertir .pdf a .doc (queda con tamaño re chico)
+
+/usr/bin/libreoffice --headless --invisible --convert-to doc libro.pdf 
+
+
