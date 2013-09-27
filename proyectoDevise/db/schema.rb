@@ -11,7 +11,45 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130925202718) do
+ActiveRecord::Schema.define(:version => 20130926230159) do
+
+  create_table "documents", :force => true do |t|
+    t.string   "email"
+    t.integer  "document_number"
+    t.date     "creation_date"
+    t.string   "name"
+    t.boolean  "uploading"
+    t.string   "original_extension"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "documents", ["email", "document_number"], :name => "index_documents_on_email_and_document_number"
+  add_index "documents", ["email"], :name => "index_documents_on_email"
+
+  create_table "documents_files", :force => true do |t|
+    t.string   "email"
+    t.integer  "document_number"
+    t.string   "current_extension"
+    t.string   "status"
+    t.date     "conversion_end_date"
+    t.integer  "size_in_bytes"
+    t.string   "download_link"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "documents_files", ["email", "document_number", "current_extension"], :name => "index_on_documents_file_email_number_extension"
+
+  create_table "registered_users", :force => true do |t|
+    t.string   "email"
+    t.string   "api_key"
+    t.string   "secret_key"
+    t.integer  "total_storage_assigned"
+    t.integer  "documents_time_for_expiration"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -29,9 +67,18 @@ ActiveRecord::Schema.define(:version => 20130925202718) do
     t.date     "registration_date"
     t.date     "last_acces"
     t.string   "profile_type"
+    t.date     "last_access"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "webhooks", :force => true do |t|
+    t.string   "email"
+    t.string   "url"
+    t.boolean  "deleted"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

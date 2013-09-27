@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  email: MyString
+  url: MyString
+  deleted: false
+
+two:
+  email: MyString
+  url: MyString
+  deleted: false
