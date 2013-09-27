@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130926230159) do
+ActiveRecord::Schema.define(:version => 20130927220748) do
 
   create_table "documents", :force => true do |t|
     t.string   "email"
@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(:version => 20130926230159) do
     t.date     "creation_date"
     t.string   "name"
     t.boolean  "uploading"
-    t.string   "original_extension"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.integer  "original_extension", :limit => 255
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   add_index "documents", ["email", "document_number"], :name => "index_documents_on_email_and_document_number"
@@ -40,6 +40,21 @@ ActiveRecord::Schema.define(:version => 20130926230159) do
   end
 
   add_index "documents_files", ["email", "document_number", "current_extension"], :name => "index_on_documents_file_email_number_extension"
+
+  create_table "file_extensions", :force => true do |t|
+    t.integer  "extension"
+    t.integer  "can_be_converted_to"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "file_extensions", ["can_be_converted_to", "extension"], :name => "index_file_extensions_on_can_be_converted_to_and_extension"
+
+  create_table "formats", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "registered_users", :force => true do |t|
     t.string   "email"
