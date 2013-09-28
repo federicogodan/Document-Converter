@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130928003125) do
+ActiveRecord::Schema.define(:version => 20130928005339) do
 
   create_table "documents", :force => true do |t|
     t.integer  "document_number"
@@ -21,13 +21,12 @@ ActiveRecord::Schema.define(:version => 20130928003125) do
     t.integer  "original_extension", :limit => 255
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
-    t.integer  "id_user"
+    t.integer  "user_id"
   end
 
   add_index "documents", ["document_number"], :name => "index_documents_on_email_and_document_number"
 
   create_table "documents_files", :force => true do |t|
-    t.string   "email"
     t.integer  "document_number"
     t.string   "current_extension"
     t.string   "status"
@@ -36,9 +35,10 @@ ActiveRecord::Schema.define(:version => 20130928003125) do
     t.string   "download_link"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.integer  "user_id"
   end
 
-  add_index "documents_files", ["email", "document_number", "current_extension"], :name => "index_on_documents_file_email_number_extension"
+  add_index "documents_files", ["document_number", "current_extension"], :name => "index_on_documents_file_email_number_extension"
 
   create_table "file_extensions", :force => true do |t|
     t.integer  "extension"
