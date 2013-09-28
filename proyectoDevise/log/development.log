@@ -183,3 +183,41 @@ Migrating to AddIndexFileExtension (20130927220748)
   [1m[35m (0.2ms)[0m  select sqlite_version(*)
   [1m[36m (0.3ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
 Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+  [1m[36m (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Migrating to DeviseCreateUsers (20130925200912)
+Migrating to Version1 (20130925202718)
+Migrating to CreateRegisteredUsers (20130925231328)
+Migrating to CreateCreateDocuments (20130926164310)
+Migrating to CreateDocumentsFiles (20130926202916)
+Migrating to AddingIndex (20130926214135)
+Migrating to AddRegistrationAlgoToUsers (20130926225121)
+Migrating to CreateWebhooks (20130926230159)
+Migrating to CreateFileExtensions (20130927210851)
+Migrating to CreateFormats (20130927212405)
+Migrating to ActualizationDocument (20130927213016)
+Migrating to AddIndexFileExtension (20130927220748)
+Migrating to ReferenceToUser (20130928003125)
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.2ms)[0m  ALTER TABLE "documents" ADD "id_user" integer
+  [1m[36m (0.8ms)[0m  [1mCREATE TEMPORARY TABLE "altered_documents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "document_number" integer, "creation_date" date, "name" varchar(255), "uploading" boolean, "original_extension" integer(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "id_user" integer) [0m
+  [1m[35m (0.3ms)[0m  CREATE INDEX "temp_index_altered_documents_on_email_and_document_number" ON "altered_documents" ("email", "document_number")
+  [1m[36m (0.3ms)[0m  [1mCREATE INDEX "temp_index_altered_documents_on_email" ON "altered_documents" ("email")[0m
+  [1m[35m (0.3ms)[0m  SELECT * FROM "documents"
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO "altered_documents" ("id","email","document_number","creation_date","name","uploading","original_extension","created_at","updated_at","id_user") VALUES (1, 'nico', 12, NULL, NULL, NULL, NULL, '2013-09-27 22:39:01.326841', '2013-09-27 22:39:01.326841', NULL)[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO "altered_documents" ("id","email","document_number","creation_date","name","uploading","original_extension","created_at","updated_at","id_user") VALUES (2, 'mio@gmail', 2, NULL, NULL, NULL, NULL, '2013-09-27 22:43:00.880668', '2013-09-27 22:43:00.880668', NULL)
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO "altered_documents" ("id","email","document_number","creation_date","name","uploading","original_extension","created_at","updated_at","id_user") VALUES (3, 'mio@gmail', 3, NULL, NULL, NULL, NULL, '2013-09-27 22:43:39.510545', '2013-09-27 22:43:39.510545', NULL)[0m
+  [1m[35m (0.6ms)[0m  DROP TABLE "documents"
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "documents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "document_number" integer, "creation_date" date, "name" varchar(255), "uploading" boolean, "original_extension" integer(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "id_user" integer) [0m
+  [1m[35m (0.3ms)[0m  CREATE INDEX "index_documents_on_email_and_document_number" ON "documents" ("document_number")
+  [1m[36m (0.2ms)[0m  [1mSELECT * FROM "altered_documents"[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO "documents" ("id","document_number","creation_date","name","uploading","original_extension","created_at","updated_at","id_user") VALUES (1, 12, NULL, NULL, NULL, NULL, '2013-09-27 22:39:01.326841', '2013-09-27 22:39:01.326841', NULL)
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO "documents" ("id","document_number","creation_date","name","uploading","original_extension","created_at","updated_at","id_user") VALUES (2, 2, NULL, NULL, NULL, NULL, '2013-09-27 22:43:00.880668', '2013-09-27 22:43:00.880668', NULL)[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO "documents" ("id","document_number","creation_date","name","uploading","original_extension","created_at","updated_at","id_user") VALUES (3, 3, NULL, NULL, NULL, NULL, '2013-09-27 22:43:39.510545', '2013-09-27 22:43:39.510545', NULL)
+  [1m[36m (0.5ms)[0m  [1mDROP TABLE "altered_documents"[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130928003125')
+  [1m[36m (140.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations" 
