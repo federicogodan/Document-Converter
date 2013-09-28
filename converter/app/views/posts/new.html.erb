@@ -1,7 +1,8 @@
-<h1>Press the bottom to convert your document!</h1>
-<%= form_for :post, url: posts_path , :html => {:multipart => true}  do |f|  %>
-  <%= f.file_field :file %><br><br>
-  <%=f.radio_button(:format, "pdf")%> pdf
-  <%= f.radio_button(:format, "txt")%> txt
+<h1>Press the botton to convert your document</h1><br><br>
+<h3>Please upload your file and choose the format</h3><br><br>
+<%= form_for :post, :url=>{ :controller=>"posts", :action=>"create"}, :html => {:multipart => true} do |f|  %>
+  <%= f.file_field :uploaded_file %><br><br>
+  <%=f.radio_button(:format, 'pdf')%> pdf
+  <%= f.radio_button(:format, 'txt')%> txt
   <%= f.submit %>
 <% end %>

@@ -1,33 +1,35 @@
 
 require 'socket'
+
 puts "Starting up server..."
 # establish the server
-## Server established to listen for connections on port 8100
-server = TCPServer.new(8100)
+port = ARGV[0]
+
+server = TCPServer.new(port)
+redirect_socket = TCPSocket.new("localhost", 8103)
+redirect_socket.puts(port)
+while !(redirect_socket.closed?) &&
+                (serverMessage = redirect_socket.gets)
+end #end loop
+
 # setup to listen and accept connections
 while (session = server.accept)
- #start new thread conversation
- ## Here we establish a new thread for a connection client
  Thread.start do
-   puts "log: Connection from #{session.peeraddr[2]}"
-   puts "log: got input from client"
-   #getting the parameters from the input of the socket
-   input = session.gets.split
-   format = input[0]
-   file = input[1]
-   puts format + "\n" + file +"\n"
-   format = format.rstrip
-   format = format.lstrip
-   if (format=="txt") #txt is a particular case that needs :Text after
-	   format = "txt:Text"
+   puts "accepting client"
+   format = session.gets.delete("\n")
+   puts "format: " + format 
+   name = session.gets.delete("\n")
+   puts "name: " + name
+   File.open('/home/mika/'+ name, 'w') do |file|
+     file.write (session.read(8079))
+   end   
+   if (format=="txt") 
+     format = "txt:Text"
    end
-   #create the string to send to libreoffice 
-    to_send = '/usr/bin/libreoffice --headless --invisible --convert-to ' + format + ' ' + 'Untitled.odt'
-   puts to_send
+   to_send = '/usr/bin/libreoffice --headless --invisible --convert-to ' + format + ' /home/mika/'+name
+   puts "to send " + to_send
    system(to_send)
    session.puts "ACK"
-   # reply   
-   puts "log: sending completed"
-   session.puts "completed"
- end  #end thread 
+   session.puts "close"
+ end  #end thread conversation
 end   #end loop

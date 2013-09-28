@@ -1,27 +1,32 @@
 class PostsController < ApplicationController
 
-	def new
-	  
-	end
+  def new
+    
+  end
   
   def create
-      #get the format to be convert     
-      format = params[:post][:format]
-      #get the file 
-      file = params[:post][:file].path
-    
       require 'socket'
-      # establish connection with the server 
-      clientSession = TCPSocket.new( "localhost", 8100 )
-      puts "log: starting connection"
-      #send the request to the server
-      clientSession.puts format + ' ' + file
-      #wait for ACK and completed message from the server
+      redirect_socket = TCPSocket.new( "localhost", 8102 )
+      serverMessage = redirect_socket.gets
+      clientSession = TCPSocket.new( "localhost", serverMessage.to_i)
+      puts "sending ACK"
+      redirect_socket.puts "ACK" 
+      puts "obteniendo formato"
+      format = params[:post][:format]
+      clientSession.puts format
+      file_name = params[:post][:uploaded_file].original_filename
+      file_path = params[:post][:uploaded_file].path
+      system ("chmod 777 " + file_path)
+      puts params[:post][:uploaded_file].size
+      File.open(file_path, 'r') do |file|     
+          clientSession.write(file.read(8079))
+      end
+      puts("finish")
        while !(clientSession.closed?) &&
                 (serverMessage = clientSession.gets)
-        #if one of the messages contains 'Completed' we'll disconnect
-        ## we disconnect by 'closing' the session.
-        if serverMessage.include?("completed")
+        ## lets output our server messages
+        puts serverMessage
+        if serverMessage.include?("Goodbye")
          clientSession.close
         end
        end #end loop
