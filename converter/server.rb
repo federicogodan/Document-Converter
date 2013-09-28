@@ -30,6 +30,5 @@ while (session = server.accept)
    puts "to send " + to_send
    system(to_send)
    session.puts "ACK"
-   session.puts "close"
  end  #end thread conversation
 end   #end loop
