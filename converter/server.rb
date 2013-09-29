@@ -1,5 +1,7 @@
 
 require 'socket'
+require 'sys/proctable'
+require 'time'
 
 puts "Starting up server..."
 # establish the server
@@ -20,8 +22,18 @@ while (session = server.accept)
    puts "format: " + format 
    name = session.gets.delete("\n")
    puts "name: " + name
+   size = session.gets.to_i
+   puts "size "
+   puts  size
    File.open('/home/mika/'+ name, 'w') do |file|
-     file.write (session.read(8079))
+      puts "creating temp file"
+     while((size - 1024) > 0 ) ## lets output our server messages
+        puts "reading " 
+        puts size
+        file.write session.read(1024)
+        size = size - 1024
+     end
+     file.write session.read(size)
    end   
    if (format=="txt") 
      format = "txt:Text"
@@ -29,6 +41,16 @@ while (session = server.accept)
    to_send = '/usr/bin/libreoffice --headless --invisible --convert-to ' + format + ' /home/mika/'+name
    puts "to send " + to_send
    system(to_send)
+   puts "sending ACK"
    session.puts "ACK"
+   Sys::ProcTable.ps.each { |ps|
+      if ps.name.downcase == "libreoffice".downcase
+        puts "libreoffice"
+        Process.kill('KILL', ps.pid)
+        puts "killing"
+      end
+    }
+   puts "finish"
+   
  end  #end thread conversation
 end   #end loop

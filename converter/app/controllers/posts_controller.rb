@@ -18,19 +18,18 @@ class PostsController < ApplicationController
       file_name = params[:post][:uploaded_file].original_filename
       clientSession.puts file_name
       file_path = params[:post][:uploaded_file].path
-      system ("chmod 777 " + file_path)
-      puts params[:post][:uploaded_file].size
-      File.open(file_path, 'r') do |file|     
-          clientSession.write(file.read(8079))
+      system "chmod 777 " + file_path
+      size = params[:post][:uploaded_file].size
+      clientSession.puts size
+      File.open(file_path, 'r') do |file|  
+           while(size - 1024 > 0 ) 
+              clientSession.write(file.read(1024))
+              size = size - 1024
+           end
+           clientSession.write(file.read(size))      
       end
-      puts("finish")
-       while !(clientSession.closed?) &&
-                (serverMessage = clientSession.gets)
-        ## lets output our server messages
-        puts serverMessage
-        if serverMessage.include?("Goodbye")
-         clientSession.close
-        end
-       end #end loop
+      serverMessage = clientSession.gets
+      puts "Recieved: " + serverMessage
+      clientSession.close
   end
 end
