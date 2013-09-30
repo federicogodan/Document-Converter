@@ -383,3 +383,1057 @@ Migrating to ReferenceToWebhock (20130930195202)
   [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130930195202')[0m
   [1m[35m (273.6ms)[0m  commit transaction
   [1m[36m (0.3ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Connecting to database specified by database.yml
+
+
+Started GET "/users/" for 127.0.0.1 at 2013-09-30 17:00:23 -0300
+
+ActionController::RoutingError (No route matches [GET] "/users"):
+  actionpack (3.2.13) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.13) lib/rails/rack/logger.rb:32:in `call_app'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `block in call'
+  activesupport (3.2.13) lib/active_support/tagged_logging.rb:22:in `tagged'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.13) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.5) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/static.rb:63:in `call'
+  railties (3.2.13) lib/rails/engine.rb:479:in `call'
+  railties (3.2.13) lib/rails/application.rb:223:in `call'
+  rack (1.4.5) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.13) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.5) lib/rack/handler/webrick.rb:59:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (10.5ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2013-09-30 17:00:26 -0300
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.erb (2.5ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (113.2ms)
+Compiled application.css  (1ms)  (pid 4638)
+Compiled jquery.js  (8ms)  (pid 4638)
+Compiled jquery_ujs.js  (1ms)  (pid 4638)
+Compiled application.js  (160ms)  (pid 4638)
+Completed 200 OK in 440ms (Views: 355.2ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:00:27 -0300
+Served asset /application.css - 200 OK (37ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:00:27 -0300
+Served asset /application.js - 200 OK (22ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:00:27 -0300
+Served asset /jquery_ujs.js - 200 OK (9ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:00:27 -0300
+Served asset /jquery.js - 200 OK (11ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2013-09-30 17:02:13 -0300
+
+ActionController::RoutingError (No route matches [GET] "/users"):
+  actionpack (3.2.13) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.13) lib/rails/rack/logger.rb:32:in `call_app'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `block in call'
+  activesupport (3.2.13) lib/active_support/tagged_logging.rb:22:in `tagged'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.13) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.5) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/static.rb:63:in `call'
+  railties (3.2.13) lib/rails/engine.rb:479:in `call'
+  railties (3.2.13) lib/rails/application.rb:223:in `call'
+  rack (1.4.5) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.13) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.5) lib/rack/handler/webrick.rb:59:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.1ms)
+
+
+Started GET "/confirmations" for 127.0.0.1 at 2013-09-30 17:07:29 -0300
+
+ActionController::RoutingError (No route matches [GET] "/confirmations"):
+  actionpack (3.2.13) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.13) lib/rails/rack/logger.rb:32:in `call_app'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `block in call'
+  activesupport (3.2.13) lib/active_support/tagged_logging.rb:22:in `tagged'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.13) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.5) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/static.rb:63:in `call'
+  railties (3.2.13) lib/rails/engine.rb:479:in `call'
+  railties (3.2.13) lib/rails/application.rb:223:in `call'
+  rack (1.4.5) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.13) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.5) lib/rack/handler/webrick.rb:59:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (8.2ms)
+
+
+Started GET "/users/confirmations" for 127.0.0.1 at 2013-09-30 17:07:52 -0300
+
+ActionController::RoutingError (No route matches [GET] "/users/confirmations"):
+  actionpack (3.2.13) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.13) lib/rails/rack/logger.rb:32:in `call_app'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `block in call'
+  activesupport (3.2.13) lib/active_support/tagged_logging.rb:22:in `tagged'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.13) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.5) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/static.rb:63:in `call'
+  railties (3.2.13) lib/rails/engine.rb:479:in `call'
+  railties (3.2.13) lib/rails/application.rb:223:in `call'
+  rack (1.4.5) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.13) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.5) lib/rack/handler/webrick.rb:59:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.1ms)
+Connecting to database specified by database.yml
+
+
+Started GET "/assets/rails.png" for 127.0.0.1 at 2013-09-30 17:09:04 -0300
+Served asset /rails.png - 200 OK (19ms)
+
+
+Started GET "/rails/info/properties" for 127.0.0.1 at 2013-09-30 17:09:16 -0300
+  [1m[36m (0.3ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Processing by Rails::InfoController#properties as HTML
+  Rendered inline template (1.9ms)
+Completed 200 OK in 22ms (Views: 20.8ms | ActiveRecord: 0.0ms)
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+
+
+Started GET "/rails/info/properties" for 127.0.0.1 at 2013-09-30 17:22:33 -0300
+  [1m[36m (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Processing by Rails::InfoController#properties as HTML
+  Rendered inline template (1.9ms)
+Completed 200 OK in 12ms (Views: 10.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/home" for 127.0.0.1 at 2013-09-30 17:22:36 -0300
+
+ActionController::RoutingError (No route matches [GET] "/home"):
+  actionpack (3.2.13) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.13) lib/rails/rack/logger.rb:32:in `call_app'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `block in call'
+  activesupport (3.2.13) lib/active_support/tagged_logging.rb:22:in `tagged'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.13) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.5) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/static.rb:63:in `call'
+  railties (3.2.13) lib/rails/engine.rb:479:in `call'
+  railties (3.2.13) lib/rails/application.rb:223:in `call'
+  rack (1.4.5) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.13) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.5) lib/rack/handler/webrick.rb:59:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (9.5ms)
+Connecting to database specified by database.yml
+  [1m[36m (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Migrating to DeviseCreateUsers (20130925200912)
+Migrating to Version1 (20130925202718)
+Migrating to CreateRegisteredUsers (20130925231328)
+Migrating to CreateCreateDocuments (20130926164310)
+Migrating to CreateDocumentsFiles (20130926202916)
+Migrating to AddingIndex (20130926214135)
+Migrating to AddRegistrationAlgoToUsers (20130926225121)
+Migrating to CreateWebhooks (20130926230159)
+Migrating to CreateFileExtensions (20130927210851)
+Migrating to CreateFormats (20130927212405)
+Migrating to ActualizationDocument (20130927213016)
+Migrating to AddIndexFileExtension (20130927220748)
+Migrating to ReferenceToUser (20130928003125)
+Migrating to ReferenceToUserDocFile (20130928005339)
+Migrating to ReferenceToUserRegistered (20130930194705)
+Migrating to ReferenceToWebhock (20130930195202)
+  [1m[35m (0.2ms)[0m  select sqlite_version(*)
+  [1m[36m (0.3ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Connecting to database specified by database.yml
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:23:28 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (2.3ms)
+Compiled user.css  (46ms)  (pid 5284)
+Compiled application.css  (53ms)  (pid 5284)
+Compiled user.js  (787ms)  (pid 5284)
+Compiled application.js  (804ms)  (pid 5284)
+Completed 200 OK in 970ms (Views: 969.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:23:29 -0300
+Served asset /application.css - 304 Not Modified (10ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:23:29 -0300
+Served asset /user.css - 200 OK (16ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:23:29 -0300
+Served asset /user.js - 200 OK (4ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:23:29 -0300
+Served asset /application.js - 304 Not Modified (25ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:23:29 -0300
+Served asset /jquery.js - 304 Not Modified (11ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:23:29 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (12ms)
+Connecting to database specified by database.yml
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:30:46 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (98.2ms)
+Completed 500 Internal Server Error in 109ms
+
+ActionView::Template::Error (undefined local variable or method `users' for #<#<Class:0xa4d8a78>:0xa4d83fc>):
+    1: <h1>User#home</h1>
+    2: <p>Find me in app/views/user/home.html.erb</p>
+    3: 
+    4: <%= link_to("login",users/sign_in)%>
+  app/views/user/home.html.erb:4:in `_app_views_user_home_html_erb__612842928__618544258'
+
+
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/_trace.erb (3.1ms)
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.0ms)
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (18.2ms)
+Connecting to database specified by database.yml
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:31:32 -0300
+Processing by UserController#home as HTML
+ERROR: compiling _app_views_user_home_html_erb__431826034__618543748 RAISED /home/nicolas/workspace/Document-Converter/proyectoDevise/app/views/user/home.html.erb:5: syntax error, unexpected keyword_ensure, expecting ')'
+/home/nicolas/workspace/Document-Converter/proyectoDevise/app/views/user/home.html.erb:7: syntax error, unexpected keyword_end, expecting ')'
+Function body:           def _app_views_user_home_html_erb__431826034__618543748(local_assigns, output_buffer)
+            _old_virtual_path, @virtual_path = @virtual_path, "user/home";_old_output_buffer = @output_buffer;;@output_buffer = output_buffer || ActionView::OutputBuffer.new;@output_buffer.safe_concat('<h1>User#home</h1>
+<p>Find me in app/views/user/home.html.erb</p>
+
+');@output_buffer.append= ( link_to("login",users#sign_in));@output_buffer.to_s
+          ensure
+            @virtual_path, @output_buffer = _old_virtual_path, _old_output_buffer
+          end
+
+Backtrace: /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/template.rb:297:in `module_eval'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/template.rb:297:in `compile'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/template.rb:244:in `block in compile!'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/template.rb:232:in `synchronize'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/template.rb:232:in `compile!'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/template.rb:144:in `block in render'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/notifications.rb:125:in `instrument'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/template.rb:143:in `render'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/renderer/template_renderer.rb:47:in `block (2 levels) in render_template'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/renderer/abstract_renderer.rb:38:in `block in instrument'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/notifications.rb:123:in `block in instrument'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/notifications.rb:123:in `instrument'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/renderer/abstract_renderer.rb:38:in `instrument'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/renderer/template_renderer.rb:46:in `block in render_template'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/renderer/template_renderer.rb:54:in `render_with_layout'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/renderer/template_renderer.rb:45:in `render_template'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/renderer/template_renderer.rb:18:in `render'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/renderer/renderer.rb:36:in `render_template'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_view/renderer/renderer.rb:17:in `render'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/abstract_controller/rendering.rb:110:in `_render_template'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/streaming.rb:225:in `_render_template'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/abstract_controller/rendering.rb:103:in `render_to_body'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/renderers.rb:28:in `render_to_body'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/compatibility.rb:50:in `render_to_body'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/abstract_controller/rendering.rb:88:in `render'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/rendering.rb:16:in `render'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/instrumentation.rb:40:in `block (2 levels) in render'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/core_ext/benchmark.rb:5:in `block in ms'
+/home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/benchmark.rb:296:in `realtime'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/core_ext/benchmark.rb:5:in `ms'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/instrumentation.rb:40:in `block in render'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/instrumentation.rb:83:in `cleanup_view_runtime'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activerecord-3.2.13/lib/active_record/railties/controller_runtime.rb:24:in `cleanup_view_runtime'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/instrumentation.rb:39:in `render'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/implicit_render.rb:10:in `default_render'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/implicit_render.rb:5:in `send_action'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/abstract_controller/base.rb:167:in `process_action'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/rendering.rb:10:in `process_action'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/abstract_controller/callbacks.rb:18:in `block in process_action'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/callbacks.rb:414:in `_run__938504866__process_action__825627052__callbacks'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/callbacks.rb:405:in `__run_callback'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/callbacks.rb:385:in `_run_process_action_callbacks'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/callbacks.rb:81:in `run_callbacks'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/abstract_controller/callbacks.rb:17:in `process_action'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/rescue.rb:29:in `process_action'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/instrumentation.rb:30:in `block in process_action'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/notifications.rb:123:in `block in instrument'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/notifications.rb:123:in `instrument'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/instrumentation.rb:29:in `process_action'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/params_wrapper.rb:207:in `process_action'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activerecord-3.2.13/lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/abstract_controller/base.rb:121:in `process'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/abstract_controller/rendering.rb:45:in `process'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal.rb:203:in `dispatch'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal/rack_delegation.rb:14:in `dispatch'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_controller/metal.rb:246:in `block in action'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/routing/route_set.rb:73:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/routing/route_set.rb:73:in `dispatch'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/routing/route_set.rb:36:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/journey-1.0.4/lib/journey/router.rb:68:in `block in call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/journey-1.0.4/lib/journey/router.rb:56:in `each'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/journey-1.0.4/lib/journey/router.rb:56:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/routing/route_set.rb:612:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/warden-1.2.3/lib/warden/manager.rb:35:in `block in call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/warden-1.2.3/lib/warden/manager.rb:34:in `catch'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/warden-1.2.3/lib/warden/manager.rb:34:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/rack-1.4.5/lib/rack/etag.rb:23:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/rack-1.4.5/lib/rack/conditionalget.rb:25:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/head.rb:14:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/flash.rb:242:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/rack-1.4.5/lib/rack/session/abstract/id.rb:210:in `context'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/rack-1.4.5/lib/rack/session/abstract/id.rb:205:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/cookies.rb:341:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activerecord-3.2.13/lib/active_record/query_cache.rb:64:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activerecord-3.2.13/lib/active_record/connection_adapters/abstract/connection_pool.rb:479:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/callbacks.rb:405:in `_run__46103833__call__645491599__callbacks'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/callbacks.rb:405:in `__run_callback'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/callbacks.rb:385:in `_run_call_callbacks'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/callbacks.rb:81:in `run_callbacks'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/reloader.rb:65:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/remote_ip.rb:31:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/debug_exceptions.rb:16:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/railties-3.2.13/lib/rails/rack/logger.rb:32:in `call_app'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/railties-3.2.13/lib/rails/rack/logger.rb:16:in `block in call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/tagged_logging.rb:22:in `tagged'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/railties-3.2.13/lib/rails/rack/logger.rb:16:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/request_id.rb:22:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/rack-1.4.5/lib/rack/methodoverride.rb:21:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/rack-1.4.5/lib/rack/runtime.rb:17:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/activesupport-3.2.13/lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/rack-1.4.5/lib/rack/lock.rb:15:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/static.rb:63:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/railties-3.2.13/lib/rails/engine.rb:479:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/railties-3.2.13/lib/rails/application.rb:223:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/rack-1.4.5/lib/rack/content_length.rb:14:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/railties-3.2.13/lib/rails/rack/log_tailer.rb:17:in `call'
+/home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/rack-1.4.5/lib/rack/handler/webrick.rb:59:in `service'
+/home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+/home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+/home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+  Rendered user/home.html.erb within layouts/application (49.6ms)
+Completed 500 Internal Server Error in 61ms
+
+ActionView::Template::Error (/home/nicolas/workspace/Document-Converter/proyectoDevise/app/views/user/home.html.erb:5: syntax error, unexpected keyword_ensure, expecting ')'
+/home/nicolas/workspace/Document-Converter/proyectoDevise/app/views/user/home.html.erb:7: syntax error, unexpected keyword_end, expecting ')'):
+    2: <p>Find me in app/views/user/home.html.erb</p>
+    3: 
+    4: <%= link_to("login",users#sign_in)%>
+  actionpack (3.2.13) lib/action_view/template.rb:297:in `module_eval'
+  actionpack (3.2.13) lib/action_view/template.rb:297:in `compile'
+  actionpack (3.2.13) lib/action_view/template.rb:244:in `block in compile!'
+  actionpack (3.2.13) lib/action_view/template.rb:232:in `synchronize'
+  actionpack (3.2.13) lib/action_view/template.rb:232:in `compile!'
+  actionpack (3.2.13) lib/action_view/template.rb:144:in `block in render'
+  activesupport (3.2.13) lib/active_support/notifications.rb:125:in `instrument'
+  actionpack (3.2.13) lib/action_view/template.rb:143:in `render'
+  actionpack (3.2.13) lib/action_view/renderer/template_renderer.rb:47:in `block (2 levels) in render_template'
+  actionpack (3.2.13) lib/action_view/renderer/abstract_renderer.rb:38:in `block in instrument'
+  activesupport (3.2.13) lib/active_support/notifications.rb:123:in `block in instrument'
+  activesupport (3.2.13) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (3.2.13) lib/active_support/notifications.rb:123:in `instrument'
+  actionpack (3.2.13) lib/action_view/renderer/abstract_renderer.rb:38:in `instrument'
+  actionpack (3.2.13) lib/action_view/renderer/template_renderer.rb:46:in `block in render_template'
+  actionpack (3.2.13) lib/action_view/renderer/template_renderer.rb:54:in `render_with_layout'
+  actionpack (3.2.13) lib/action_view/renderer/template_renderer.rb:45:in `render_template'
+  actionpack (3.2.13) lib/action_view/renderer/template_renderer.rb:18:in `render'
+  actionpack (3.2.13) lib/action_view/renderer/renderer.rb:36:in `render_template'
+  actionpack (3.2.13) lib/action_view/renderer/renderer.rb:17:in `render'
+  actionpack (3.2.13) lib/abstract_controller/rendering.rb:110:in `_render_template'
+  actionpack (3.2.13) lib/action_controller/metal/streaming.rb:225:in `_render_template'
+  actionpack (3.2.13) lib/abstract_controller/rendering.rb:103:in `render_to_body'
+  actionpack (3.2.13) lib/action_controller/metal/renderers.rb:28:in `render_to_body'
+  actionpack (3.2.13) lib/action_controller/metal/compatibility.rb:50:in `render_to_body'
+  actionpack (3.2.13) lib/abstract_controller/rendering.rb:88:in `render'
+  actionpack (3.2.13) lib/action_controller/metal/rendering.rb:16:in `render'
+  actionpack (3.2.13) lib/action_controller/metal/instrumentation.rb:40:in `block (2 levels) in render'
+  activesupport (3.2.13) lib/active_support/core_ext/benchmark.rb:5:in `block in ms'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/benchmark.rb:296:in `realtime'
+  activesupport (3.2.13) lib/active_support/core_ext/benchmark.rb:5:in `ms'
+  actionpack (3.2.13) lib/action_controller/metal/instrumentation.rb:40:in `block in render'
+  actionpack (3.2.13) lib/action_controller/metal/instrumentation.rb:83:in `cleanup_view_runtime'
+  activerecord (3.2.13) lib/active_record/railties/controller_runtime.rb:24:in `cleanup_view_runtime'
+  actionpack (3.2.13) lib/action_controller/metal/instrumentation.rb:39:in `render'
+  actionpack (3.2.13) lib/action_controller/metal/implicit_render.rb:10:in `default_render'
+  actionpack (3.2.13) lib/action_controller/metal/implicit_render.rb:5:in `send_action'
+  actionpack (3.2.13) lib/abstract_controller/base.rb:167:in `process_action'
+  actionpack (3.2.13) lib/action_controller/metal/rendering.rb:10:in `process_action'
+  actionpack (3.2.13) lib/abstract_controller/callbacks.rb:18:in `block in process_action'
+  activesupport (3.2.13) lib/active_support/callbacks.rb:414:in `_run__938504866__process_action__825627052__callbacks'
+  activesupport (3.2.13) lib/active_support/callbacks.rb:405:in `__run_callback'
+  activesupport (3.2.13) lib/active_support/callbacks.rb:385:in `_run_process_action_callbacks'
+  activesupport (3.2.13) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (3.2.13) lib/abstract_controller/callbacks.rb:17:in `process_action'
+  actionpack (3.2.13) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (3.2.13) lib/action_controller/metal/instrumentation.rb:30:in `block in process_action'
+  activesupport (3.2.13) lib/active_support/notifications.rb:123:in `block in instrument'
+  activesupport (3.2.13) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (3.2.13) lib/active_support/notifications.rb:123:in `instrument'
+  actionpack (3.2.13) lib/action_controller/metal/instrumentation.rb:29:in `process_action'
+  actionpack (3.2.13) lib/action_controller/metal/params_wrapper.rb:207:in `process_action'
+  activerecord (3.2.13) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (3.2.13) lib/abstract_controller/base.rb:121:in `process'
+  actionpack (3.2.13) lib/abstract_controller/rendering.rb:45:in `process'
+  actionpack (3.2.13) lib/action_controller/metal.rb:203:in `dispatch'
+  actionpack (3.2.13) lib/action_controller/metal/rack_delegation.rb:14:in `dispatch'
+  actionpack (3.2.13) lib/action_controller/metal.rb:246:in `block in action'
+  actionpack (3.2.13) lib/action_dispatch/routing/route_set.rb:73:in `call'
+  actionpack (3.2.13) lib/action_dispatch/routing/route_set.rb:73:in `dispatch'
+  actionpack (3.2.13) lib/action_dispatch/routing/route_set.rb:36:in `call'
+  journey (1.0.4) lib/journey/router.rb:68:in `block in call'
+  journey (1.0.4) lib/journey/router.rb:56:in `each'
+  journey (1.0.4) lib/journey/router.rb:56:in `call'
+  actionpack (3.2.13) lib/action_dispatch/routing/route_set.rb:612:in `call'
+  warden (1.2.3) lib/warden/manager.rb:35:in `block in call'
+  warden (1.2.3) lib/warden/manager.rb:34:in `catch'
+  warden (1.2.3) lib/warden/manager.rb:34:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+  rack (1.4.5) lib/rack/etag.rb:23:in `call'
+  rack (1.4.5) lib/rack/conditionalget.rb:25:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/head.rb:14:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/flash.rb:242:in `call'
+  rack (1.4.5) lib/rack/session/abstract/id.rb:210:in `context'
+  rack (1.4.5) lib/rack/session/abstract/id.rb:205:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/cookies.rb:341:in `call'
+  activerecord (3.2.13) lib/active_record/query_cache.rb:64:in `call'
+  activerecord (3.2.13) lib/active_record/connection_adapters/abstract/connection_pool.rb:479:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+  activesupport (3.2.13) lib/active_support/callbacks.rb:405:in `_run__46103833__call__645491599__callbacks'
+  activesupport (3.2.13) lib/active_support/callbacks.rb:405:in `__run_callback'
+  activesupport (3.2.13) lib/active_support/callbacks.rb:385:in `_run_call_callbacks'
+  activesupport (3.2.13) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (3.2.13) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/reloader.rb:65:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/remote_ip.rb:31:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/debug_exceptions.rb:16:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.13) lib/rails/rack/logger.rb:32:in `call_app'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `block in call'
+  activesupport (3.2.13) lib/active_support/tagged_logging.rb:22:in `tagged'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.13) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.5) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/static.rb:63:in `call'
+  railties (3.2.13) lib/rails/engine.rb:479:in `call'
+  railties (3.2.13) lib/rails/application.rb:223:in `call'
+  rack (1.4.5) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.13) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.5) lib/rack/handler/webrick.rb:59:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/_trace.erb (2.9ms)
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.5ms)
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (18.6ms)
+Connecting to database specified by database.yml
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:31:51 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 105ms (Views: 104.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:31:51 -0300
+Served asset /application.css - 304 Not Modified (24ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:31:51 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (7ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:31:51 -0300
+Served asset /jquery.js - 304 Not Modified (13ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:31:51 -0300
+Served asset /user.css - 304 Not Modified (10ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:31:51 -0300
+Served asset /application.js - 304 Not Modified (105ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:31:51 -0300
+Served asset /user.js - 304 Not Modified (8ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2013-09-30 17:31:54 -0300
+
+ActionController::RoutingError (No route matches [GET] "/users"):
+  actionpack (3.2.13) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.13) lib/rails/rack/logger.rb:32:in `call_app'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `block in call'
+  activesupport (3.2.13) lib/active_support/tagged_logging.rb:22:in `tagged'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.13) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.5) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/static.rb:63:in `call'
+  railties (3.2.13) lib/rails/engine.rb:479:in `call'
+  railties (3.2.13) lib/rails/application.rb:223:in `call'
+  rack (1.4.5) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.13) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.5) lib/rack/handler/webrick.rb:59:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.2ms)
+Connecting to database specified by database.yml
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:32:27 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 103ms (Views: 101.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:32:27 -0300
+Served asset /application.css - 304 Not Modified (5ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:32:27 -0300
+Served asset /application.js - 304 Not Modified (15ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:32:28 -0300
+Served asset /user.js - 304 Not Modified (6ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:32:28 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (9ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:32:28 -0300
+Served asset /jquery.js - 304 Not Modified (76ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:32:28 -0300
+Served asset /user.css - 304 Not Modified (3ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2013-09-30 17:32:29 -0300
+
+ActionController::RoutingError (No route matches [GET] "/users"):
+  actionpack (3.2.13) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.13) lib/rails/rack/logger.rb:32:in `call_app'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `block in call'
+  activesupport (3.2.13) lib/active_support/tagged_logging.rb:22:in `tagged'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.13) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.5) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/static.rb:63:in `call'
+  railties (3.2.13) lib/rails/engine.rb:479:in `call'
+  railties (3.2.13) lib/rails/application.rb:223:in `call'
+  rack (1.4.5) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.13) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.5) lib/rack/handler/webrick.rb:59:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.2ms)
+Connecting to database specified by database.yml
+
+
+Started GET "/users" for 127.0.0.1 at 2013-09-30 17:33:01 -0300
+
+ActionController::RoutingError (No route matches [GET] "/users"):
+  actionpack (3.2.13) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.13) lib/rails/rack/logger.rb:32:in `call_app'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `block in call'
+  activesupport (3.2.13) lib/active_support/tagged_logging.rb:22:in `tagged'
+  railties (3.2.13) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.13) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.5) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.13) lib/action_dispatch/middleware/static.rb:63:in `call'
+  railties (3.2.13) lib/rails/engine.rb:479:in `call'
+  railties (3.2.13) lib/rails/application.rb:223:in `call'
+  rack (1.4.5) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.13) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.5) lib/rack/handler/webrick.rb:59:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /home/nicolas/.rvm/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /home/nicolas/.rvm/gems/ruby-2.0.0-p247/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (6.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:33:06 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 48ms (Views: 46.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:06 -0300
+Served asset /application.css - 304 Not Modified (32ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:06 -0300
+Served asset /application.js - 304 Not Modified (23ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:06 -0300
+Served asset /user.js - 304 Not Modified (5ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:06 -0300
+Served asset /user.css - 304 Not Modified (7ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:06 -0300
+Served asset /jquery.js - 304 Not Modified (60ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:06 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (4ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2013-09-30 17:33:08 -0300
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.erb (2.6ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (26.8ms)
+Completed 200 OK in 142ms (Views: 53.1ms | ActiveRecord: 2.5ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:09 -0300
+Served asset /application.css - 304 Not Modified (25ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:09 -0300
+Served asset /user.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:09 -0300
+Served asset /jquery.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:09 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:09 -0300
+Served asset /user.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:09 -0300
+Served asset /application.js - 304 Not Modified (1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:33:16 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 43ms (Views: 42.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:16 -0300
+Served asset /application.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:16 -0300
+Served asset /user.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:16 -0300
+Served asset /jquery.js - 304 Not Modified (2ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:16 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:16 -0300
+Served asset /user.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:16 -0300
+Served asset /application.js - 304 Not Modified (1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (0.1ms)
+Completed 200 OK in 37ms (Views: 36.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Served asset /application.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Served asset /user.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Served asset /jquery.js - 304 Not Modified (6ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Served asset /user.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Served asset /application.js - 304 Not Modified (4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (0.1ms)
+Completed 200 OK in 39ms (Views: 38.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Served asset /application.css - 304 Not Modified (28ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Served asset /user.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Served asset /jquery.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Served asset /user.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Served asset /application.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:18 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 26ms (Views: 25.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Served asset /application.css - 304 Not Modified (32ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Served asset /user.css - 304 Not Modified (3ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Served asset /jquery.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Served asset /user.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Served asset /application.js - 304 Not Modified (5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (0.1ms)
+Completed 200 OK in 22ms (Views: 21.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (0.1ms)
+Completed 200 OK in 30ms (Views: 30.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Served asset /application.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Served asset /user.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Served asset /jquery.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Served asset /user.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:19 -0300
+Served asset /application.js - 304 Not Modified (6ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2013-09-30 17:33:21 -0300
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.erb (0.5ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 37ms (Views: 31.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:21 -0300
+Served asset /application.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:21 -0300
+Served asset /user.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:21 -0300
+Served asset /jquery.js - 304 Not Modified (5ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:21 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:21 -0300
+Served asset /user.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:21 -0300
+Served asset /application.js - 304 Not Modified (6ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2013-09-30 17:33:25 -0300
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2yOecOLeGzXMqPm/Gmlmi17IazNkSizj95CczRQYMLM=", "user"=>{"email"=>"", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  Rendered devise/shared/_links.erb (0.5ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (9.9ms)
+Completed 200 OK in 63ms (Views: 30.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:25 -0300
+Served asset /application.css - 304 Not Modified (2ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:33:25 -0300
+Served asset /user.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:25 -0300
+Served asset /jquery.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:25 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:25 -0300
+Served asset /user.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:33:25 -0300
+Served asset /application.js - 304 Not Modified (4ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2013-09-30 17:34:04 -0300
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2yOecOLeGzXMqPm/Gmlmi17IazNkSizj95CczRQYMLM=", "user"=>{"email"=>"gonza@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.4ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'gonza@gmail.com' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  Rendered devise/shared/_links.erb (0.6ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (11.9ms)
+Completed 200 OK in 360ms (Views: 36.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:34:05 -0300
+Served asset /application.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:34:05 -0300
+Served asset /application.js - 304 Not Modified (2ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:34:05 -0300
+Served asset /user.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:34:05 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:34:05 -0300
+Served asset /jquery.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:34:05 -0300
+Served asset /user.css - 304 Not Modified (0ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2013-09-30 17:34:17 -0300
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2yOecOLeGzXMqPm/Gmlmi17IazNkSizj95CczRQYMLM=", "user"=>{"email"=>"gonza@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'gonza@gmail.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (14.8ms)[0m  INSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_password", "last_acces", "last_access", "last_sign_in_at", "last_sign_in_ip", "profile_type", "registration_date", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", Mon, 30 Sep 2013 20:34:17 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "gonza@gmail.com"], ["encrypted_password", "$2a$10$f/AneUtATBwY9UnkUlhGH.a92gQtjaW0XwGmaSGPG0Tk3FFJJVzGe"], ["last_acces", nil], ["last_access", nil], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["profile_type", nil], ["registration_date", nil], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Mon, 30 Sep 2013 20:34:17 UTC +00:00]]
+  [1m[36m (161.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mUPDATE "users" SET "last_sign_in_at" = '2013-09-30 20:34:17.506606', "current_sign_in_at" = '2013-09-30 20:34:17.506606', "last_sign_in_ip" = '127.0.0.1', "current_sign_in_ip" = '127.0.0.1', "sign_in_count" = 1, "updated_at" = '2013-09-30 20:34:17.508502' WHERE "users"."id" = 4[0m
+  [1m[35m (128.1ms)[0m  commit transaction
+Redirected to http://localhost:3000/
+Completed 302 Found in 522ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:34:17 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 25ms (Views: 22.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:34:17 -0300
+Served asset /application.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:34:17 -0300
+Served asset /user.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:34:17 -0300
+Served asset /application.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:34:17 -0300
+Served asset /jquery.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:34:17 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:34:17 -0300
+Served asset /user.js - 304 Not Modified (0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2013-09-30 17:34:29 -0300
+Processing by Devise::RegistrationsController#new as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 4 LIMIT 1[0m
+Redirected to http://localhost:3000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 35ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-09-30 17:34:29 -0300
+Processing by UserController#home as HTML
+  Rendered user/home.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 24ms (Views: 23.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-09-30 17:34:29 -0300
+Served asset /application.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.css?body=1" for 127.0.0.1 at 2013-09-30 17:34:29 -0300
+Served asset /user.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-09-30 17:34:29 -0300
+Served asset /jquery.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-09-30 17:34:29 -0300
+Served asset /application.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-09-30 17:34:29 -0300
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/user.js?body=1" for 127.0.0.1 at 2013-09-30 17:34:29 -0300
+Served asset /user.js - 304 Not Modified (0ms)
+Connecting to database specified by database.yml

@@ -1,4 +1,7 @@
 ProyectoDevise::Application.routes.draw do
+  get "user/home"
+  root to: 'user#home'
+  
   devise_for :users
 
   # The priority is based upon order of creation:
