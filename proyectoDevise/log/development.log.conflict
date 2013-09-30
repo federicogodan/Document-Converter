@@ -272,6 +272,13 @@ Migrating to ReferenceToUserDocFile (20130928005339)
   [1m[35m (159.0ms)[0m  commit transaction
   [1m[36m (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
 Connecting to database specified by database.yml
+<<<<<<< HEAD
+Connecting to database specified by database.yml
+
+
+Started GET "/assets/rails.png" for 127.0.0.1 at 2013-09-30 16:44:23 -0300
+Served asset /rails.png - 304 Not Modified (19ms)
+=======
 >>>>>>> c49279b4ee748ac9d15328eea22d1cd9b6ca3fbf
 Connecting to database specified by database.yml
 Connecting to database specified by database.yml
@@ -383,3 +390,4 @@ Migrating to ReferenceToWebhock (20130930195202)
   [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130930195202')[0m
   [1m[35m (273.6ms)[0m  commit transaction
   [1m[36m (0.3ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+>>>>>>> ba8a185402336918be59ddd3e38a481845e2722e

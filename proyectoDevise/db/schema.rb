@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130928005339) do
+ActiveRecord::Schema.define(:version => 20130930195202) do
 
   create_table "documents", :force => true do |t|
     t.integer  "document_number"
@@ -56,13 +56,13 @@ ActiveRecord::Schema.define(:version => 20130928005339) do
   end
 
   create_table "registered_users", :force => true do |t|
-    t.string   "email"
     t.string   "api_key"
     t.string   "secret_key"
     t.integer  "total_storage_assigned"
     t.integer  "documents_time_for_expiration"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|
@@ -88,11 +88,11 @@ ActiveRecord::Schema.define(:version => 20130928005339) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "webhooks", :force => true do |t|
-    t.string   "email"
     t.string   "url"
     t.boolean  "deleted"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
   end
 
 end
