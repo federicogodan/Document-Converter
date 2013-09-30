@@ -1,4 +1,4 @@
 class Webhook < ActiveRecord::Base
-  validates_uniqueness_of :email, [:deleted, :url]
-  attr_accessible :deleted, :email, :url
+  validates_uniqueness_of :user_id, [:deleted, :url]
+  attr_accessible :deleted, :user_id, :url
 end
