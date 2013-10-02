@@ -1,5 +1,5 @@
 # REQUIRED: The name of your application
-app_name: mapi1
+app_name: mapi
 
 # REQUIRED: The system user to run your app servers as
 app_user: pis2013
