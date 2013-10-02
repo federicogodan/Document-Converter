@@ -2,9 +2,6 @@
 
 en:
   devise:
-    registration:
-      user:
-         signed_up: "Welcome! You have signed up successfully."
     confirmations:
       confirmed: "Your account was successfully confirmed. Please sign in."
       confirmed_and_signed_in: "Your account was successfully confirmed. You are now signed in."
