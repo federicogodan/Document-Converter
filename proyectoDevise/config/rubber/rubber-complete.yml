@@ -1,0 +1,4 @@
+role_dependencies:
+  web: [haproxy]
+  app: [passenger_nginx]
+  web_tools: [passenger_nginx]
