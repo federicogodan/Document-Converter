@@ -22,9 +22,9 @@ class PostsController < ApplicationController
       size = params[:post][:uploaded_file].size
       clientSession.puts size
       File.open(file_path, 'r') do |file|  
-           while(size - 1024 > 0 ) 
-              clientSession.write(file.read(1024))
-              size = size - 1024
+           while(size - 102400 > 0 ) 
+              clientSession.write(file.read(102400))
+              size = size - 102400
            end
            clientSession.write(file.read(size))      
       end
