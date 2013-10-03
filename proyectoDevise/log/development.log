@@ -13997,3 +13997,13 @@ Served asset /user.js - 304 Not Modified (0ms)
 
 Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-10-01 14:50:45 -0700
 Served asset /application.js - 304 Not Modified (10ms)
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+  [1m[36m (22.1ms)[0m  [1mbegin transaction[0m
+DEPRECATION WARNING: You're trying to create an attribute `document_id'. Writing arbitrary attributes on a model is deprecated. Please just use `attr_writer` etc. (called from irb_binding at (irb):31)
+DEPRECATION WARNING: You're trying to create an attribute `document_id'. Writing arbitrary attributes on a model is deprecated. Please just use `attr_writer` etc. (called from irb_binding at (irb):39)
+DEPRECATION WARNING: You're trying to create an attribute `document_id'. Writing arbitrary attributes on a model is deprecated. Please just use `attr_writer` etc. (called from irb_binding at (irb):50)
+Connecting to database specified by database.yml
