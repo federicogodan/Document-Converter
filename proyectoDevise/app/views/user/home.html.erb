@@ -70,14 +70,14 @@
       <div class="tab-pane active" id="panel-login">
 
 
-        <form role="form">
+        <form role="form" id="new_user" method="post" action="/users/sign_in">
           <div class="form-group has-warning form-login dc-loginGroup">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+            <input id="user_email "type="email" class="form-control" name="user[email]" placeholder="Enter email">
             <span class="help-block">Please input a valid email address.</span>
 
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input id="user_password "type="password" class="form-control" name="user[password]" placeholder="Password">
             <span class="help-block">Password must be al least 8 characters long.</span>
 
             <div class="checkbox">

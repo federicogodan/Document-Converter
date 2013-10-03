@@ -5,7 +5,7 @@ ProyectoDevise::Application.routes.draw do
   root to: 'user#home'
   
   #devise_for :users #BEFORE
-  devise_for :users, :controllers => {:registrations => "user/registration"}
+  devise_for :users, :controllers => {:registrations => "user/registration", :sessions => "user/sessions"}
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

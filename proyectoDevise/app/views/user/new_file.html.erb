@@ -1,2 +1,6 @@
 <%= devise_error_messages! %>
-<%= link_to "Sign out", destroy_user_session_path, :method => :delete %> 
+<br />
+<%= javascript_include_tag :defaults %>
+<%= link_to "sign out1", destroy_user_session_path, :method => :delete %>
+
+<a href="/users/sign_out" data-method="delete" rel="nofollow">Sign out2</a>
