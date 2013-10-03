@@ -70,14 +70,14 @@
       <div class="tab-pane active" id="panel-login">
 
 
-        <form role="form">
+        <form role="form" id="new_user" method="post" action="/users/sign_in">
           <div class="form-group has-warning form-login dc-loginGroup">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-            <span class="help-block">Please input a valid email address.</span>
+            <label for="exampleInputEmail1">Login</label>
+            <input id="user_email "type="text" class="form-control" name="user[email]" placeholder="Enter email or nick">
+            <span class="help-block">Please input a valid email address or nickname.</span>
 
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input id="user_password "type="password" class="form-control" name="user[password]" placeholder="Password">
             <span class="help-block">Password must be al least 8 characters long.</span>
 
             <div class="checkbox">
@@ -96,16 +96,22 @@
     <div class="tab-pane" id="panel-register">
       <form id="new_user" class="new_user" role="form"  action="/users" method="post">
         <div class="form-group has-warning form-register dc-registerGroup">
-          <label for="exampleInputEmail1">Email address</label>
+          <label for="exampleInputEmail1">Email address *</label>
           <input type="email" class="form-control" id="email" name="user[email]" autofocus="autofocus" placeholder="Enter email">
           <span class="help-block">Email address alredy in use, try with another one.</span>
-          <label for="exampleInputPassword1">Password</label>
+          
+          <label for="exampleInputNick1">Nickname</label>
+          <input type="text" class="form-control" id="nick" name="user[nick]"  autofocus="autofocus" placeholder="Enter nick">
+          
+          <label for="exampleInputName1">Name</label>
+          <input type="text" class="form-control" id="name" name="user[name]"  autofocus="autofocus" placeholder="Enter name">
+          
+          <label for="exampleInputPassword1">Password *</label>
           <input type="password" class="form-control" id="password" name="user[password]" placeholder="Password">
 
-          <label for="exampleInputPassword1">Repeat password</label>
+          <label for="exampleInputPassword1">Repeat password *</label>
           <input type="password" class="form-control" id="password_confirmation" name="user[password_confirmation]" placeholder="Password">
-
-          <span class="help-block">Passwords doesn't match, try again.</span>
+          <span id="password_notice" class="help-block">Passwords doesn't match, try again.</span>
 
         </div>
         <button id="btnRegister" class="btn btn-primary btn-block" type="submit" name="commit">Register</button>
