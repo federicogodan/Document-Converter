@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131003161340) do
+ActiveRecord::Schema.define(:version => 20131004193831) do
 
   create_table "documents", :force => true do |t|
     t.integer  "document_number"
@@ -78,12 +78,11 @@ ActiveRecord::Schema.define(:version => 20131003161340) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.date     "registration_date"
-    t.date     "last_acces"
     t.string   "profile_type"
-    t.date     "last_access"
     t.string   "name"
     t.string   "nick"
+    t.string   "surname"
+    t.date     "birth_date"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

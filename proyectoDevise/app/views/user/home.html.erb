@@ -106,6 +106,12 @@
           <label for="exampleInputName1">Name</label>
           <input type="text" class="form-control" id="name" name="user[name]"  autofocus="autofocus" placeholder="Enter name">
           
+          <label for="exampleInputSurname1">Surname</label>
+          <input type="text" class="form-control" id="surname" name="user[surname]"  autofocus="autofocus" placeholder="Enter surname">
+          
+          <label for="exampleInputBirthDate1">BirthDate</label>
+          <input type="text" class="form-control" id="birth_date" name="user[birth_date]"  autofocus="autofocus">
+          
           <label for="exampleInputPassword1">Password *</label>
           <input type="password" class="form-control" id="password" name="user[password]" placeholder="Password">
 
@@ -161,7 +167,10 @@ $(document).ready(function(){
 
 <script>
 $(document).ready(function() {
-  $(".tabbable.responsive").resptabs(); 
+  
+   $(function() {
+$( "#birth_|date" ).datepicker();
+});
 });
 </script>
 </body>
