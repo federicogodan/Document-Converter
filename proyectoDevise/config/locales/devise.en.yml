@@ -4,6 +4,7 @@ en:
   devise:
     registration:
       user:
+         log_error: "Error: nick or email already exists."
          signed_up: "Welcome! You have signed up successfully."
     confirmations:
       confirmed: "Your account was successfully confirmed. Please sign in."
