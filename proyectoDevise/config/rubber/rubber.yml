@@ -1,5 +1,5 @@
 # REQUIRED: The name of your application
-app_name: mapi
+app_name: api01
 
 # REQUIRED: The system user to run your app servers as
 app_user: pis2013
@@ -226,7 +226,7 @@ auto_security_groups: false
 # by mangling their names to be appname_env_groupname
 # This makes it safer to have staging and production coexist on the same EC2
 # account, or even multiple apps
-isolate_security_groups: false
+isolate_security_groups: true
 
 # OPTIONAL: Prompts one to sync security group rules when the ones in amazon
 # differ from those in rubber
