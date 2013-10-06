@@ -1,77 +1,138 @@
+###
+#TODO: catch timeout exception (when the client shutdown by surprise,
+# the server must to recover and not explode)
+###
+
 
 require 'socket'
 require 'sys/proctable'
 
-
 puts "Starting up server..."
-# establish the server
+
+#the server takes the port as an argument
 port = ARGV[0]
-#queue of pending conversions
-# la cola tiene que ser una estructura para guardar que hay que mandar y a que cliente 
-# osea se guarda el to_send que es lo q se tiene q mandar a convertir y el socket del cliente para mandarle ack  
+
+Struct.new("Pending", :to_send, :converted_file, :client_session) 
+#to_send : command to be executed by the server to make the conversion
+#converted_file : path to the converted file
+#client_session : client's socket 
+
+#queue of pending conversions which has elements of 'Pending' Objects
 queue_pending = Queue.new
+
 #to synchronize the queue
 semaphore = Mutex.new
 
+#to notify the thread that there is work to convert
+mutex = Mutex.new
+work = ConditionVariable.new
+
+#start server connection
 server = TCPServer.new(port)
 redirect_socket = TCPSocket.new("localhost", 8103)
 redirect_socket.puts(port)
-while !(redirect_socket.closed?) &&
-                (serverMessage = redirect_socket.gets)
-end #end loop
+serverMessage = redirect_socket.gets
 
-# setup to listen and accept connections
-while (session = server.accept)
+
+#thread charged on the conversion, takes an element from the queue and execute the command it 
+#and send ACK to the client when the file is converted correctly
 Thread.start do
-   puts "accepting client"
-   format = session.gets.delete("\n")
-   puts "format: " + format 
-   name = session.gets.delete("\n")
-   puts "name: " + name
-   size = session.gets.to_i
-   puts "size "
-   puts  size
-   File.open('/home/mika/'+ name, 'w') do |file|
-      puts "creating temp file"
-     while((size - 102400) > 0 ) ## lets output our server messages
-        puts "reading " 
-        puts size
-        file.write session.read(102400)
-        size = size - 102400
-     end
-     file.write session.read(size)
-   end   
-   if (format=="txt") 
-     format = "txt:Text"
-   end
-   to_send = '/usr/bin/libreoffice --headless --invisible --convert-to ' + format + ' /home/mika/'+name
-   puts "to send " + to_send
-   semaphore.synchronize {
-    queue_pendig.push to_send
-   }
-   system(to_send)
-   
-   #aca hay que intentar abrir el archivo y si existe se elimina de la cola y sino se mata a libreoffice 
-   puts "sending ACK"
-   session.puts "ACK"
-   semaphore.synchronize {
-    queue_pendig.pop
-   }
-   puts "finish"
-   
- end  #end thread conversation
-end   #end loop
-Thread.new #esto hay que cambiarlo , porque no va a ser un hilo que cada cierto tiempo mate a libreoffice 
-  while(true) 
-    sleep(5.minutes)
-    Sys::ProcTable.ps.each { |ps|
-        puts ps.cmdline    
-        if ps.cmdline.include? "libreoffice"
-        puts "libreoffice"
-        Process.kill('KILL', ps.pid)
-        puts "killing"
-        end
-     }
-     
-  end #loop
- end #thread
+   while(true)
+		 puts "initializing conversion thread"
+		 @size = 0
+		 semaphore.synchronize {
+			  @size = queue_pending.size
+			  puts "getting size"
+		 }
+		 if (@size==0) 
+		   puts "size=0 waiting to work"
+		   mutex.synchronize {
+			puts "waiting to work"
+			 work.wait(mutex) #waiting that queue has some work to convert
+			} 
+		 end  
+		#get work
+		semaphore.synchronize {
+			  @pending_work = queue_pending.pop
+		}
+	
+		ok = false
+		while (!ok) 
+			
+			puts @pending_work[:to_send]
+			system(@pending_work[:to_send])
+			puts "opening file"  
+			puts @pending_work[:converted_file]
+			#try open file  
+			begin
+			    file = open(@pending_work[:converted_file])
+			    if file 
+			      puts "ok"
+			      ok = true
+			    end
+			    rescue
+			      
+			    #the file is broken or it does not exists, 
+			    #kill libreoffice 's process and convert again the file
+				    puts "killing libreoffice proccess"
+				    Sys::ProcTable.ps.each { |ps|    
+					    if ps.cmdline.include? "libreoffice"
+					      Process.kill('KILL', ps.pid)
+					    end
+				    }
+			end
+		end #loop ok
+		puts "client_session"
+		@pending_work[:client_session].puts "ACK"
+		puts "sending ACK"   
+   end#loop true
+end#thread 
+
+#thread that is charged on attending clients and add into queue pending work
+Thread.start do
+      while (session = server.accept)
+	Thread.start do
+	  puts "accepting client"
+	  format = session.gets.delete("\n")
+	  puts "format: " + format 
+	  name = session.gets.delete("\n")
+	  puts "name: " + name
+	  size = session.gets.to_i
+	  puts "size "
+	  puts  size
+	  
+	  #TODO: put a relative path instead of '/home/mika'
+	  
+	  File.open('/home/mika/'+ name, 'w') do |file|
+	    puts "creating temp file"
+	    while((size - 102400) > 0 ) 
+		file.write session.read(102400)
+		size = size - 102400
+	    end
+	    file.write session.read(size)
+	  end   
+	  if (format=="txt") #TODO: filter through the format in function of the original one 
+	      format = "txt:Text"
+	  end
+	  
+	  #TODO: put a relative path instead of '/home/mika'
+	  to_send = '/usr/bin/libreoffice --headless --invisible --convert-to ' + format + ' /home/mika/'+name
+	  puts "to send " + to_send
+	  
+	  #building the path of the converted file 
+	  converted_file = '/home/mika/Escritorio/PIS/PROYECTO/Document-Converter/converter/' + name.split('.')[0] + '.' + format
+	  puts converted_file
+	  #push into queue
+	  semaphore.synchronize {
+	    pending = Struct::Pending.new(to_send, converted_file, session) 
+	    queue_pending.push pending
+	  }
+	  mutex.synchronize {
+	      work.signal
+	  }
+	  end # thread 
+      end#loop 
+end#thread 
+
+while(true)   
+end
