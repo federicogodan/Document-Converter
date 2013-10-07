@@ -1,11 +1,16 @@
 ProyectoDevise::Application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+
   get "user/home"
   get "user/new_file"
   
   root to: 'user#home'
   
   #devise_for :users #BEFORE
+  ActiveAdmin.routes(self)
   devise_for :users, :controllers => {:registrations => "user/registration", :sessions => "user/sessions"}
+  ActiveAdmin.routes(self)
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
