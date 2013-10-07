@@ -1,11 +1,12 @@
 ProyectoDevise::Application.routes.draw do
+  root to: 'user#home'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
   get "user/home"
   get "user/new_file"
   
-  root to: 'user#home'
+  
   
   #devise_for :users #BEFORE
   ActiveAdmin.routes(self)
