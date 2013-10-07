@@ -1,7 +1,8 @@
 ProyectoDevise::Application.routes.draw do
   get "user/home"
   get "user/new_file"
-  
+
+  resource :user  
   root to: 'user#home'
   
   #devise_for :users #BEFORE

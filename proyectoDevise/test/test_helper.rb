@@ -1,8 +1,16 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+require 'capybara/rspec'
+require 'capybara/rails'
 
 class ActiveSupport::TestCase
+  include Capybara::DSL
+  
+  def teardown
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
+  end
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
