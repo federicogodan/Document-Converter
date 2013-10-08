@@ -74,11 +74,11 @@
           <div class="form-group has-warning form-login dc-loginGroup">
             <label for="exampleInputEmail1">Login</label>
             <input id="user_email "type="text" class="form-control" name="user[email]" placeholder="Enter email or nick">
-            <span class="help-block">Please input a valid email address or nickname.</span>
+            <!--<span class="help-block">Please input a valid email address or nickname.</span> -->
 
             <label for="exampleInputPassword1">Password</label>
             <input id="user_password "type="password" class="form-control" name="user[password]" placeholder="Password">
-            <span class="help-block">Password must be al least 8 characters long.</span>
+            <!-- <span class="help-block">Password must be al least 8 characters long.</span> -->
 
             <div class="checkbox">
              <label class="checkbox">
@@ -87,7 +87,7 @@
           </div>
         </div>
         <button id="btnLogin" class="btn btn-primary btn-block">Sign in</button> <!--  type="submit" y tag button -->
-        <p class="text-danger dc-loginGroup">Wrong user or password, try again.</p>
+        <!-- <p class="text-danger dc-loginGroup">Wrong user or password, try again.</p> -->
       </form>
 
 
@@ -98,7 +98,7 @@
         <div class="form-group has-warning form-register dc-registerGroup">
           <label for="exampleInputEmail1">Email address *</label>
           <input type="email" class="form-control" id="email" name="user[email]" autofocus="autofocus" placeholder="Enter email">
-          <span class="help-block">Email address alredy in use, try with another one.</span>
+          <!--<span class="help-block">Email address alredy in use, try with another one.</span> -->
           
           <label for="exampleInputNick1">Nickname</label>
           <input type="text" class="form-control" id="nick" name="user[nick]"  autofocus="autofocus" placeholder="Enter nick">
@@ -117,7 +117,7 @@
 
           <label for="exampleInputPassword1">Repeat password *</label>
           <input type="password" class="form-control" id="password_confirmation" name="user[password_confirmation]" placeholder="Password">
-          <span id="password_notice" class="help-block">Passwords doesn't match, try again.</span>
+          <!--<span id="password_notice" class="help-block">Passwords doesn't match, try again.</span> -->
 
         </div>
         <button id="btnRegister" class="btn btn-primary btn-block" type="submit" name="commit">Register</button>
