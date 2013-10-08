@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  email: 
+  api_key: 
+  secret_key: 
+  total_storage_assigned: 
+  documents_time_for_expiration: 
+
+two:
+  email: 
+  api_key: 
+  secret_key: 
+  total_storage_assigned: 
+  documents_time_for_expiration: 

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  email: MyString
+  document_number: 1
+  creation_date: 2013-09-26
+  name: MyString
+  uploading: false
+  original_extension: MyString
+
+two:
+  email: MyString
+  document_number: 1
+  creation_date: 2013-09-26
+  name: MyString
+  uploading: false
+  original_extension: MyString

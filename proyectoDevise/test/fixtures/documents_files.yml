@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  email: MyString
+  document_number: 1
+  current_extension: MyString
+  status: MyString
+  conversion_end_date: 2013-09-26
+  size_in_bytes: 1
+  download_linnk: MyString
+
+two:
+  email: MyString
+  document_number: 1
+  current_extension: MyString
+  status: MyString
+  conversion_end_date: 2013-09-26
+  size_in_bytes: 1
+  download_linnk: MyString

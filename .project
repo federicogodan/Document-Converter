@@ -5,7 +5,18 @@
 	<projects>
 	</projects>
 	<buildSpec>
+<<<<<<< HEAD
 	</buildSpec>
 	<natures>
+=======
+		<buildCommand>
+			<name>com.aptana.ide.core.unifiedBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.aptana.ruby.core.rubynature</nature>
+>>>>>>> e35a9b4f448c8378ab597aa392657dc128548af2
 	</natures>
 </projectDescription>
