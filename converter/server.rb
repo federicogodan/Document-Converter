@@ -10,7 +10,12 @@ require 'sys/proctable'
 puts "Starting up server..."
 
 #the server takes the port as an argument
+
+#TODO: get parameters through a configuration file 
 port = ARGV[0]
+ip =  "localhost"
+redirect_ip = "localhost"
+redirect_port = 8103
 
 Struct.new("Pending", :to_send, :converted_file, :client_session) 
 #to_send : command to be executed by the server to make the conversion
@@ -29,10 +34,10 @@ work = ConditionVariable.new
 
 #start server connection
 server = TCPServer.new(port)
-redirect_socket = TCPSocket.new("localhost", 8103)
+redirect_socket = TCPSocket.new(redirect_ip, redirect_port)
+redirect_socket.puts(ip)
 redirect_socket.puts(port)
 serverMessage = redirect_socket.gets
-
 
 #thread charged on the conversion, takes an element from the queue and execute the command it 
 #and send ACK to the client when the file is converted correctly
@@ -71,7 +76,6 @@ Thread.start do
 			      ok = true
 			    end
 			    rescue
-			      
 			    #the file is broken or it does not exists, 
 			    #kill libreoffice 's process and convert again the file
 				    puts "killing libreoffice proccess"
@@ -94,12 +98,8 @@ Thread.start do
 	Thread.start do
 	  puts "accepting client"
 	  format = session.gets.delete("\n")
-	  puts "format: " + format 
 	  name = session.gets.delete("\n")
-	  puts "name: " + name
 	  size = session.gets.to_i
-	  puts "size "
-	  puts  size
 	  
 	  #TODO: put a relative path instead of '/home/mika'
 	  

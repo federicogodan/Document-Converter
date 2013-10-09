@@ -1,0 +1,8 @@
+* cliente : 
+ruby client.rb /home/mika/Escritorio/PIS/PROYECTO/Document-Converter/converter/Untitled3.odt pdf Untitled3.odt 496271
+
+* servidor: 
+ruby server.rb 8005
+
+* redirect server:
+ruby redirect_server.rb 

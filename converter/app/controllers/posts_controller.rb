@@ -8,9 +8,10 @@ class PostsController < ApplicationController
       require 'socket'
       redirect_socket = TCPSocket.new( "localhost", 8102 )
       puts "getting server socket"
-      serverMessage = redirect_socket.gets
-      puts "serverMessage : " + serverMessage
-      clientSession = TCPSocket.new( "localhost", serverMessage.to_i)
+      server_ip = redirect_socket.gets.delete("\n")
+      server_port = redirect_socket.gets.delete("\n").to_i
+      
+      clientSession = TCPSocket.new( server_ip , server_port)
       puts "sending ACK"
       redirect_socket.puts "ACK" 
       format = params[:post][:format]
@@ -28,8 +29,10 @@ class PostsController < ApplicationController
            end
            clientSession.write(file.read(size))      
       end
-      serverMessage = clientSession.gets
-      puts "Recieved: " + serverMessage
-      clientSession.close
+      puts "waiting response"
+serverMessage = clientSession.gets
+puts "Recieved: " 
+puts serverMessage
+clientSession.close
   end
 end
