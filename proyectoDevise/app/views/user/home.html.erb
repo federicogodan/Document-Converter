@@ -4,16 +4,17 @@
   <title>Document Converter</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap -->
-  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/bootstrap.css" rel="stylesheet" media="screen">
   <link href="css/datepicker.css" rel="stylesheet" media="screen">
   <link rel="stylesheet" href="css/datepicker.css" />
 
 </head>
 <body>
-  <nav class="navbar navbar-default" role="navigation">
+
+  <nav class="navbar navbar-inverse" role="navigation">
+  <div class="container">
     <a class="navbar-brand" href="#">Document Converter</a>
   </div>
-
 
 </nav>
 
@@ -97,10 +98,25 @@
 
 
 
-
-
+<div class="header">
+<div class="container">
 <div class="row">
-  <div class="col-sm-offset-1 col-sm-6 hidden-xs">IZQUIERDA</div>
+  <div class="col-sm-offset-1 col-sm-6 hidden-xs">
+  
+  
+
+  <div class="container">
+    <h1>Cloud converting for developers</h1>
+	
+
+                <h3>Document converter makes easier the task of converting documents between different formats in your own applications.</h3>
+
+
+  </div>
+
+  
+  
+  </div>
   <div class="col-sm-4 col-xs-offset-0 col-xs-12">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -113,7 +129,7 @@
 
 
 
-      </div>
+      
       <div class="panel-body">
 
         <form role="form" id="user_login" method="post" action="/users/sign_in">
@@ -137,7 +153,8 @@
 </div>
 </div>
 </div>
-
+</div>
+</div>
 
 <script src="js/jquery-2.0.3.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -151,8 +168,6 @@ $(document).ready(function() {
 
   $('#user_login').validate(
   {
-    focusCleanup: true,
-    onkeyup: false,
     errorClass: "text-danger",
     rules: {
       "user[email]": {
