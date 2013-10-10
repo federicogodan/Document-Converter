@@ -5,7 +5,7 @@ class User::RegistrationController < Devise::RegistrationsController
 
   def create
     #set up profile_tyme manually
-    puts sign_up_params[:profile_type] = "user"
+    puts sign_up_params[:profile_type] = "standar"
     build_resource(sign_up_params)
     if resource.save
       if resource.active_for_authentication?

@@ -3,5 +3,4 @@ class FileExtension < ActiveRecord::Base
   attr_accessible :can_be_converted_to, :extension
   belongs_to :can_be_converted_to, class_name: "Format"
   belongs_to :extension, class_name: "Format"
-  
 end
