@@ -4017,6 +4017,10 @@ textarea.input-group-sm > .input-group-btn > .btn {
   min-height: 50px;
   margin-bottom: 20px;
   border: 1px solid transparent;
+<<<<<<< HEAD
+=======
+  border-radius: 0;
+>>>>>>> 32f661c83fb71da908a3a485ca706b42faf208a5
 }
 
 .navbar:before,
@@ -4041,7 +4045,11 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 @media (min-width: 768px) {
   .navbar {
+<<<<<<< HEAD
     border-radius: 4px;
+=======
+   
+>>>>>>> 32f661c83fb71da908a3a485ca706b42faf208a5
   }
 }
 
@@ -6802,4 +6810,17 @@ td.visible-print {
   td.hidden-print {
     display: none !important;
   }
+<<<<<<< HEAD
+=======
+}
+
+.header {
+padding: 30px 15px 40px;
+text-shadow: 0 1px 0 rgba(0,0,0,.15);
+box-sizing: border-box;
+display: block;
+margin-top: -20px;
+background: linear-gradient(0deg, #edf7ff 0%,#5d82c5 100%);
+/*background: url(../images/background.png) repeat center center;*/
+>>>>>>> 32f661c83fb71da908a3a485ca706b42faf208a5
 }
