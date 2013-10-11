@@ -16,3 +16,6 @@
 
 # Ignore .project file
 .project
+
+# Ignore Gemfile.lock
+Gemfile.lock
