@@ -2,14 +2,14 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,:lockable
 
   validates_uniqueness_of :nick
   
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, 
                   :remember_me, :name, :nick, :surname, :birth_date, :profile_type,
-                  :api_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration
+                  :api_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration, :failed_attempts
   # attr_accessible :title, :body
   
   # Allow to login with a nick or email. 
