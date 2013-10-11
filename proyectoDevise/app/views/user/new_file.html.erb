@@ -1,4 +1,148 @@
-<%= devise_error_messages! %>
-<br />
-<%= javascript_include_tag :defaults %>
-<%= link_to "sign out", destroy_user_session_path, :method => :delete %>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Bootstrap -->
+	<link href="../css/bootstrap.css" rel="stylesheet" media="screen">
+</head>
+<body>
+
+	<header class="navbar navbar-inverse" role="navigation">
+	 <div class="container">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Document Converter</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">Dashboard</a></li>
+				<li><a href="#">Documentation</a></li>
+			</ul>
+
+
+			<ul class="nav navbar-nav navbar-right">	  
+				<li><a>Hello, name!</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li role="presentation" class="dropdown-header">Account Settings</li>
+						<li><a href="#">My profile</a></li>
+						<li><a href="#">My API Keys</a></li>
+						<li><a href="#">My Webhooks</a></li>
+						<li role="presentation" class="divider"></li>
+						<li><%= link_to "sign out", destroy_user_session_path, :method => :delete %></li>
+					</ul>
+				</li>
+			</ul>
+			</div>
+		</div><!-- /.navbar-collapse -->
+	</header>
+
+	
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-sm-offset-1 col-sm-11">
+				<h4><button type="button" class="btn btn-default">Start the Wizzard</button> to start converting documents.</h4
+					<hr>
+				</div>	
+			</div>
+			<div class="row">
+				<div class="col-sm-offset-1 col-sm-2">
+					<div class="well well-sm">
+						<ul class="nav nav-list">
+							<li class="nav-header">
+								General
+							</li>
+							<li class="active">
+								<a href="#">Dasboard</a>
+							</li>
+							<li class="nav-header">
+								Requests
+							</li>
+							<li>
+								<a href="#">Events Report</a>
+							</li>
+							<li>
+								<a href="#">Webhooks Events</a>
+							</li>
+							<li class="divider">
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-8">
+
+
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="pull-left">
+								<p class="text-muted">Date &amp Time: 07/31/2013</p>
+								<h4>Title: "Document title.docx"</h4>
+								<h5>Source and destination format: DOCX to PDF</h5>
+							</div>
+
+						</div>
+
+
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="pull-left">
+								<p class="text-muted">Date &amp Time: 07/31/2013</p>
+								<h4>Title: "Document title.docx"</h4>
+								<h5>Source and destination format: DOCX to PDF</h5>
+							</div>
+
+						</div>
+
+
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="pull-left">
+								<p class="text-muted">Date &amp Time: 07/31/2013</p>
+								<h4>Title: "Document title.docx"</h4>
+								<h5>Source and destination format: DOCX to PDF</h5>
+							</div>
+
+						</div>
+
+
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="pull-left">
+								<p class="text-muted">Date &amp Time: 07/31/2013</p>
+								<h4>Title: "Document title.docx"</h4>
+								<h5>Source and destination format: DOCX to PDF</h5>
+							</div>
+
+						</div>
+
+
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<script src="../js/jquery-2.0.3.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/bootstrap-datepicker.js"></script>
+		<script src="../js/jquery.validate.min.js"></script>
+
+	</body>
+	</html>
