@@ -6,17 +6,20 @@ describe "PruebasCapybaras" do
   
   describe "Sign In exito" do
     it "Sign In exitoso", :js => true do
+   #   registroChechab
+      u1 = User.new(email:"checha@hola.com", nick:"chechab", password:"holamundo")
+      u1.save
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
       visit '/'
       #click_on 'Create an account'
   #    click_link 'Create an account'
       
-      click_link 'Register'
-      within ('#registerModal') do
+    #  click_link 'Register'
+   #   within ('#registerModal') do
         
-          fill_in'Email', with: 'hola@mundo.com'
+  #        fill_in'Email', with: 'hola@mundo.com'
         
-      end
+ #     end
  #find('#new_user').trigger('focus')
  
       #find('email').set 'hola@mundo.com'
@@ -31,15 +34,15 @@ describe "PruebasCapybaras" do
    #   expect(page).to have_content('Welcome')
    
    
-#      fill_in 'Enter email or nick', with: 'chechab'
+      fill_in 'Enter email or nick', with: 'chechab'
   #   find('#panel-register').trigger('focus')
     
- #    fill_in 'Password', with: 'holamundo'
+     fill_in 'Password', with: 'holamundo'
  #    click_button 'Sign in'
-  #    click_on 'Sign in'
+      click_on 'Sign in'
    #   page.execute_script("$('#panel-register').focus()")
       #within ('form#new_user') {expect(page).to have_content('Surname')}
-  #    expect(page).to have_content('Signed in successfully.')
+      expect(page).to have_content('Signed in successfully.')
  #     page.should have_content('Signed in successfully.')
       
       #find('#surname').set('barreiro')
