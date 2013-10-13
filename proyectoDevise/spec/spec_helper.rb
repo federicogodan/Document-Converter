@@ -41,4 +41,11 @@ RSpec.configure do |config|
       u1 = User.new(email:"checha@hola.com", nick:"chechab", password:"holamundo")
       u1.save
   end
+  
+  
+  def register_user
+      u = User.new(email:"test@test.com", nick:"test", password:"1234")
+      u.save
+      return u
+  end
 end
