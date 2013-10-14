@@ -37,5 +37,15 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+  def registroChechab
+      u1 = User.new(email:"checha@hola.com", nick:"chechab", password:"holamundo")
+      u1.save
+  end
   
+  
+  def register_user
+      u = User.new(email:"test@test.com", nick:"test", password:"holamundo")
+      u.save
+      return u
+  end
 end
