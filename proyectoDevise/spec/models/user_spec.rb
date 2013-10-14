@@ -32,15 +32,17 @@ describe User do
   end
   
   it 'valid birthdate' do
-    us1 = User.new(email:"us1@gmail.com",nick:"nickname1",password:"MoreThanEight",birth_date:Date.current)
-    us1.save
-  
+   # us1 = User.new(email:"us1@gmail.com",nick:"nickname1",password:"MoreThanEight",birth_date:Date.today)
+   # us1.save
+   #DateTime.now.tomorrow.to_date
     us2 = User.new(email:"us2@gmail.com",nick:"nickname2",password:"MoreThanEight",birth_date:Date.tomorrow)
-    us1.valid?.should == false
+   #puts us2.birth_date
+   # puts Date.today
+    us2.valid?.should == false
   end
   
   it 'valid email format' do
-    us1 = User.new(email:"badFormatEmail",nick:"nickname1",password:"MoreThanEight",birth_date:Date.current)
+    us1 = User.new(email:"badFormatEmail",nick:"nickname1",password:"MoreThanEight",birth_date:Date.today)
     us1.valid?.should == false
     
   end
