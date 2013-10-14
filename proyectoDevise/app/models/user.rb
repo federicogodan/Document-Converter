@@ -4,7 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,:lockable
 
-  validates_uniqueness_of :nick
+  #validates_uniqueness_of :nick
+  validates :nick, presence: true, uniqueness: true, length: { minimum: 6 }
+
   
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, 
