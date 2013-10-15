@@ -13,7 +13,7 @@ puts "Starting up server..."
 
 #TODO: get parameters through a configuration file 
 port = ARGV[0]
-ip =  "localhost"
+ip =  "ec2-177-71-194-169"
 redirect_ip = "localhost"
 redirect_port = 8103
 
