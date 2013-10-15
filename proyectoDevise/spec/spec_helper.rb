@@ -48,4 +48,18 @@ RSpec.configure do |config|
       u.save
       return u
   end
+  
+  def add_format
+    f1 = Format.new(name:"pdf")
+    f2 = Format.new(name:"doc")
+    f3 = Format.new(name:"odt")
+    f4 = Format.new(name:"txt")
+    f5 = Format.new(name:"xml")
+    
+    f1.save
+    f2.save
+    f3.save
+    f4.save
+    f5.save
+  end
 end
