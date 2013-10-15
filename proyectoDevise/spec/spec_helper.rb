@@ -38,4 +38,9 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
   
+  def add_one_user
+      usr = User.new(email:"user1@gmail.com", nick:"usuario1", password:"12345678")
+      usr.save
+  end
+  
 end
