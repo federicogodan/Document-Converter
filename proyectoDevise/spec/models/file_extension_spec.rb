@@ -4,7 +4,7 @@ describe FileExtension do
   it 'validates uniqueness of extension and can_be_converted' do
     add_format
     
-    fe1 = FileExtension.new()
+    fe1 = FileExtension.new(extension:1,can_be_converted_to:2)
     fe1.save
     
     fe2 = FileExtension.new(extension:1,can_be_converted_to:2)
