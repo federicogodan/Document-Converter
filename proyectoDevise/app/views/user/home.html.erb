@@ -191,7 +191,8 @@ $(document).ready(function() {
     rules: {
       "user[email]": {
         required: true,
-        email: true
+        email: true,
+        remote: true
       },
       "user[birth_date]": {
         required: true,
@@ -199,7 +200,8 @@ $(document).ready(function() {
       },
       "user[nick]": {
         minlength: 6,
-        required: true
+        required: true,
+        remote: true
       },
       "user[password]": {
         required: true,
