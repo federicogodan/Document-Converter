@@ -42,6 +42,11 @@ RSpec.configure do |config|
       u1.save
   end
   
+  def add_one_user
+      usr = User.new(email:"user1@gmail.com", nick:"usuario1", password:"12345678")
+      usr.save
+  end
+  
   
   def register_user
       u = User.new(email:"test@test.com", nick:"test", password:"holamundo")

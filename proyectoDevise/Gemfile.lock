@@ -1,0 +1,2 @@
+fatal: Path 'proyectoDevise/Gemfile.lock' is in the index, but not at stage 3.
+Did you mean ':1:proyectoDevise/Gemfile.lock'?
