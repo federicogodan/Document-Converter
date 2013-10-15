@@ -25,7 +25,7 @@ test:
   port: 3306
   database: doconvtest
   username: root
-  password: pis2013  
+  password: nicolas  
   pool: 5
   timeout: 5000
 
@@ -35,6 +35,6 @@ production:
   port: 3306
   database: doconvprod
   username: root
-  password: pis2013 
+  password: nicolas 
   pool: 5
   timeout: 5000

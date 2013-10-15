@@ -4,7 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,:lockable
 
-  validates_uniqueness_of :nick
+  #validates_uniqueness_of :nick
+  validates :nick, presence: true, uniqueness: true, length: { minimum: 6 }
+
   
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, 
@@ -16,5 +18,14 @@ class User < ActiveRecord::Base
   def self.find_for_database_authentication(conditions={})
     self.where("nick = ?", conditions[:email]).limit(1).first ||
     self.where("email = ?", conditions[:email]).limit(1).first
+  end
+  
+  #checks that the birth_date be lesser than today.
+  before_save :check_birthdate
+  def check_birthdate
+    
+    if (self.birth_date != nil) && (self.birth_date < Date.today)
+      false
+    end
   end
 end
