@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131009211147) do
+ActiveRecord::Schema.define(:version => 20131015225149) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -73,19 +73,12 @@ ActiveRecord::Schema.define(:version => 20131009211147) do
 
   add_index "documents", ["document_number"], :name => "index_documents_on_email_and_document_number"
 
-  create_table "file_extensions", :force => true do |t|
-    t.integer  "extension"
-    t.integer  "can_be_converted_to"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-  end
-
-  add_index "file_extensions", ["can_be_converted_to", "extension"], :name => "index_file_extensions_on_can_be_converted_to_and_extension"
-
   create_table "formats", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "origin"
+    t.integer  "destiny"
   end
 
   create_table "users", :force => true do |t|

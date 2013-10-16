@@ -2,12 +2,17 @@ require 'spec_helper'
 
 describe FileExtension do
   it 'validates uniqueness of extension and can_be_converted' do
-    add_format
+    format1 = Format.new(name:"formato1")
+    format2 = Format.new(name:"formato2")
     
-    fe1 = FileExtension.new(extension:1,can_be_converted_to:2)
+    fe1 = FileExtension.new()
+    fe1.extension = format1
+    fe1.can_be_converted_to = format2
     fe1.save
     
-    fe2 = FileExtension.new(extension:1,can_be_converted_to:2)
+    fe2 = FileExtension.new()
+    fe2.extension = format1
+    fe2.can_be_converted_to = format2
     fe2.valid?.should == false
   end
   
