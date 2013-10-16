@@ -25,7 +25,7 @@ test:
   port: 3306
   database: doconvtest
   username: root
-  password: nicolas  
+  password: pis2013  
   pool: 5
   timeout: 5000
 

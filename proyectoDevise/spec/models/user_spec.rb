@@ -38,7 +38,10 @@ describe User do
     us2 = User.new(email:"us2@gmail.com",nick:"nickname2",password:"MoreThanEight",birth_date:Date.tomorrow)
    #puts us2.birth_date
    # puts Date.today
+   
+   #us2.valid?.should_be assert_false
     us2.valid?.should == false
+    
   end
   
   it 'valid email format' do
