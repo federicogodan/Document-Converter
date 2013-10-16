@@ -1,0 +1,182 @@
+%nav.navbar.navbar-inverse{role: "navigation"}
+  .container
+    %a.navbar-brand{href: "#"} Document Converter
+/ Modal
+#registerModal.modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+        %h4.modal-title Register
+      %form#new_user.form-horizontal{action: "/users", method: "post", role: "form"}
+        .modal-body
+          .form-group
+            %label.col-lg-4.control-label{for: "email"} Email
+            .col-lg-8
+              %input#email.form-control{autofocus: "autofocus", name: "user[email]", placeholder: "Email", type: "email"}/
+          .form-group
+            %label.col-lg-4.control-label{for: "nick"} Nickname
+            .col-lg-8
+              %input#nick.form-control{name: "user[nick]", placeholder: "Nick name", type: "text"}/
+          .form-group
+            %label.col-lg-4.control-label{for: "name"} First Name
+            .col-lg-8
+              %input#name.form-control{name: "user[name]", placeholder: "First name", type: "text"}/
+          .form-group
+            %label.col-lg-4.control-label{for: "surname"} Last name
+            .col-lg-8
+              %input#surname.form-control{name: "user[surname]", placeholder: "Last name", type: "text"}/
+          .form-group.input-append.date{"data-date" => "12-02-2012", "data-date-format" => "dd-mm-yyyy"}
+            %label.col-lg-4.control-label{for: "birth_date"} Birth Date
+            .col-lg-8
+              %input#birth_date.form-control.datepicker{name: "user[birth_date]", placeholder: "Birth Date", type: "text"}/
+          .form-group.input-password
+            %label.col-lg-4.control-label{for: "password"} Password
+            .col-lg-8
+              %input#password.form-control{name: "user[password]", placeholder: "Password", type: "password"}/
+          .form-group.input-password
+            %label.col-lg-4.control-label{for: "password_confirmation"} Repeat Password
+            .col-lg-8
+              %input#password_confirmation.form-control{name: "user[password_confirmation]", placeholder: "Repeat Password", type: "password"}/
+        .modal-footer
+          %a.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+          %button#btnRegister.btn.btn-primary{name: "commit", type: "submit"} Register
+    / /.modal-content
+  / /.modal-dialog
+/ /.modal
+.header
+  .container
+    .row
+      .col-sm-offset-1.col-sm-6.hidden-xs
+        .container
+          %h1 Cloud converting for developers
+          %h3 Document converter makes easier the task of converting documents between different formats, even in your own applications.
+      .col-sm-4.col-xs-offset-0.col-xs-12
+        .panel.panel-default
+          .panel-heading
+            %ul.list-inline
+              %li
+                %h3.panel-title Sign in
+              %li
+                %small
+                  or
+                  %a{"data-toggle" => "modal", href: "#registerModal"} Register
+            .panel-body
+              %form#user_login{action: "/users/sign_in", method: "post", role: "form"}
+                .form-group.form-login.dc-loginGroup
+                  %label{for: "user_email"} Login
+                  %input#user_email.form-control{autofocus: "autofocus", name: "user[email]", placeholder: "Enter email or nick", type: "text"}/
+                  %label{for: "user_password"} Password
+                  %input#user_password.form-control{name: "user[password]", placeholder: "Password", type: "password"}/
+                  .checkbox
+                    %label.checkbox
+                      %input{type: "checkbox", value: "remember-me"}/
+                      Remember me
+                %button#btnLogin.btn.btn-primary.pull-right{type: "submit"} Sign in
+                - if @invalid_user == nil
+                  = @invalid_user = 0
+                - if @invalid_user > 0
+                  %p{:class => "text-danger dc-loginGroup"}"Wrong user or password, try again."
+%script{src: "js/jquery-2.0.3.min.js"}
+%script{src: "js/bootstrap.min.js"}
+%script{src: "js/bootstrap-datepicker.js"}
+%script{src: "js/jquery.validate.min.js"}
+:javascript
+  $(document).ready(function() {
+  
+   $('#user_login').validate(
+   {
+    errorClass: "text-danger",
+    rules: {
+      "user[email]": {
+        required: true,
+        minlength: 6
+      },  
+      "user[password]": {
+        required: true,
+        minlength: 8
+      },
+    },
+    messages: {
+      "user[email]": {
+        required: "You must enter your email or your nickname to continue.",
+        minlength: "Username or email too short, try again."
+      },
+      "user[password]": {
+        required: "You must enter your password to continue",
+        minlength: "Your password must be at least 8 characters long"
+      },
+    },
+  
+    highlight: function(element) {
+      $(element).closest('.form-group').addClass('has-error');
+    },
+    success: function(element) {
+      $(element).closest('.form-group').removeClass('has-error');
+    }
+  });
+  
+  
+   $('#new_user').validate(
+   {
+    errorPlacement: function(error, element) {
+      error.appendTo( element.closest('.col-lg-8') );
+    },
+    errorClass: "text-danger",
+    rules: {
+      "user[email]": {
+        required: true,
+        email: true,
+        remote: true
+      },
+      "user[birth_date]": {
+        required: true,
+        date: true
+      },
+      "user[nick]": {
+        minlength: 6,
+        required: true,
+        remote: true
+      },
+      "user[password]": {
+        required: true,
+        minlength: 8
+      },
+      "user[password_confirmation]": {
+        equalTo: "#password"
+      },
+    },
+    messages: {
+      "user[email]": {
+        required: "We need your email address to create your account",
+        email: "Your email address must be in the format of name@domain.com"
+      },
+      "user[birth_date]": {
+        required: "We need your birth date to create your account",
+        date: "Your birth date must be in the format of DD-MM-YYYY"
+      },
+      "user[nick]": {
+        minlength: "Your nickname must be at least 6 characters long",
+        required: "We need a nickname to create your account"
+      },
+      "user[password]": {
+        required: "Please enter a password to create your account",
+        minlength: "Your password must be at least 8 characters long"
+      },
+      "user[password_confirmation]": {
+        equalTo: "Passwords doesn't match, please try again"
+      },
+    },
+  
+    highlight: function(element) {
+      $(element).closest('.form-group').addClass('has-error');
+    },
+    success: function(element) {
+      $(element).closest('.form-group').removeClass('has-error');
+    }
+  });
+  
+  
+    $('.datepicker').datepicker();
+  
+  });
