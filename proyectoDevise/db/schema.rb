@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131007203324) do
+ActiveRecord::Schema.define(:version => 20131009211147) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -46,20 +46,7 @@ ActiveRecord::Schema.define(:version => 20131007203324) do
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
 
-  create_table "documents", :force => true do |t|
-    t.integer  "document_number"
-    t.date     "creation_date"
-    t.string   "name"
-    t.boolean  "uploading"
-    t.integer  "original_extension", :limit => 255
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.integer  "user_id"
-  end
-
-  add_index "documents", ["document_number"], :name => "index_documents_on_email_and_document_number"
-
-  create_table "documents_files", :force => true do |t|
+  create_table "converted_document", :force => true do |t|
     t.integer  "document_number"
     t.string   "current_extension"
     t.string   "status"
@@ -71,7 +58,20 @@ ActiveRecord::Schema.define(:version => 20131007203324) do
     t.integer  "user_id"
   end
 
-  add_index "documents_files", ["document_number", "current_extension"], :name => "index_on_documents_file_email_number_extension"
+  add_index "converted_document", ["document_number", "current_extension"], :name => "index_on_documents_file_email_number_extension"
+
+  create_table "documents", :force => true do |t|
+    t.integer  "document_number"
+    t.date     "creation_date"
+    t.string   "name"
+    t.boolean  "uploading"
+    t.integer  "original_extension"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "user_id"
+  end
+
+  add_index "documents", ["document_number"], :name => "index_documents_on_email_and_document_number"
 
   create_table "file_extensions", :force => true do |t|
     t.integer  "extension"
@@ -88,34 +88,31 @@ ActiveRecord::Schema.define(:version => 20131007203324) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "registered_users", :force => true do |t|
-    t.string   "api_key"
-    t.string   "secret_key"
-    t.integer  "total_storage_assigned"
-    t.integer  "documents_time_for_expiration"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.integer  "user_id"
-  end
-
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                         :default => "", :null => false
+    t.string   "encrypted_password",            :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0,  :null => false
+    t.integer  "sign_in_count",                 :default => 0,  :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
     t.string   "profile_type"
     t.string   "name"
     t.string   "nick"
     t.string   "surname"
     t.date     "birth_date"
+    t.string   "api_key"
+    t.string   "secret_key"
+    t.integer  "total_storage_assigned"
+    t.integer  "documents_time_for_expiration"
+    t.integer  "failed_attempts",               :default => 0
+    t.string   "unlock_token"
+    t.datetime "locked_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

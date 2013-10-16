@@ -3,6 +3,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+require 'capybara/rspec'
+require 'capybara/rails'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -35,4 +37,34 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+  def registroChechab
+      u1 = User.new(email:"checha@hola.com", nick:"chechab", password:"holamundo")
+      u1.save
+  end
+  
+  def add_one_user
+      usr = User.new(email:"user1@gmail.com", nick:"usuario1", password:"12345678")
+      usr.save
+  end
+  
+  
+  def register_user
+      u = User.new(email:"test@test.com", nick:"test", password:"holamundo")
+      u.save
+      return u
+  end
+  
+  def add_format
+    f1 = Format.new(name:"pdf")
+    f2 = Format.new(name:"doc")
+    f3 = Format.new(name:"odt")
+    f4 = Format.new(name:"txt")
+    f5 = Format.new(name:"xml")
+    
+    f1.save
+    f2.save
+    f3.save
+    f4.save
+    f5.save
+  end
 end

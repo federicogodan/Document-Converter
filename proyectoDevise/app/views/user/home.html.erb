@@ -1,252 +1,267 @@
-<!DOCTYPE html>
-<html>
-<head>
   <title>Document Converter</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap -->
-  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/bootstrap.css" rel="stylesheet" media="screen">
   <link href="css/datepicker.css" rel="stylesheet" media="screen">
   <link rel="stylesheet" href="css/datepicker.css" />
 
 </head>
 <body>
-  <nav class="navbar navbar-default" role="navigation">
-    <a class="navbar-brand" href="#">Document Converter</a>
-  </div>
 
-
-</nav>
-
-<!-- Modal -->
-<div class="modal" id="registerModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Register</h4>
-      </div>
-
-
-
-      <form id="new_user" class="form-horizontal" role="form"  action="/users" method="post">
-        <div class="modal-body">
-
-
-          <div class="form-group">
-            <label for="email" class="col-lg-4 control-label">Email</label>
-            <div class="col-lg-8">
-              <input type="email" class="form-control" id="email" name="user[email]" autofocus="autofocus" placeholder="Email">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="nick" class="col-lg-4 control-label">Nickname</label>
-            <div class="col-lg-8">
-              <input type="text" class="form-control" id="nick" name="user[nick]" placeholder="Nick name">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="name" class="col-lg-4 control-label">First Name</label>
-            <div class="col-lg-8">
-              <input type="text" class="form-control" id="name" name="user[name]" placeholder="First name">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="surname" class="col-lg-4 control-label">Last name</label>
-            <div class="col-lg-8">
-              <input type="text" class="form-control" id="surname" name="user[surname]" placeholder="Last name">
-            </div>
-          </div>
-
-          <div class="form-group input-append date" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-            <label for="birth_date" class="col-lg-4 control-label">Birth Date</label>
-            <div class="col-lg-8">
-              <input type="text" class="form-control datepicker" id="birth_date" name="user[birth_date]" placeholder="Birth Date">
-            </div>
-          </div>
-
-          
-
-          <div class="form-group input-password">
-            <label for="password" class="col-lg-4 control-label">Password</label>
-            <div class="col-lg-8">
-              <input type="password" class="form-control" id="password" name="user[password]" placeholder="Password">
-            </div>
-          </div>
-
-          <div class="form-group input-password">
-            <label for="password_confirmation" class="col-lg-4 control-label">Repeat Password</label>
-            <div class="col-lg-8">
-              <input type="password" class="form-control" id="password_confirmation" name="user[password_confirmation]" placeholder="Repeat Password">
-            </div>
-          </div>
-
-
-        </div>
-        <div class="modal-footer">
-
-          <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-          <button id="btnRegister" class="btn btn-primary" type="submit" name="commit">Register</button>
-        </div>
-      </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
-
-
-<div class="row">
-  <div class="col-sm-offset-1 col-sm-6 hidden-xs">IZQUIERDA</div>
-  <div class="col-sm-4 col-xs-offset-0 col-xs-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-
-        <ul class="list-inline">
-          <li><h3 class="panel-title">Sign in</h3></li>
-          <li> <small>or <a data-toggle="modal" href="#registerModal">Register</a></small></li>
-        </ul>
-
-
-
-
-      </div>
-      <div class="panel-body">
-
-        <form role="form" id="user_login" method="post" action="/users/sign_in">
-          <div class="form-group form-login dc-loginGroup">
-            <label for="user_email">Login</label>
-            <input id="user_email" type="text" class="form-control" name="user[email]" autofocus="autofocus"  placeholder="Enter email or nick">
-
-            <label for="user_password">Password</label>
-            <input id="user_password" type="password" class="form-control" name="user[password]" placeholder="Password">
-            <div class="checkbox">
-             <label class="checkbox">
-              <input type="checkbox" value="remember-me"> Remember me
-            </label>
-          </div>
-        </div>
-        <button id="btnLogin" class="btn btn-primary pull-right" type="submit">Sign in</button> 
-        <p class="text-danger dc-loginGroup">Wrong user or password, try again.</p>
-      </form>
+  <nav class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+      <a class="navbar-brand" href="#">Document Converter</a>
     </div>
-  </div>
-</div>
-</div>
-</div>
+
+  </nav>
+
+  <!-- Modal -->
+  <div class="modal" id="registerModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Register</h4>
+        </div>
 
 
-<script src="js/jquery-2.0.3.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/bootstrap-datepicker.js"></script>
-<script src="js/jquery.validate.min.js"></script>
 
-<script>
-
-$(document).ready(function() {
+        <form id="new_user" class="form-horizontal" role="form"  action="/users" method="post">
+          <div class="modal-body">
 
 
-  $('#user_login').validate(
-  {
-    focusCleanup: true,
-    onkeyup: false,
-    errorClass: "text-danger",
-    rules: {
-      "user[email]": {
-        required: true,
-      },  
-      "user[password]": {
-        required: true,
-        minlength: 8
-      },
+            <div class="form-group">
+              <label for="email" class="col-lg-4 control-label">Email</label>
+              <div class="col-lg-8">
+                <input type="email" class="form-control" id="email" name="user[email]" autofocus="autofocus" placeholder="Email">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="nick" class="col-lg-4 control-label">Nickname</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" id="nick" name="user[nick]" placeholder="Nick name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="name" class="col-lg-4 control-label">First Name</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" id="name" name="user[name]" placeholder="First name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="surname" class="col-lg-4 control-label">Last name</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" id="surname" name="user[surname]" placeholder="Last name">
+              </div>
+            </div>
+
+            <div class="form-group input-append date" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+              <label for="birth_date" class="col-lg-4 control-label">Birth Date</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control datepicker" id="birth_date" name="user[birth_date]" placeholder="Birth Date">
+              </div>
+            </div>
+
+
+
+            <div class="form-group input-password">
+              <label for="password" class="col-lg-4 control-label">Password</label>
+              <div class="col-lg-8">
+                <input type="password" class="form-control" id="password" name="user[password]" placeholder="Password">
+              </div>
+            </div>
+
+            <div class="form-group input-password">
+              <label for="password_confirmation" class="col-lg-4 control-label">Repeat Password</label>
+              <div class="col-lg-8">
+                <input type="password" class="form-control" id="password_confirmation" name="user[password_confirmation]" placeholder="Repeat Password">
+              </div>
+            </div>
+
+
+          </div>
+          <div class="modal-footer">
+
+            <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+            <button id="btnRegister" class="btn btn-primary" type="submit" name="commit">Register</button>
+          </div>
+        </form>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+
+  <div class="header">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-offset-1 col-sm-6 hidden-xs">
+
+
+
+          <div class="container">
+            <h1>Cloud converting for developers</h1>
+            <h3>Document converter makes easier the task of converting documents between different formats, even in your own applications.</h3>
+          </div>
+
+
+
+        </div>
+        <div class="col-sm-4 col-xs-offset-0 col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <ul class="list-inline">
+                <li><h3 class="panel-title">Sign in</h3></li>
+                <li> <small>or <a data-toggle="modal" href="#registerModal">Register</a></small></li>
+              </ul>
+
+
+
+
+
+              <div class="panel-body">
+
+                <form role="form" id="user_login" method="post" action="/users/sign_in">
+                  <div class="form-group form-login dc-loginGroup">
+                    <label for="user_email">Login</label>
+                    <input id="user_email" type="text" class="form-control" name="user[email]" autofocus="autofocus"  placeholder="Enter email or nick">
+
+                    <label for="user_password">Password</label>
+                    <input id="user_password" type="password" class="form-control" name="user[password]" placeholder="Password">
+                    <div class="checkbox">
+                     <label class="checkbox">
+                      <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                  </div>
+                </div>
+                <button id="btnLogin" class="btn btn-primary pull-right" type="submit">Sign in</button> 
+                <%if @invalid_user == nil
+                 @invalid_user = 0
+                 end   %>
+                 <%if @invalid_user > 0%>
+
+                 <p class="text-danger dc-loginGroup">Wrong user or password, try again.</p>
+                 <%end %>	
+               </form>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <script src="js/jquery-2.0.3.min.js"></script>
+ <script src="js/bootstrap.min.js"></script>
+ <script src="js/bootstrap-datepicker.js"></script>
+ <script src="js/jquery.validate.min.js"></script>
+
+ <script>
+
+ $(document).ready(function() {
+
+ $('#user_login').validate(
+ {
+  errorClass: "text-danger",
+  rules: {
+    "user[email]": {
+      required: true,
+      minlength: 6
+    },  
+    "user[password]": {
+      required: true,
+      minlength: 8
     },
-    messages: {
-      "user[email]": {
-        required: "You must enter your email or your nickname to continue"
-      },
-      "user[password]": {
-        required: "You must enter your password to continue",
-        minlength: "Your password must be at least 8 characters long"
-      },
+  },
+  messages: {
+    "user[email]": {
+      required: "You must enter your email or your nickname to continue.",
+      minlength: "Username or email too short, try again."
     },
+    "user[password]": {
+      required: "You must enter your password to continue",
+      minlength: "Your password must be at least 8 characters long"
+    },
+  },
 
-    highlight: function(element) {
-      $(element).closest('.form-group').addClass('has-error');
-    },
-    success: function(element) {
-      $(element).closest('.form-group').removeClass('has-error');
-    }
-  });
-
-
-  $('#new_user').validate(
-  {
-    errorPlacement: function(error, element) {
-      error.appendTo( element.closest('.col-lg-8') );
-    },
-    errorClass: "text-danger",
-    rules: {
-      "user[email]": {
-        required: true,
-        email: true,
-        remote: true
-      },
-      "user[birth_date]": {
-        required: true,
-        date: true
-      },
-      "user[nick]": {
-        minlength: 6,
-        required: true,
-        remote: true
-      },
-      "user[password]": {
-        required: true,
-        minlength: 8
-      },
-      "user[password_confirmation]": {
-        equalTo: "#password"
-      },
-    },
-    messages: {
-      "user[email]": {
-        required: "We need your email address to create your account",
-        email: "Your email address must be in the format of name@domain.com"
-      },
-      "user[birth_date]": {
-        required: "We need your birth date to create your account",
-        date: "Your birth date must be in the format of DD-MM-YYYY"
-      },
-      "user[nick]": {
-        minlength: "Your nickname must be at least 6 characters long",
-        required: "We need a nickname to create your account"
-      },
-      "user[password]": {
-        required: "Please enter a password to create your account",
-        minlength: "Your password must be at least 8 characters long"
-      },
-      "user[password_confirmation]": {
-        equalTo: "Passwords doesn't match, please try again"
-      },
-    },
-
-    highlight: function(element) {
-      $(element).closest('.form-group').addClass('has-error');
-    },
-    success: function(element) {
-      $(element).closest('.form-group').removeClass('has-error');
-    }
-  });
+  highlight: function(element) {
+    $(element).closest('.form-group').addClass('has-error');
+  },
+  success: function(element) {
+    $(element).closest('.form-group').removeClass('has-error');
+  }
+});
 
 
-$('.datepicker').datepicker();
+ $('#new_user').validate(
+ {
+  errorPlacement: function(error, element) {
+    error.appendTo( element.closest('.col-lg-8') );
+  },
+  errorClass: "text-danger",
+  rules: {
+    "user[email]": {
+      required: true,
+      email: true,
+      remote: true
+    },
+    "user[birth_date]": {
+      required: true,
+      date: true
+    },
+    "user[nick]": {
+      minlength: 6,
+      required: true,
+      remote: true
+    },
+    "user[password]": {
+      required: true,
+      minlength: 8
+    },
+    "user[password_confirmation]": {
+      equalTo: "#password"
+    },
+  },
+  messages: {
+    "user[email]": {
+      required: "We need your email address to create your account",
+      email: "Your email address must be in the format of name@domain.com"
+    },
+    "user[birth_date]": {
+      required: "We need your birth date to create your account",
+      date: "Your birth date must be in the format of DD-MM-YYYY"
+    },
+    "user[nick]": {
+      minlength: "Your nickname must be at least 6 characters long",
+      required: "We need a nickname to create your account"
+    },
+    "user[password]": {
+      required: "Please enter a password to create your account",
+      minlength: "Your password must be at least 8 characters long"
+    },
+    "user[password_confirmation]": {
+      equalTo: "Passwords doesn't match, please try again"
+    },
+  },
+
+  highlight: function(element) {
+    $(element).closest('.form-group').addClass('has-error');
+  },
+  success: function(element) {
+    $(element).closest('.form-group').removeClass('has-error');
+  }
+});
+
+
+  $('.datepicker').datepicker();
 
 });
 
-</script>
+  </script>
 
 
 </body>

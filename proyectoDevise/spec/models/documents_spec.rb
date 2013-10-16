@@ -2,19 +2,62 @@ require "spec_helper"
 
 describe Document do
   
-  it 'uniqueness user_id document_number' do
-    doc = Document.new()
-    doc.user = User.first # ???
-    doc.user_id = User.first.id # ???
-    doc.document_number = 1
-    doc.save
-    
-    doc2 = Document.new()
-    doc2.user = User.first # ???
-    doc2.user_id = User.first.id # ???
-    doc2.document_number = 1
-    doc2.valid?.should_not be_true
-    
+#"document_number"
+#"creation_date"
+#"name"
+#"uploading"
+#"original_extension"
+#"created_at"
+#"updated_at"
+# "user_id"
+  
+  it 'create a document' do
+    #add_one_user
+    doc = Document.new(document_number:1, creation_date:Date.current, name:"documento1",
+      original_extension:"pdf", user_id:14)
+    doc.valid?.should == true
   end
-
+  
+  it 'Uniqueness document_number for a user id' do
+    add_one_user
+    doc1 = Document.new(document_number:1, creation_date:Date.current, name:"documento1",
+      original_extension:"pdf", user_id:1)
+    doc1.save
+    
+    doc2 = Document.new(document_number:1, creation_date:Date.current, name:"documento2",
+      original_extension:"pdf", user_id:1)
+    doc2.valid?.should == false
+  end
+  
+  #la clave de el modelo es el user_id y document_number, por lo tanto dos documentos pueden
+  #tener el mismo nombre.
+  it 'Uniqueness name' do
+    add_one_user
+    doc1 = Document.new(document_number:1, creation_date:Date.current, name:"documento1",
+      original_extension:"pdf", user_id:1)
+    doc1.save
+    
+    doc2 = Document.new(document_number:2, creation_date:Date.current, name:"documento1",
+      original_extension:"pdf", user_id:1)
+    doc2.valid?.should == true
+  end
+  
+  it 'No document_number' do
+    add_one_user
+    doc = Document.new(name:"documento1", original_extension:"pdf", user_id:1)
+    doc.save.should == false
+  end
+  
+  it 'No user_id' do
+    add_one_user
+    doc = Document.new(document_number:1, name:"documento1", original_extension:"pdf")
+    doc.save.should == false
+  end
+  
+  it 'No user_id and document_number' do
+    add_one_user
+    doc = Document.new(name:"documento1", original_extension:"pdf")
+    doc.save.should == false
+  end
+  
 end
