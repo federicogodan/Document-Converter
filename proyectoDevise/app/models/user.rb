@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  before_save :check_birthdate
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -22,11 +23,18 @@ class User < ActiveRecord::Base
   end
   
   #checks that the birth_date be lesser than today.
-  before_save :check_birthdate
+  
   def check_birthdate
+    if (self.birth_date != nil) and (self.birth_date > Date.today)
+      puts "Soy lo que debo ser"
+    else
+      puts "NOOOOOOOO"
+    end
     
-    if (self.birth_date != nil) && (self.birth_date < Date.today)
-      false
+    if (self.birth_date != nil) and (self.birth_date > Date.today)
+       errors.add(:user,"Birthdate is in the future.")
+       raise "Unable to assign birthdate"
+       false
     end
   end
 end
