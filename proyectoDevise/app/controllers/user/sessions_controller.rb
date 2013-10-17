@@ -6,8 +6,8 @@ def new
     #Actualize the variable invalid_user to make appear the alert text
     @invalid_user = 1
      
-    respond_with resource, :location => log_in_invalid(resource)
-    #render "user/home"
+    #respond_with resource, :location => log_in_invalid(resource)
+    render "user/home"
 end
 def create
   self.resource = warden.authenticate!(auth_options)
@@ -17,8 +17,8 @@ def create
     #Its a valid user, so the invalid_user variable is actualize
     @invalid_user = 0
     
-    respond_with resource, :location => after_sign_in_path_for(resource)
-    #render "user/new_file"
+    #respond_with resource, :location => after_sign_in_path_for(resource)
+    render "user/new_file"
 end
 def destroy
   super
