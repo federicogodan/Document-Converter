@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131015225149) do
+ActiveRecord::Schema.define(:version => 20131017163624) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(:version => 20131015225149) do
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
 
-  create_table "converted_document", :force => true do |t|
+  create_table "converted_documents", :force => true do |t|
     t.integer  "document_number"
     t.string   "current_extension"
     t.string   "status"
@@ -56,9 +56,11 @@ ActiveRecord::Schema.define(:version => 20131015225149) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.integer  "user_id"
+    t.integer  "document_id"
+    t.integer  "format_id"
   end
 
-  add_index "converted_document", ["document_number", "current_extension"], :name => "index_on_documents_file_email_number_extension"
+  add_index "converted_documents", ["document_number", "current_extension"], :name => "index_on_documents_file_email_number_extension"
 
   create_table "documents", :force => true do |t|
     t.integer  "document_number"
@@ -69,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20131015225149) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "user_id"
+    t.integer  "format_id"
   end
 
   add_index "documents", ["document_number"], :name => "index_documents_on_email_and_document_number"
@@ -78,7 +81,7 @@ ActiveRecord::Schema.define(:version => 20131015225149) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "origin"
-    t.integer  "destiny"
+    t.integer  "destinies"
   end
 
   create_table "users", :force => true do |t|

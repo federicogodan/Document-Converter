@@ -19,13 +19,18 @@ describe Document do
   end
   
   it 'Uniqueness document_number for a user id' do
-    add_one_user
+    #add_one_user
+    usr = User.new(email:"user1@gmail.com", nick:"usuario1", password:"12345678")
+    usr.save
+      
     doc1 = Document.new(document_number:1, creation_date:Date.current, name:"documento1",
-      original_extension:"pdf", user_id:1)
+      original_extension:"pdf")
+    doc1.user = usr 
     doc1.save
     
     doc2 = Document.new(document_number:1, creation_date:Date.current, name:"documento2",
-      original_extension:"pdf", user_id:1)
+      original_extension:"pdf")
+    doc2.user = usr  
     doc2.valid?.should == false
   end
   
