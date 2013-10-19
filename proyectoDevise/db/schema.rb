@@ -74,10 +74,13 @@ ActiveRecord::Schema.define(:version => 20131007203324) do
 
   add_index "documents", ["user_id", "document_number"], :name => "index_documents_on_user_id_and_document_number"
 
+  create_table "format_destinies", :force => true do |t|
+    t.integer "format_id"
+    t.integer "destiniy_id"
+  end
+
   create_table "formats", :force => true do |t|
     t.string   "name"
-    t.integer  "origin"
-    t.integer  "destinies"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
