@@ -4,8 +4,8 @@ class Format < ActiveRecord::Base
   
   #Self join between the origin format to the destinies of formats that the origin can be converted to.
   has_many :destinies, class_name: "Format",
-                          foreign_key: "origin_id"
-  belongs_to :origin, class_name: "Format"
+                          foreign_key: "destinies"
+  belongs_to :origin, class_name: "Format", foreign_key: "origin"
   
   #A single format could have many documents to be converted
   has_many :documents
