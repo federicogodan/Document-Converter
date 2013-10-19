@@ -7,6 +7,9 @@ gem 'rails', '3.2.13'
 
 #gem 'sqlite3'
 
+gem 'execjs'
+gem 'therubyracer', :platforms => :ruby
+
 group :development, :test do
   gem 'mysql2'
   gem 'rspec-rails'

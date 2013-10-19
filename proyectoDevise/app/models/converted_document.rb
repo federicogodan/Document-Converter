@@ -1,4 +1,4 @@
-class ConvertedDocuments < ActiveRecord::Base
+class ConvertedDocument < ActiveRecord::Base
   validates_uniqueness_of :user_id, scope: [:document_number, :current_extension]
   validates_presence_of :user_id, :document_number, :current_extension
   

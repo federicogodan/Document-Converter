@@ -3,7 +3,7 @@ require 'spec_helper'
 describe User do
   
   it 'with valid params' do
-    user = User.new(email:"test@test.com", nick:"test", password:"holamundo", password_confirmation:"holamundo")
+    user = User.new(email:"test@test.com", nick:"testtest", password:"holamundo", password_confirmation:"holamundo")
     user.valid?.should == true
     
   end

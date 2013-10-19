@@ -17,13 +17,14 @@ describe Format do
   end
   
   it 'lot of asociations' do
-      f = Format.new(name: 'hola1')
-      f2 = Format.new(name: 'hola2')
-      f3 = Format.new(name: 'hola3')
+      f = Format.new(name:"hola1")
+      f2 = Format.new(name:"hola2")
+      f2.save
+      f3 = Format.new(name:"hola3")
+      f3.save
       
-      #f.destiny = f2
       f.destinies.push(f2)
-      #f.detiny = f3
+      f.destinies.push(f3)      
       
       f.save 
   end

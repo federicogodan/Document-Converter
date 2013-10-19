@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Formats do
+describe Format do
   
   context 'format:' do
     it 'name uniqueness' do

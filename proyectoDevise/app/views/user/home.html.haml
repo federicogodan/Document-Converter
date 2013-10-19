@@ -1,13 +1,14 @@
 %nav.navbar.navbar-inverse{role: "navigation"}
   .container
     %a.navbar-brand{href: "#"} Document Converter
-/ Modal
+/ Modal dialog for register users
 #registerModal.modal
   .modal-dialog
     .modal-content
       .modal-header
-        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+        %button.close.cancel{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
         %h4.modal-title Register
+        /form used for register users
       %form#new_user.form-horizontal{action: "/users", method: "post", role: "form"}
         .modal-body
           .form-group
@@ -26,7 +27,7 @@
             %label.col-lg-4.control-label{for: "surname"} Last name
             .col-lg-8
               %input#surname.form-control{name: "user[surname]", placeholder: "Last name", type: "text"}/
-          .form-group.input-append.date{"data-date" => "12-02-2012", "data-date-format" => "dd-mm-yyyy"}
+          .form-group.input-append.date{"data-date" => "12-02-2012", "data-date-format" => "mm-dd-yyyy"}
             %label.col-lg-4.control-label{for: "birth_date"} Birth Date
             .col-lg-8
               %input#birth_date.form-control.datepicker{name: "user[birth_date]", placeholder: "Birth Date", type: "text"}/
@@ -39,18 +40,18 @@
             .col-lg-8
               %input#password_confirmation.form-control{name: "user[password_confirmation]", placeholder: "Repeat Password", type: "password"}/
         .modal-footer
-          %a.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+          %a.btn.cancel{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
           %button#btnRegister.btn.btn-primary{name: "commit", type: "submit"} Register
-    / /.modal-content
-  / /.modal-dialog
-/ /.modal
+/Main page
 .header
   .container
     .row
+      /Left row, shows description about the product, it disappears when the page is displayed on a small device
       .col-sm-offset-1.col-sm-6.hidden-xs
         .container
           %h1 Cloud converting for developers
           %h3 Document converter makes easier the task of converting documents between different formats, even in your own applications.
+      /Right row, shows the login form
       .col-sm-4.col-xs-offset-0.col-xs-12
         .panel.panel-default
           .panel-heading
@@ -62,6 +63,7 @@
                   or
                   %a{"data-toggle" => "modal", href: "#registerModal"} Register
             .panel-body
+              /Login form
               %form#user_login{action: "/users/sign_in", method: "post", role: "form"}
                 .form-group.form-login.dc-loginGroup
                   %label{for: "user_email"} Login
@@ -73,20 +75,16 @@
                       %input{type: "checkbox", value: "remember-me"}/
                       Remember me
                 %button#btnLogin.btn.btn-primary.pull-right{type: "submit"} Sign in
-                - if @invalid_user == nil
-                  = @invalid_user = 0
-                - if @invalid_user > 0
-                  %p{:class => "text-danger dc-loginGroup"}"Wrong user or password, try again."
-%script{src: "js/jquery-2.0.3.min.js"}
-%script{src: "js/bootstrap.min.js"}
-%script{src: "js/bootstrap-datepicker.js"}
-%script{src: "js/jquery.validate.min.js"}
+                /Shows wrong user or password when login fails
+                - if @invalid_user != nil
+                  %p{:class => "text-danger dc-loginGroup"}Wrong user or password, try again.
 :javascript
   $(document).ready(function() {
-  
+  //Validates user login
    $('#user_login').validate(
    {
     errorClass: "text-danger",
+    errorElement: "span",
     rules: {
       "user[email]": {
         required: true,
@@ -116,18 +114,18 @@
     }
   });
   
-  
+  //Validates new user form
    $('#new_user').validate(
    {
     errorPlacement: function(error, element) {
       error.appendTo( element.closest('.col-lg-8') );
     },
+    errorElement: "span",
     errorClass: "text-danger",
     rules: {
       "user[email]": {
         required: true,
-        email: true,
-        remote: true
+        email: true
       },
       "user[birth_date]": {
         required: true,
@@ -136,7 +134,6 @@
       "user[nick]": {
         minlength: 6,
         required: true,
-        remote: true
       },
       "user[password]": {
         required: true,
@@ -176,7 +173,20 @@
     }
   });
   
-  
-    $('.datepicker').datepicker();
+  //Popups the datepicker for the date input elements
+    $('input.datepicker').datepicker();
+  //Hides the datepicker popup when a non-date input is focused
+    $('input.datepicker').datepicker('hide');
+    $(":input").focus(function() {
+      if (!($(this).hasClass("datepicker"))) {
+       $('input.datepicker').datepicker('hide');
+      }
+    });
+
+    $(".cancel").click(function() {
+      var validator =  $('#new_user').validate();
+      validator.resetForm();
+      $(':input','#new_user').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+    });
   
   });

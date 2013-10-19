@@ -29,8 +29,23 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.integer  :failed_attempts, :default => 0, :null => false # Only if lock strategy is :failed_attempts
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
+      
+      #map
+      # t.datetime :registration_date  ##it's mapped to t.created_at
+      # t.datetime :last_access        ##it's mapped to t.last_sign_in_at
 
-
+      t.string :profile_type
+      t.string :name
+      t.string :nick
+      t.string :surname
+      t.datetime :birth_date
+      
+      t.string :api_key
+      t.string :secret_key
+      t.integer :total_storage_assigned
+      t.integer :documents_time_for_expiration
+      
+      
       t.timestamps
     end
 
@@ -38,5 +53,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
     add_index :users, :reset_password_token, :unique => true
     # add_index :users, :confirmation_token,   :unique => true
     # add_index :users, :unlock_token,         :unique => true
+       
   end
+  
 end

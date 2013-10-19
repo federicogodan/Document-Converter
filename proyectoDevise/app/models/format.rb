@@ -7,7 +7,7 @@ class Format < ActiveRecord::Base
                           foreign_key: "origin_id"
   belongs_to :origin, class_name: "Format"
   
-  #A signle format could have many documents to be converted
+  #A single format could have many documents to be converted
   has_many :documents
   
   #A single format could have many converted documents

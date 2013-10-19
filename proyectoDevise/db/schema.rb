@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131017163624) do
+ActiveRecord::Schema.define(:version => 20131007203324) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -47,41 +47,39 @@ ActiveRecord::Schema.define(:version => 20131017163624) do
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
 
   create_table "converted_documents", :force => true do |t|
-    t.integer  "document_number"
-    t.string   "current_extension"
-    t.string   "status"
+    t.string   "name"
     t.date     "conversion_end_date"
-    t.integer  "size_in_bytes"
+    t.integer  "document_number"
     t.string   "download_link"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-    t.integer  "user_id"
+    t.integer  "size_in_bytes"
+    t.string   "status"
     t.integer  "document_id"
     t.integer  "format_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
-  add_index "converted_documents", ["document_number", "current_extension"], :name => "index_on_documents_file_email_number_extension"
+  add_index "converted_documents", ["document_number", "format_id"], :name => "index_on_converted_documents_number_format"
 
   create_table "documents", :force => true do |t|
     t.integer  "document_number"
     t.date     "creation_date"
     t.string   "name"
     t.boolean  "uploading"
-    t.integer  "original_extension"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
     t.integer  "user_id"
     t.integer  "format_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
-  add_index "documents", ["document_number"], :name => "index_documents_on_email_and_document_number"
+  add_index "documents", ["user_id", "document_number"], :name => "index_documents_on_user_id_and_document_number"
 
   create_table "formats", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
     t.integer  "origin"
     t.integer  "destinies"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -95,20 +93,17 @@ ActiveRecord::Schema.define(:version => 20131017163624) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
     t.string   "profile_type"
     t.string   "name"
     t.string   "nick"
     t.string   "surname"
-    t.date     "birth_date"
+    t.datetime "birth_date"
     t.string   "api_key"
     t.string   "secret_key"
     t.integer  "total_storage_assigned"
     t.integer  "documents_time_for_expiration"
-    t.integer  "failed_attempts",               :default => 0
-    t.string   "unlock_token"
-    t.datetime "locked_at"
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -117,9 +112,9 @@ ActiveRecord::Schema.define(:version => 20131017163624) do
   create_table "webhooks", :force => true do |t|
     t.string   "url"
     t.boolean  "deleted"
+    t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "user_id"
   end
 
 end
