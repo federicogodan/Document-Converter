@@ -2,7 +2,6 @@ class CreateDocuments < ActiveRecord::Migration
   def change
     create_table :documents do |t|
       t.integer :document_number, uniqueness: true
-      t.date :creation_date
       t.string :name
       t.boolean :uploading
 

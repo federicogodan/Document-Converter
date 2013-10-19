@@ -63,7 +63,6 @@ ActiveRecord::Schema.define(:version => 20131007203324) do
 
   create_table "documents", :force => true do |t|
     t.integer  "document_number"
-    t.date     "creation_date"
     t.string   "name"
     t.boolean  "uploading"
     t.integer  "user_id"
