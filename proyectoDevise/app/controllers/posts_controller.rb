@@ -22,6 +22,15 @@ class PostsController < ApplicationController
       system "chmod 777 " + file_path
       size = params[:post][:uploaded_file].size
       clientSession.puts size
+      
+      #Association between user and document
+      user = User.find(session[:user_id])
+      doc = Document.new(document_number:1,name:file_name,uploading:true)
+      doc.format = Format.find(2)
+      user.document = doc
+      doc.save
+      user.save
+      
       File.open(file_path, 'r') do |file|  
            while(size - 102400 > 0 ) 
               clientSession.write(file.read(102400))
@@ -30,8 +39,8 @@ class PostsController < ApplicationController
            clientSession.write(file.read(size))      
       end
       puts "waiting response"
-serverMessage = clientSession.gets
-puts "Recieved: " 
+      serverMessage = clientSession.gets
+      puts "Recieved: " 
 puts serverMessage
 clientSession.close
   end

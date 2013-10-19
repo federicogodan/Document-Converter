@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,:lockable
+         :recoverable, :rememberable, :trackable, :validatable
+         #,:lockable
 
   #validates_uniqueness_of :nick
   validates :nick, presence: true, uniqueness: true, length: { minimum: 6 }
@@ -12,7 +13,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, 
                   :remember_me, :name, :nick, :surname, :birth_date, :profile_type,
-                  :api_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration, :failed_attempts
+                  :api_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration
   
   # A user has many documents to be converted.
   has_many :documents
