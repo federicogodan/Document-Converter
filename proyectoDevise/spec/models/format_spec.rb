@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe Format do
   
+  it 'valid' do
+    f = Format.new(name: "pepe")
+    f.valid?.should == true
+  end
+  
   it 'uniquenss name' do
     f = Format.new(name:"pdf")
     f.save
@@ -25,8 +30,11 @@ describe Format do
       
       f.destinies.push(f2)
       f.destinies.push(f3)      
-      
       f.save 
+      
+      f = Format.find_by_name('hola1')
+      f.destinies.include?(f2).should be_true
+      f.destinies.include?(f3).should be_true
   end
  
 end
