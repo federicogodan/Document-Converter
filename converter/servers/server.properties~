@@ -1,0 +1,10 @@
+{
+	:port   => 8005,
+	:ip   => 'localhost',
+	:redirect_ip  => 'localhost',
+	:redirect_port  => 8103,
+	:temp => '/home/mika/Escritorio/PIS/prototipoMika/Document-Converter/converter/servers/temp1/',
+	:libreoffice => '/usr/bin/libreoffice',
+	:converted => '/home/mika/Escritorio/PIS/prototipoMika/Document-Converter/converter/servers',
+	:pid_file => 'pid_file'
+}

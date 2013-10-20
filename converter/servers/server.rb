@@ -11,14 +11,18 @@ puts "Starting up server..."
 
 #the server takes the port as an argument
 
-#TODO: get parameters through a configuration file 
-port = ARGV[0]
-ip =  "localhost"
-redirect_ip = "localhost"
-#"177.71.195.102"
-redirect_port = 8103
+#get parameters through a configuration file 
+configuration = eval(File.open('server.properties') {|f| f.read })
+port = configuration[:port]
+ip = configuration[:ip] 
+redirect_ip = configuration[:redirect_ip]
+redirect_port = configuration[:redirect_port]
+temp = configuration[:temp]
+libreoffice = configuration[:libreoffice]
+converted = configuration[:converted]
+pid_file = configuration[:pid_file]
 
-Struct.new("Pending", :to_send, :converted_file, :client_session) 
+Struct.new("Pending", :to_send, :converted_file, :client_session, :name) 
 #to_send : command to be executed by the server to make the conversion
 #converted_file : path to the converted file
 #client_session : client's socket 
@@ -79,19 +83,19 @@ Thread.start do
 			      #the file is broken or it does not exists, 
 			      #kill libreoffice 's process and convert again the file
 			      #get pid from a file
-			      system("ps -A -o pid,cmd | grep 'libreoffice' > id_pid_libreOffice")
-			      file = File.open("id_pid_libreOffice", "r")
-			      line = file.gets
-			      pid = line.match(/\d+/) 
+			      system("ps -A -o pid,cmd | grep 'libreoffice' > pid_file")
+			      file = File.open(pid_file, "r")
+			      pid =  file.gets
 			      file.close
-			      aux = 'kill ' + pid.to_s
+			      aux = 'kill ' + pid
 			      puts aux
 			      system(aux)
 			      #delete file
-			      File.delete("id_pid_libreOffice")
+			      File.delete(pid_file)
 			end
 		end #loop ok
-		puts "deleting file pid"
+		puts "deleting temp file"
+		File.delete(temp + @pending_work[:name])
 		puts "client_session"
 		@pending_work[:client_session].puts "ACK"
 		puts "sending ACK"   
@@ -109,7 +113,7 @@ Thread.start do
 	  
 	  #TODO: put a relative path instead of '/home/mika'
 	  
-	  File.open('/home/mika/'+ name, 'w') do |file|
+	  File.open(temp + name, 'w') do |file|
 	    puts "creating temp file"
 	    while((size - 102400) > 0 ) 
 		file.write session.read(102400)
@@ -117,20 +121,19 @@ Thread.start do
 	    end
 	    file.write session.read(size)
 	  end   
-	  if (format=="txt") #TODO: filter through the format in function of the original one 
-	      format = "txt:Text"
-	  end
-	  
-	  #TODO: put a relative path instead of '/home/mika'
-	  to_send = '/usr/bin/libreoffice --headless --invisible --convert-to ' + format + ' /home/mika/'+ name
-	  puts "to send " + to_send
-	  
+	  if (format=='txt') #TODO: filter through the format in function of the original one 
+	      plus = ':Text'
+	  else
+	      plus = ''
+	  end	  
+	  puts "plus: "
+	  puts plus
+	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + format + plus + ' ' + temp + name	  
 	  #building the path of the converted file 
-	  converted_file = '/home/mika/Escritorio/PIS/romiProyectoCOnverter/proyecto-converter/' + name.split('.')[0] + '.' + format
-	  puts converted_file
+	  converted_file = converted + name.split('.')[0] + '.' + format
 	  #push into queue
 	  semaphore.synchronize {
-	    pending = Struct::Pending.new(to_send, converted_file, session) 
+	    pending = Struct::Pending.new(to_send, converted_file, session, name) 
 	    queue_pending.push pending
 	  }
 	  mutex.synchronize {
