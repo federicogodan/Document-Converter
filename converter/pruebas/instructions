@@ -1,0 +1,8 @@
+este ejemplo es estando parado en la carpeta pruebas
+client : ruby servers/client.rb prueba1.odt txt prueba1.odt 8008
+server : ruby servers/server1.rb 8005
+redirect : ruby servers/redirect_server.rb
+
+client : ruby client.rb ruta_archivo formato_destino tamaño_bytes
+el tamaño en bytes se obtiene ejecutando el siguiente comando : du -b archivo 
+
