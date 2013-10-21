@@ -21,6 +21,7 @@ temp = configuration[:temp]
 libreoffice = configuration[:libreoffice]
 converted = configuration[:converted]
 pid_file = configuration[:pid_file]
+unoconv = configuration[:unconv]
 
 Struct.new("Pending", :to_send, :converted_file, :client_session, :name) 
 #to_send : command to be executed by the server to make the conversion
@@ -120,12 +121,14 @@ Thread.start do
 		size = size - 102400
 	    end
 	    file.write session.read(size)
-	  end   
+	  end
+	    
 	  if (format=='txt') #TODO: filter through the format in function of the original one 
 	      plus = ':Text'
 	  else
 	      plus = ''
-	  end	  
+	  end
+	  
 	  puts "plus: "
 	  puts plus
 	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + format + plus + ' ' + temp + name	  
