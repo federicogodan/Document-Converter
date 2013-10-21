@@ -1,6 +1,7 @@
 class Document < ActiveRecord::Base
   validates_uniqueness_of :user_id, scope: :document_number
-  attr_accessible :creation_date, :document_number, :user_id, :name, :original_extension, :uploading
+  attr_accessible :document_number, :user_id, :name, :file, :creation_date, :format_id
+  mount_uploader :file, FileUploader
 
   #A document belongs to a user, who upload that document for the future conversion
   belongs_to :user

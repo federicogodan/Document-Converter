@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131007203324) do
+ActiveRecord::Schema.define(:version => 20131019213131) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -62,14 +62,14 @@ ActiveRecord::Schema.define(:version => 20131007203324) do
   add_index "converted_documents", ["document_number", "format_id"], :name => "index_on_converted_documents_number_format"
 
   create_table "documents", :force => true do |t|
-    t.integer  "document_number"
-    t.date     "creation_date"
-    t.string   "name"
-    t.boolean  "uploading"
-    t.integer  "user_id"
-    t.integer  "format_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer "document_number"
+    t.date    "creation_date"
+    t.string  "name"
+    t.integer "user_id"
+    t.integer "format_id"
+    t.date    "updated_at"
+    t.date    "created_at"
+    t.string  "file"
   end
 
   add_index "documents", ["user_id", "document_number"], :name => "index_documents_on_user_id_and_document_number"
