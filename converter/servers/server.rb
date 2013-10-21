@@ -120,12 +120,14 @@ Thread.start do
 		size = size - 102400
 	    end
 	    file.write session.read(size)
-	  end   
+	  end
+	    
 	  if (format=='txt') #TODO: filter through the format in function of the original one 
 	      plus = ':Text'
 	  else
 	      plus = ''
-	  end	  
+	  end
+	  
 	  puts "plus: "
 	  puts plus
 	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + format + plus + ' ' + temp + name	  
