@@ -38,3 +38,20 @@ Observaciones:
 para obtener el tamaño del archivo se puede ejecutar el siguiente comando : 
 du -b archivo  
 
+Ejecución del 'server_uno'
+--------------------------
+*configuración : editar archivo de configuración server.propierties
+parámetros:
+port------------>puerto por el cual el servidor atenderá clientes
+ip-------------->ip donde se ejecuta el servidor
+redirect_ip----->ip donde se ejecua el redirecy_server
+redirect_port--->puerto en el cual el redirect_server escucha a los servidores
+temp ------------>ruta para archivos temporales del servidor
+uno ----->ruta de instancia de unoconv que será ejecutada por el servidor
+converted ------->ruta donde se guardarán los archivos convertidos
+pid_file--------->nombre de archivo donde se guardará el pid del proceso libreoffice al ejecutar el comando para realizar la conversión
+tar_name--------->nombre del archivo tar donde se almacenarán los archivos convertidos
+*ejecución : ruby server_uno.rb
+
+
+		
