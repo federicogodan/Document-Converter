@@ -1,9 +1,12 @@
 class User < ActiveRecord::Base
   before_validation :check_birthdate
+  
+  after_save :insert_counter
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,:lockable
+         :recoverable, :rememberable, :trackable, :validatable
+         #,:lockable
 
   #validates_uniqueness_of :nick
   validates :nick, presence: true, uniqueness: true, length: { minimum: 6 }
@@ -12,7 +15,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, 
                   :remember_me, :name, :nick, :surname, :birth_date, :profile_type,
-                  :api_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration, :failed_attempts
+                  :api_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration
   
   # A user has many documents to be converted.
   has_many :documents
@@ -22,6 +25,9 @@ class User < ActiveRecord::Base
   
   #A user could have many webhooks to be alert for some completed conversion
   has_many :webhooks
+  
+  #A user has a counter for his/her documents (it's local for every user)
+  has_one :users_counters
   
   # Allow to login with a nick or email. 
   def self.find_for_database_authentication(conditions={})
@@ -35,5 +41,12 @@ class User < ActiveRecord::Base
        errors.add(:user,"Birthdate is in the future.")
        false
     end
+  end
+  
+  #function that inserts a row on the table users_counters, containing the default documents'counter of a user(counter = 1)
+  def insert_counter
+    uc = UsersCounter.new(counter:1)
+    uc.user = self
+    uc.save
   end
 end

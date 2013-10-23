@@ -7,7 +7,7 @@ def new
     @invalid_user = 1
      
     #respond_with resource, :location => log_in_invalid(resource)
-    render "user/home"
+    redirect_to "/user/home"
 end
 def create
   self.resource = warden.authenticate!(auth_options)
@@ -15,10 +15,11 @@ def create
     sign_in(resource_name, resource)
     
     #Its a valid user, so the invalid_user variable is actualize
-    @invalid_user = 0
+    @invalid_user = 0       
     
+    cookies[:nickname] = resource.nick
     #respond_with resource, :location => after_sign_in_path_for(resource)
-    render "user/new_file"
+    redirect_to "/user/new_file"
 end
 def destroy
   super
