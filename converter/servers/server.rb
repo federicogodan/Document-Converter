@@ -21,6 +21,15 @@ temp = configuration[:temp]
 libreoffice = configuration[:libreoffice]
 converted = configuration[:converted]
 pid_file = configuration[:pid_file]
+#configuration parameters: 
+puts port
+puts ip
+puts redirect_ip
+puts redirect_port
+puts temp
+puts libreoffice
+puts converted
+puts pid_file
 
 Struct.new("Pending", :to_send, :converted_file, :client_session, :name) 
 #to_send : command to be executed by the server to make the conversion
@@ -69,6 +78,8 @@ Thread.start do
 		ok = false
 		while (!ok) 
 			
+			puts "to send: "
+			puts @pending_work[:to_send]
 			system(@pending_work[:to_send])
 			puts "try open file"  
 			puts @pending_work[:converted_file]
@@ -83,11 +94,12 @@ Thread.start do
 			      #the file is broken or it does not exists, 
 			      #kill libreoffice 's process and convert again the file
 			      #get pid from a file
-			      system("ps -A -o pid,cmd | grep 'libreoffice' > pid_file")
+			      system('ps -A -o pid,cmd | grep libreoffice > pid_file')
 			      file = File.open(pid_file, "r")
-			      pid =  file.gets
+			      line =  file.gets
+			      pid = line.match(/\d+/) 
 			      file.close
-			      aux = 'kill ' + pid
+			      aux = 'kill ' + pid.to_s
 			      puts aux
 			      system(aux)
 			      #delete file
@@ -109,6 +121,8 @@ Thread.start do
 	  puts "accepting client"
 	  format = session.gets.delete("\n")
 	  name = session.gets.delete("\n")
+	  puts "NAME:"
+	  puts name
 	  size = session.gets.to_i
 	  
 	  #TODO: put a relative path instead of '/home/mika'
@@ -133,6 +147,8 @@ Thread.start do
 	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + format + plus + ' ' + temp + name	  
 	  #building the path of the converted file 
 	  converted_file = converted + name.split('.')[0] + '.' + format
+	  puts "converted_file:"
+	  puts converted_file
 	  #push into queue
 	  semaphore.synchronize {
 	    pending = Struct::Pending.new(to_send, converted_file, session, name) 
