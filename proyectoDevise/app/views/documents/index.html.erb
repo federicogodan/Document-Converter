@@ -9,10 +9,10 @@
 
 <% @documents.each do |document| %>
   <tr>
-<td>Document Name: <%= document.user %> </td>
-<td>Document Name: <%= document.name %> </td>
-<td>Document URL: <%=link_to document.file %> </td>
-<td>Creation date: <%= document.creation_date %> </td>
+    <td>Owner: <%= document.user.name %> </td>
+    <td>Document Name: <%= document.name %> </td>
+    <td>Document URL: <%=link_to document.file %> </td>
+    <td>Creation date: <%= document.created_at %> </td>
     <td><%= link_to 'Show', document %></td>
     <td><%= link_to 'Edit', edit_document_path(document) %></td>
     <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
