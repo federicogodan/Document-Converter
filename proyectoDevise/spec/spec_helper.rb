@@ -40,13 +40,7 @@ RSpec.configure do |config|
   def registroChechab
       u1 = User.new(email:"checha@hola.com", nick:"chechab", password:"holamundo")
       u1.save
-  end
-  
-  def add_one_user
-      usr = User.new(email:"user1@gmail.com", nick:"usuario1", password:"12345678")
-      usr.save
-  end
-  
+  end  
   
   def register_user
       u = User.new(email:"test@test.com", nick:"test", password:"holamundo")
@@ -55,6 +49,12 @@ RSpec.configure do |config|
   end
   
   def add_format
+      f = Format.new(name:"html")
+      f.save
+      return f
+  end
+  
+  def add_formats
     f1 = Format.new(name:"pdf")
     f2 = Format.new(name:"doc")
     f3 = Format.new(name:"odt")
