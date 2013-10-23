@@ -20,7 +20,7 @@ temp ------------>ruta para archivos temporales del servidor
 libreoffice ----->ruta de instancia de libreoffice que será ejecutada por el servidor
 converted ------->ruta donde se guardarán los archivos convertidos
 pid_file--------->nombre de archivo donde se guardará el pid del proceso libreoffice al ejecutar el comando para realizar la 			  conversión
-*ejecución : ruby server.rb 
+*ejecución : ruby server.rb puerto 
 
 Ejecución del 'client'
 ---------------------
@@ -49,7 +49,7 @@ uno ----->ruta de instancia de unoconv que será ejecutada por el servidor
 converted ------->ruta donde se guardarán los archivos convertidos
 pid_file--------->nombre de archivo donde se guardará el pid del proceso libreoffice al ejecutar el comando para realizar la conversión
 tar_name--------->nombre del archivo tar donde se almacenarán los archivos convertidos
-*ejecución : ruby server_uno.rb
+*ejecución : ruby server_uno.rb puerto
 
 
 		
