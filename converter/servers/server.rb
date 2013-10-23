@@ -10,10 +10,10 @@ require 'sys/proctable'
 puts "Starting up server..."
 
 #the server takes the port as an argument
+port = ARGV[0]
 
 #get parameters through a configuration file 
 configuration = eval(File.open('server.properties') {|f| f.read })
-port = configuration[:port]
 ip = configuration[:ip] 
 redirect_ip = configuration[:redirect_ip]
 redirect_port = configuration[:redirect_port]
@@ -22,14 +22,13 @@ libreoffice = configuration[:libreoffice]
 converted = configuration[:converted]
 pid_file = configuration[:pid_file]
 #configuration parameters: 
-puts port
-puts ip
-puts redirect_ip
-puts redirect_port
-puts temp
-puts libreoffice
-puts converted
-puts pid_file
+#puts ip
+#puts redirect_ip
+#puts redirect_port
+#puts temp
+#puts libreoffice
+#puts converted
+#puts pid_file
 
 Struct.new("Pending", :to_send, :converted_file, :client_session, :name) 
 #to_send : command to be executed by the server to make the conversion
@@ -49,8 +48,8 @@ work = ConditionVariable.new
 #start server connection
 server = TCPServer.new(port)
 redirect_socket = TCPSocket.new(redirect_ip, redirect_port)
-redirect_socket.puts(ip)
-redirect_socket.puts(port)
+info = ip + ',' + port + ',L'
+redirect_socket.puts(info)
 serverMessage = redirect_socket.gets
 
 #thread charged on the conversion, takes an element from the queue and execute the command it 

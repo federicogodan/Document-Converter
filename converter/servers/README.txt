@@ -13,7 +13,6 @@ Ejecución del 'server'
 ----------------------
 *configuración : editar archivo de configuración server.propierties
 parámetros:
-port------------>puerto por el cual el servidor atenderá clientes
 ip-------------->ip donde se ejecuta el servidor
 redirect_ip----->ip donde se ejecua el redirecy_server
 redirect_port--->puerto en el cual el redirect_server escucha a los servidores
@@ -42,7 +41,6 @@ Ejecución del 'server_uno'
 --------------------------
 *configuración : editar archivo de configuración server.propierties
 parámetros:
-port------------>puerto por el cual el servidor atenderá clientes
 ip-------------->ip donde se ejecuta el servidor
 redirect_ip----->ip donde se ejecua el redirecy_server
 redirect_port--->puerto en el cual el redirect_server escucha a los servidores

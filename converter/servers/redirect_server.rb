@@ -21,9 +21,11 @@ Thread.start do #thread to attend server
 	while (session_server = accept_server.accept)
 	Thread.start do
 	   puts "Accepting a server"
-	   server_ip = session_server.gets.delete("\n")
-	   server_port = session_server.gets.delete("\n")
-	   puts server_ip + ":" + server_port
+	   server_message = session_server.gets.delete("\n").split(",")
+	   server_ip = server_message[0] 
+	   server_port = server_message[1]
+	   server_type = server_message[2] #esto es para despues meterlos en distintas colas segun sea U o L el server_type  
+	   puts server_ip + ":" + server_port + ":" + server_type
 	   semaphore.synchronize { #push a new server into available servers 
 	     server = Struct::Server.new(server_ip, server_port) 
 	     queue_sockets.push server

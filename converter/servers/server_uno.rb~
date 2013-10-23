@@ -1,8 +1,3 @@
-###
-#TODO: catch timeout exception (when the client shutdown by surprise,
-# the server must to recover and not explode)
-###
-
 
 require 'socket'
 require 'sys/proctable'
@@ -10,10 +5,10 @@ require 'sys/proctable'
 puts "Starting up server..."
 
 #the server takes the port as an argument
+port = ARGV[0]
 
 #get parameters through a configuration file 
 configuration = eval(File.open('server_uno.properties') {|f| f.read })
-port = configuration[:port]
 ip = configuration[:ip] 
 redirect_ip = configuration[:redirect_ip]
 redirect_port = configuration[:redirect_port]
@@ -24,15 +19,14 @@ pid_file = configuration[:pid_file]
 tar_name = configuration[:tar_name]
 
 #configuration parameters: 
-puts port
-puts ip
-puts redirect_ip
-puts redirect_port
-puts temp
-puts uno
-puts converted
-puts pid_file
-puts tar_name
+#puts ip
+#puts redirect_ip
+#puts redirect_port
+#puts temp
+#puts uno
+#puts converted
+#puts pid_file
+#puts tar_name
 
 Struct.new("Pending", :to_send, :converted_file, :client_session, :name) 
 #to_send : command to be executed by the server to make the conversion
@@ -52,8 +46,9 @@ work = ConditionVariable.new
 #start server connection
 server = TCPServer.new(port)
 redirect_socket = TCPSocket.new(redirect_ip, redirect_port)
-redirect_socket.puts(ip)
-redirect_socket.puts(port)
+info = ip + ',' + port + ',U'
+puts info
+redirect_socket.puts(info)
 serverMessage = redirect_socket.gets
 
 #thread charged on the conversion, takes an element from the queue and execute the command it 
@@ -91,7 +86,6 @@ Thread.start do
 			    file = open(@pending_work[:converted_file])
 			    if file 
 			      system('tar -czvf ' + tar_name + '.tar ' + converted)
-			      puts "ok"
 			      ok = true
 			    end
 			    rescue
@@ -112,7 +106,7 @@ Thread.start do
 		end #loop ok
 		puts "deleting temp files"
 		File.delete(temp + @pending_work[:name])
-		Dir.rmdir(converted)
+		system('rm -r ' + converted)
 		puts "client_session"
 		@pending_work[:client_session].puts "ACK"
 		puts "sending ACK"   
@@ -126,7 +120,6 @@ Thread.start do
 	  puts "accepting client"
 	  format = session.gets.delete("\n")
 	  name = session.gets.delete("\n")
-	  puts "NAME:"
 	  puts name
 	  size = session.gets.to_i
 	  

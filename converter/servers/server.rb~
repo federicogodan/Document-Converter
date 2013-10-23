@@ -10,10 +10,10 @@ require 'sys/proctable'
 puts "Starting up server..."
 
 #the server takes the port as an argument
+port = ARGV[0]
 
 #get parameters through a configuration file 
 configuration = eval(File.open('server.properties') {|f| f.read })
-port = configuration[:port]
 ip = configuration[:ip] 
 redirect_ip = configuration[:redirect_ip]
 redirect_port = configuration[:redirect_port]
@@ -22,14 +22,13 @@ libreoffice = configuration[:libreoffice]
 converted = configuration[:converted]
 pid_file = configuration[:pid_file]
 #configuration parameters: 
-puts port
-puts ip
-puts redirect_ip
-puts redirect_port
-puts temp
-puts libreoffice
-puts converted
-puts pid_file
+#puts ip
+#puts redirect_ip
+#puts redirect_port
+#puts temp
+#puts libreoffice
+#puts converted
+#puts pid_file
 
 Struct.new("Pending", :to_send, :converted_file, :client_session, :name) 
 #to_send : command to be executed by the server to make the conversion
@@ -87,7 +86,6 @@ Thread.start do
 			begin
 			    file = open(@pending_work[:converted_file])
 			    if file 
-			      system('tar -czvf ' + tar_name + '.tar' + converted)
 			      puts "ok"
 			      ok = true
 			    end
@@ -95,7 +93,7 @@ Thread.start do
 			      #the file is broken or it does not exists, 
 			      #kill libreoffice 's process and convert again the file
 			      #get pid from a file
-			      system('ps -A -o pid,cmd | grep soffice > pid_file')
+			      system('ps -A -o pid,cmd | grep libreoffice > pid_file')
 			      file = File.open(pid_file, "r")
 			      line =  file.gets
 			      pid = line.match(/\d+/) 
@@ -107,9 +105,8 @@ Thread.start do
 			      File.delete(pid_file)
 			end
 		end #loop ok
-		puts "deleting temp files"
+		puts "deleting temp file"
 		File.delete(temp + @pending_work[:name])
-		File.delete(converted)
 		puts "client_session"
 		@pending_work[:client_session].puts "ACK"
 		puts "sending ACK"   
@@ -146,7 +143,7 @@ Thread.start do
 	  
 	  puts "plus: "
 	  puts plus
-	  to_send =uno + '-f' + format + temp + name -o converted	  
+	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + format + plus + ' ' + temp + name	  
 	  #building the path of the converted file 
 	  converted_file = converted + name.split('.')[0] + '.' + format
 	  puts "converted_file:"
