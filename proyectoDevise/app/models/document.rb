@@ -1,5 +1,4 @@
 class Document < ActiveRecord::Base
-<<<<<<< HEAD
   validates :user_id, presence: true
   validates :format, presence: true
   validates :user, presence: true
