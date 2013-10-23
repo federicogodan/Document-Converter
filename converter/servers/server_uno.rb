@@ -12,24 +12,27 @@ puts "Starting up server..."
 #the server takes the port as an argument
 
 #get parameters through a configuration file 
-configuration = eval(File.open('server.properties') {|f| f.read })
+configuration = eval(File.open('server_uno.properties') {|f| f.read })
 port = configuration[:port]
 ip = configuration[:ip] 
 redirect_ip = configuration[:redirect_ip]
 redirect_port = configuration[:redirect_port]
 temp = configuration[:temp]
-libreoffice = configuration[:libreoffice]
+uno = configuration[:uno]
 converted = configuration[:converted]
 pid_file = configuration[:pid_file]
+tar_name = configuration[:tar_name]
+
 #configuration parameters: 
 puts port
 puts ip
 puts redirect_ip
 puts redirect_port
 puts temp
-puts libreoffice
+puts uno
 puts converted
 puts pid_file
+puts tar_name
 
 Struct.new("Pending", :to_send, :converted_file, :client_session, :name) 
 #to_send : command to be executed by the server to make the conversion
@@ -87,7 +90,7 @@ Thread.start do
 			begin
 			    file = open(@pending_work[:converted_file])
 			    if file 
-			      system('tar -czvf ' + tar_name + '.tar' + converted)
+			      system('tar -czvf ' + tar_name + '.tar ' + converted)
 			      puts "ok"
 			      ok = true
 			    end
@@ -109,7 +112,7 @@ Thread.start do
 		end #loop ok
 		puts "deleting temp files"
 		File.delete(temp + @pending_work[:name])
-		File.delete(converted)
+		system('rm -r ' + converted)
 		puts "client_session"
 		@pending_work[:client_session].puts "ACK"
 		puts "sending ACK"   
@@ -137,6 +140,7 @@ Thread.start do
 	    end
 	    file.write session.read(size)
 	  end
+	  system('chmod -R 777 ' + temp)
 	    
 	  if (format=='txt') #TODO: filter through the format in function of the original one 
 	      plus = ':Text'
@@ -146,7 +150,9 @@ Thread.start do
 	  
 	  puts "plus: "
 	  puts plus
-	  to_send =uno + '-f' + format + temp + name -o converted	  
+	  puts "to_send:"
+	  to_send = uno + ' -f ' + format + ' ' + ' -o ' + converted + ' ' + temp + name 
+	  puts to_send	  
 	  #building the path of the converted file 
 	  converted_file = converted + name.split('.')[0] + '.' + format
 	  puts "converted_file:"

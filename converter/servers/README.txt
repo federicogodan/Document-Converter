@@ -16,11 +16,11 @@ parámetros:
 port------------>puerto por el cual el servidor atenderá clientes
 ip-------------->ip donde se ejecuta el servidor
 redirect_ip----->ip donde se ejecua el redirecy_server
-redirect_port--->puerto en el cual el redirect_server escucha a los 			 servidores
-temp ------------>ruta para archivos temporales del servidor
-libreoffice ----->ruta de instancia de libreoffice que será ejecutada por   			  el servidor
+redirect_port--->puerto en el cual el redirect_server escucha a los servidores
+temp ------------>ruta para archivos temporales del servidor 
+libreoffice ----->ruta de instancia de libreoffice que será ejecutada por el servidor
 converted ------->ruta donde se guardarán los archivos convertidos
-pid_file--------->nombre de archivo donde se guardará el pid del proceso 			  libreoffice al ejecutar el comando para realizar la 			  conversión
+pid_file--------->nombre de archivo donde se guardará el pid del proceso libreoffice al ejecutar el comando para realizar la 			  conversión
 *ejecución : ruby server.rb 
 
 Ejecución del 'client'
