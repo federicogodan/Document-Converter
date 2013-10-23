@@ -1,0 +1,8 @@
+<p id="notice"><%= notice %></p>
+
+<p>Document Name: <%= @document.name %> </p>
+<p>Document URL: <%=link_to @document.file %> </p>
+<p>Creation date: <%= @document.creation_date %> </p>
+<p>Original Format: <%= @document.format.name %> </p>
+<%= link_to 'Edit', edit_document_path(@document) %> |
+<%= link_to 'Back', documents_path %>
