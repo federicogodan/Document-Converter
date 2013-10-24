@@ -8,8 +8,13 @@ class PostsController < ApplicationController
       require 'socket'
       redirect_socket = TCPSocket.new( "177.71.195.102", 8102 )
       puts "getting server socket"
+      
       server_ip = redirect_socket.gets.delete("\n")
-      server_port = redirect_socket.gets.delete("\n").to_i
+      server_port = redirect_socket.gets.delete("\n").to_i   
+      
+      puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+      puts server_ip
+      puts server_port
       
       clientSession = TCPSocket.new( server_ip , server_port)
       puts "sending ACK"
@@ -24,12 +29,19 @@ class PostsController < ApplicationController
       clientSession.puts size
       
       #Association between user and document
-      user = User.find(session[:user_id])
-      doc = Document.new(document_number:1,name:file_name,uploading:true)
-      doc.format = Format.find(2)
-      user.document = doc
+      us = User.find_by_nick(cookies[:nickname])      
+      uc = UsersCounter.find_by_user_id(us.id)      
+      doc = Document.new(document_number:doc_number,name:file_name,uploading:true)
+      doc.format = Format.find_by_name(params[:post][:uploaded_file].original_filename.split('.')[1]) #File.extname(params[:post][:uploaded_file].original_filename)       
+      doc.user = us
       doc.save
-      user.save
+      us.documents.push(doc)
+      us.save
+      
+      #actualizing the counter's column
+      uc.update_attributes(counter:doc_number + 1)
+      uc.save
+      
       
       File.open(file_path, 'r') do |file|  
            while(size - 102400 > 0 ) 
@@ -41,7 +53,8 @@ class PostsController < ApplicationController
       puts "waiting response"
       serverMessage = clientSession.gets
       puts "Recieved: " 
-puts serverMessage
-clientSession.close
+      puts serverMessage
+      clientSession.close
   end
+  
 end

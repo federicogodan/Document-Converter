@@ -8,6 +8,8 @@ ProyectoDevise::Application.routes.draw do
   get "user/new_file"
   get "posts/new"
   post "posts/create"
+
+  resources :documents
   
   
   #devise_for :users #BEFORE
