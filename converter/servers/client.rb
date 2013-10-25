@@ -11,6 +11,7 @@ redirect_port = configuration[:redirect_port]
 require 'socket'
 redirect_socket = TCPSocket.new( redirect_ip, redirect_port)
 puts "getting server socket"
+redirect_socket.puts size
 server_ip = redirect_socket.gets.delete("\n")
 puts "ip: "
 puts server_ip 
@@ -26,7 +27,6 @@ redirect_socket.puts "ACK"
 clientSession.puts format
 clientSession.puts file_name
 #system "sudo chmod 777 " + file_path
-
 clientSession.puts size
 File.open(file_path, 'r') do |file|  
    while(size - 102400 > 0 ) 
