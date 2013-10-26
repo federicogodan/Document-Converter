@@ -1,0 +1,8 @@
+<font color="green">Upload your document</font><br></br>
+<%= form_for @document do |f| %>
+  <%= f.label :name, 'Name' %>:
+  <%= f.text_field :name %><br></br>
+  <%= f.label :file, 'File' %>:
+  <%= f.file_field :file %><br></br>
+  <%= f.submit 'Upload' %>
+<% end %>

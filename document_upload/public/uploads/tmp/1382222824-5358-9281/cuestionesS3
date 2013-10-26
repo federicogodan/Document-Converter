@@ -1,0 +1,2 @@
+Origins CORS: hay que setear las urls que quieramos permitir
+	      el acceso una vez en produccion.

@@ -1,0 +1,5 @@
+<%= form_for @document, url: {action: "upload_document"}, html: {class: "nifty_form"} do |f| %>
+  <%= label_tag(:name, "Name:") %>
+  <%= f.text_field :name %>
+  <%= f.submit "Upload" %>
+<% end %>

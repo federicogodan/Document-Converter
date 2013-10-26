@@ -1,0 +1,20 @@
+<font color="green">Welcome, click the link to <%= link_to("upload a document", "documents/new")%></font>
+<br></br>
+<font color="green">Or pehaps you desire to download one</font>
+<br></br>
+<table class="table table-condensed">
+  <tr>
+    <th>Name</th>
+    <th>File</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @document.each do |d| %>
+    <tr>
+      <td><%= d.name %></td>
+      <td><%= link_to d.file,  d.file_url %></td>
+    </tr>
+    <% end %>
+</table>
+

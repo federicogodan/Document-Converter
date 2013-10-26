@@ -1,0 +1,1 @@
+<%= link_to "Upload a file", document_upload_document %>
