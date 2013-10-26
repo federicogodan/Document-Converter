@@ -1,8 +1,8 @@
 class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
-  def index
-    @documents = Document.find(:user_id => @current_user.id)
+  def index 
+    @documents = User.find_by_nick(cookies[:nickname]).documents
 
     respond_to do |format|
       format.html # index.html.erb
@@ -32,17 +32,24 @@ class DocumentsController < ApplicationController
     end
   end
 
-  # GET /documents/1/edit
-  def edit
-    @document = Document.find(params[:id])
-  end
 
   # POST /documents
   # POST /documents.json
   def create
-    @document = Document.new(params[:document])
+    puts params[:document][:file].original_filename
+    puts '#'*50
+      #{}"document"=>{"document_number"=>"12", , "name"=>"fsdfs", "file"=>#<ActionDispatch::Http::UploadedFile:0x000000056b46a8 @original_filename="modules.order", @content_type="application/octet-stream", @headers="Content-Disposition: form-data; name=\"document[file]\"; filename=\"modules.order\"\r\nContent-Type: application/octet-stream\r\n", @tempfile=#<Tempfile:/tmp/RackMultipart20131024-13630-n9vm71>>}, "commit"=>"Sign up"}
+   
+    @document = Document.new
+    @document.user_id = User.find_by_nick(cookies[:nickname]).id
+    @document.format_id = params[:document][:format_id]
+    @document.file = params[:document][:file]
+    @document.name = params[:document][:file].original_filename
+    puts params[:document][:file]
+
 
     respond_to do |format|
+
       if @document.save
         format.html { redirect_to @document, notice: 'Document was successfully created.' }
         format.json { render json: @document, status: :created, location: @document }

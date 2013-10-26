@@ -2,17 +2,10 @@
 
 <%= form_for(@document) do |f| %>
   <div class="field">
-  	<%= f.label :Document_number %><br />
-    <%= f.text_field :document_number %><br />
-    <%= f.label :User_ID %><br />
-    <%= f.text_field :user_id %><br />
     <%= f.label :format_id %><br />
     <%= f.text_field :format_id %><br />
-    <%= f.label :Document_name %><br />
-    <%= f.text_field :name %><br />
     <%= f.label :Document_file %><br />
     <%= f.file_field :file %>
-
   </div>
   <div class="actions">
     <%= f.submit "Sign up" %>

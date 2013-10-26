@@ -14,7 +14,6 @@
     <td>Document URL: <%=link_to document.file %> </td>
     <td>Creation date: <%= document.created_at %> </td>
     <td><%= link_to 'Show', document %></td>
-    <td><%= link_to 'Edit', edit_document_path(document) %></td>
     <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
