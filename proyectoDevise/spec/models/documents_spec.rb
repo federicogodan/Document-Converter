@@ -2,19 +2,11 @@ require "spec_helper"
 
 describe Document do
   
-#"document_number"
-#"creation_date"
-#"name"
-#"uploading"
-#"original_extension"
-#"created_at"
-#"updated_at"
-# "user_id"
-  
   it 'create a document' do
-    doc = Document.new(document_number:1, name:"documento1")
-    doc.user = register_user
-    doc.format = add_format
+    u = register_user
+    f = add_format
+    doc = Document.new(user_id:u.id, name:"documento1", format:f)
+    
     doc.valid?.should == true
   end
   
