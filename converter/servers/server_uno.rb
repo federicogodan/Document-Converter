@@ -46,8 +46,8 @@ work = ConditionVariable.new
 #start server connection
 server = TCPServer.new(port)
 redirect_socket = TCPSocket.new(redirect_ip, redirect_port)
-info = ip + ',' + port + ',U'
-redirect_socket.puts(info)
+redirect_socket.puts(ip)
+redirect_socket.puts(port)
 serverMessage = redirect_socket.gets
 
 #thread charged on the conversion, takes an element from the queue and execute the command it 
