@@ -1,0 +1,9 @@
+{
+	:port => 8005,
+	:file_path => 'pruebas/Untitled3.odt',
+	:format => 'txt',
+	:file_name => 'Untitled34.odt',
+	:size => 8008,
+	:redirect_ip  => 'localhost',
+	:redirect_port  => 8102
+}
