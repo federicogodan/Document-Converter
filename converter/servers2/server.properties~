@@ -8,5 +8,5 @@
 	:converted => '/home/mika/Escritorio/PIS/prototipoMika/Document-Converter/converter/servers/',
 	:pid_file => 'pid_file',
 	:url_backet => '',
-	:uri =>
+	:uri => ''
 }

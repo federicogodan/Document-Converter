@@ -18,6 +18,7 @@ puts "Starting up redirect_server..."
 accept_server = TCPServer.new(port_servers)
 accept_unoconv = TCPServer.new(port_unoconv)
 accept_client = TCPServer.new(port_clients)
+accept_client2 = TCPServer.new(8200)
 
 Thread.start do #thread to attend a unoconv server
 	puts "Waiting for a server connection"
@@ -111,7 +112,7 @@ end
 
 Thread.start do
 	puts "Waiting for a client connection"
-	while (session_client = accept_unoconv.accept)
+	while (session_client = accept_client2.accept)
 		Thread.start do
 			puts "Accepting a client"
 			size = session_client.gets.delete("\n").to_i
