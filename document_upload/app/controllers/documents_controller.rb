@@ -17,5 +17,8 @@ class DocumentsController < ApplicationController
   def show
     @document = Document.find(params[:id])
   end
-  
+  def self.remove_old_files
+    puts "se imprime cada un minuto*******************************************************"
+    puts Date.current
+  end
 end
