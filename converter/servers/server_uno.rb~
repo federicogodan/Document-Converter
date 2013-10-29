@@ -47,7 +47,6 @@ work = ConditionVariable.new
 server = TCPServer.new(port)
 redirect_socket = TCPSocket.new(redirect_ip, redirect_port)
 info = ip + ',' + port + ',U'
-puts info
 redirect_socket.puts(info)
 serverMessage = redirect_socket.gets
 

@@ -1,5 +1,0 @@
-{
-	:ip_redirect => 'localhost', 
-	:port_unoconv => 8102,
-	:port_normal => 8103
-}
