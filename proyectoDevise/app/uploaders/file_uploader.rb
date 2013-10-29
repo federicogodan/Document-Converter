@@ -16,6 +16,43 @@ class FileUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
+  after :store, :convert
+
+  def convert(file)
+    require 'socket'
+    configuration = eval(File.open('controller.properties') {|f| f.read })
+    ip_redirect = configuration[:ip_redirect]
+    format_dest = model.converted_document.format.name
+    puts '#'*50
+    puts format_dest
+    puts '#'*50
+    if (format_dest=='html') && (format_origin=='odp' || format_origin=='ppt')
+      redirect_port = configuration[:port_unoconv]
+    puts "getting server socket"
+    else
+      redirect_port = configuration[:port_libreoffice]
+    end
+    puts '#'*50
+    puts ip_redirect
+    puts redirect_port
+    puts '#'*50
+    redirect_socket = TCPSocket.new(ip_redirect, redirect_port)
+    redirect_socket.puts "16000"
+    server_ip = redirect_socket.gets.delete("\n")
+    server_port = redirect_socket.gets.delete("\n").to_i
+    
+    clientSession = TCPSocket.new( server_ip , server_port)
+    puts "sending ACK"
+    redirect_socket.puts "ACK" 
+    clientSession.puts '{"format":"' + format + '","name":"' + file_name + '",URL":' +
+    file_path + '",id":' + file.id + '"}' 
+    puts "waiting response"
+    serverMessage = clientSession.gets
+    puts "Recieved: " 
+    puts serverMessage
+    clientSession.close
+end
+
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
   #   # For Rails 3.1+ asset pipeline compatibility:
