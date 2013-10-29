@@ -20,10 +20,13 @@ class FileUploader < CarrierWave::Uploader::Base
 
   def convert(file)
     require 'socket'
+    puts '######CONTROLLER##########'
     configuration = eval(File.open('controller.properties') {|f| f.read })
+    puts '#########CONFIGURATION########'
     ip_redirect = configuration[:ip_redirect]
+    puts ip_redirect
     format_dest = model.converted_document.format.name
-    puts '#'*50
+    puts format_dest
     puts format_dest
     puts '#'*50
     if (format_dest=='html') && (format_origin=='odp' || format_origin=='ppt')
