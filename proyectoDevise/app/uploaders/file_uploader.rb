@@ -23,6 +23,9 @@ class FileUploader < CarrierWave::Uploader::Base
     configuration = eval(File.open('controller.properties') {|f| f.read })
     ip_redirect = configuration[:ip_redirect]
     format_dest = model.converted_document.format.name
+    file_name = model.name
+    file_url = model.file.url
+    file_id = model.id.to_s
     puts '#'*50
     puts format_dest
     puts '#'*50
@@ -41,15 +44,16 @@ class FileUploader < CarrierWave::Uploader::Base
     server_ip = redirect_socket.gets.delete("\n")
     server_port = redirect_socket.gets.delete("\n").to_i
     
+    puts '#-'*25
+    puts model.to_json
+    
     clientSession = TCPSocket.new( server_ip , server_port)
     puts "sending ACK"
     redirect_socket.puts "ACK" 
-    clientSession.puts '{"format":"' + format + '","name":"' + file_name + '",URL":' +
-    file_path + '",id":' + file.id + '"}' 
-    puts "waiting response"
-    serverMessage = clientSession.gets
-    puts "Recieved: " 
-    puts serverMessage
+    msg_to_send = '{"format":"' + format_dest + '","name":"' + file_name + '","URL":"' + file_url + '","id":"' + file_id + '"}' 
+    puts msg_to_send
+    clientSession.puts msg_to_send
+    puts "document transfered"
     clientSession.close
 end
 
