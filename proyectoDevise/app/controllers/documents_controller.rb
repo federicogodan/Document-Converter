@@ -38,6 +38,7 @@ class DocumentsController < ApplicationController
   def create
     #Create document from upload
     @document = Document.new
+    puts "document-new"
     @document.user_id = User.find_by_nick(cookies[:nickname]).id
     #TODO Obtener format original sacando del name
     @document.format_id = params[:document][:format_id]
