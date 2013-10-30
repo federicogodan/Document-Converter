@@ -32,7 +32,7 @@ class PostsController < ApplicationController
       us = User.find_by_nick(cookies[:nickname])      
       uc = UsersCounter.find_by_user_id(us.id)      
       doc = Document.new(document_number:doc_number,name:file_name,uploading:true)
-      doc.format = Format.find_by_name(params[:post][:uploaded_file].original_filename.split('.')[1]) #File.extname(params[:post][:uploaded_file].original_filename)       
+      File.extname(params[:post][:uploaded_file].original_filename)       
       doc.user = us
       doc.save
       us.documents.push(doc)
