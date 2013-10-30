@@ -40,14 +40,16 @@ class DocumentsController < ApplicationController
     @document = Document.new
     puts "document-new"
     @document.user_id = User.find_by_nick(cookies[:nickname]).id
-    #TODO Obtener format original sacando del name
+    #TODO Obtener format original sacando del name, sacar del nombre extension
     @document.format_id = params[:document][:format_id]
     @document.file = params[:document][:file]
+    @document.name = params[:document][:file].original_filename
+    @document.size = params[:document][:file].size
+    #converted document initialization
     @document.converted_document = ConvertedDocument.new
     @document.converted_document.format_id = 2
     @document.converted_document.set_to_converting
-    @document.name = params[:document][:file].original_filename
-    puts params[:document][:file]
+    puts "matias"*20
 
 
     respond_to do |format|

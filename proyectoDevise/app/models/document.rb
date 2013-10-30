@@ -1,9 +1,10 @@
 class Document < ActiveRecord::Base
   validates :user_id, presence: true
   validates :format, presence: true
-  #validates :user, presence: true
 
-  attr_accessible :user_id, :name, :file, :format_id, :size
+  attr_accessible :expired, :file, :format_id, :name,
+                  :size, :user_id
+  
   mount_uploader :file, FileUploader
 
   #A document belongs to a user, who upload that document for the future conversion
@@ -14,5 +15,4 @@ class Document < ActiveRecord::Base
   
   #A document belongs to a unique format
   belongs_to :format
-  
 end
