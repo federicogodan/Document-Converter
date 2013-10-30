@@ -14,6 +14,7 @@
 /log/*.log
 /tmp
 /public/tmp
+/public/upload
 
 # Ignore .project file
 .project
