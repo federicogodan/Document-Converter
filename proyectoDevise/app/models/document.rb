@@ -3,7 +3,7 @@ class Document < ActiveRecord::Base
   validates :format, presence: true
   #validates :user, presence: true
 
-  attr_accessible :user_id, :name, :file, :format_id
+  attr_accessible :user_id, :name, :file, :format_id, :uploading, :document_number
   mount_uploader :file, FileUploader
 
   #A document belongs to a user, who upload that document for the future conversion
