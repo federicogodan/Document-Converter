@@ -7,6 +7,7 @@
 require 'socket'
 #require 'sys/proctable'
 require 'json'
+require 'net/http'
 
 puts "Starting up server..."
 
@@ -22,7 +23,8 @@ temp = configuration[:temp]
 libreoffice = configuration[:libreoffice]
 converted = configuration[:converted]
 pid_file = configuration[:pid_file]
-url_backet = configuration[:url_backet]
+url_backet_put = configuration[:url_backet_put]
+url_backet_post = configuration[:url_backet_post] 
 uri = configuration[:uri]
 
 #configuration parameters: 
@@ -34,7 +36,7 @@ puts temp
 puts libreoffice
 puts converted
 puts pid_file
-puts url_backet
+
 
 Struct.new("Pending", :to_send, :converted_file, :client_session, :name, :url, :id) 
 #to_send : command to be executed by the server to make the conversion
@@ -111,19 +113,27 @@ Thread.start do
 			      File.delete(pid_file)
 			end
 		end #loop ok
-		file = File.open(@pending_work[:converted_file]) 
-		size = file.size
-		url_converted = url_backet + '/' + @pending_work[:id]
-		system('s3cmd put ' + @pending_work[:converted_file] + url_converted)
-		message = '{"status":"finish","id":"' + @pending_work[:id] + '","size":"' + size + '","url":"' +
-		    url_converted +'/' + file.file_name + '"}'
+		puts "sending post message"
+		file = File.basename(@pending_work[:converted_file]) 
+		puts "1"
+		size = File.size(@pending_work[:converted_file]) 
+		puts size
+		url_converted = url_backet_put + @pending_work[:id]
+		puts "2"
+		url = url_converted + '/' + file
+		puts url
+		system('s3cmd put ' + @pending_work[:converted_file] + ' ' + url)
+		puts "subio!"
+		url_post = url_backet_post +  @pending_work[:id] + '/' + file
+		message = "{\"status\":\"finish\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + size.to_s + "\",\"url\":\"\"" + url_post + "\"}"
 		puts message
 		puts "deleting temp file"
-		File.delete(temp + @pending_work[:name])
-		File.delete(converted_file)
+		File.delete(temp + @pending_work[:name]) 
+		File.delete(@pending_work[:converted_file])
 		puts "client_session"
-		uri = URI(uri)
-		res = Net::HTTP.post_form(uri, 'message' => message)
+		puts uri
+		uri_post = URI(uri)
+		res = Net::HTTP.post_form(uri_post, 'message' => message)
 		puts res.body
 		puts "sending post message"   
    end#loop true
@@ -134,25 +144,33 @@ Thread.start do
       while (session = server.accept)
 	Thread.start do
 	  puts "accepting client"
-	  message = session.gets.delete("\n").
+	  
+	  message = session.gets.delete("\n")
+	  
+	  puts message
 	  dict = JSON.parse(message)
-	  format = dict["format"]
+	  
+	  formato = dict["format"]
+	  puts formato
 	  name = dict["name"]
+	  puts name
 	  url = dict["URL"]
+	  puts url
 	  id = dict["id"]
+	  puts id
 	  
-	  system('cd ' + temp)
-	  system('s3cmd get ' + url)
+	  session.puts "ACK"
+	  system('s3cmd get ' + url + ' ' + temp)
 	  
-	  if (format=='txt') #TODO: filter through the format in function of the original one 
+	  if (formato=='txt') #TODO: filter through the format in function of the original one 
 	      plus = ':Text'
 	  else
 	      plus = ''
 	  end
 	  
-	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + format + plus + ' ' + temp + name	  
+	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + formato + plus + ' ' + temp + name	  
 	  #building the path of the converted file 
-	  converted_file = converted + name.split('.')[0] + '.' + format
+	  converted_file = converted + name.split('.')[0] + '.' + formato
 	  puts "converted_file:"
 	  puts converted_file
 	  #push into queue

@@ -94,11 +94,11 @@ Thread.start do
 			   puts "Server found, retriving it to the client"   
 	  		   @to_send = less_loaded_servers.first
 			   puts "Updating server load"  
-			   less_loaded_servers.first["server_load"] = size + less_loaded_servers.first["server_load"]
-			   puts "++ " + less_loaded_servers.first["server_load"] 
-			   puts "Updating server load"
-			   less_loaded_node["node_load"] = size + less_loaded_node["node_load"]
-			   puts "++ " + less_loaded_node["node_load"] 
+			   #less_loaded_servers.first["server_load"] = size + less_loaded_servers.first["server_load"]
+			   #puts "++ " + less_loaded_servers.first["server_load"] 
+			   #puts "Updating server load"
+			   #less_loaded_node["node_load"] = size + less_loaded_node["node_load"]
+			   #puts "++ " + less_loaded_node["node_load"] 
 			}
 			puts  @to_send["server_ip"] + ":" + @to_send["server_port"]
 			session_client.puts @to_send["server_ip"]
