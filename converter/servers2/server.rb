@@ -172,7 +172,7 @@ Thread.start do
 	      plus = ''
 	  end
 	  
-	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + formato + plus + ' ' + temp + name	  
+	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + formato + plus + ' --outdir ' + converted + ' ' + temp + name	  
 	  #building the path of the converted file 
 	  converted_file = converted + name.split('.')[0] + '.' + formato
 	  puts "converted_file:"
