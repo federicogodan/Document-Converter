@@ -33,7 +33,7 @@ production:
   adapter: mysql2
   host: localhost
   port: 3306
-  database: doconvprod
+  database: doconvtest
   username: root
   password: nicolas 
   pool: 5
