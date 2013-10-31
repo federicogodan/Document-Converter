@@ -3,20 +3,10 @@
 # It's helpful, but not entirely necessary to understand cron before proceeding.
 # http://en.wikipedia.org/wiki/Cron
 
-# Example:
-#
-# set :output, "/path/to/my/cron_log.log"
-#
- every 1.hours do
-   #command "/usr/bin/some_great_command"
-   runner "docments_controller.DeleteOldFiles"
-   #rake "some:great:rake:task"
+set :output, { :standard => "/Logs/log.log", :error => "/Logs/errors.log" }
+
+ every 1.minutes do
+   runner "ConverterDocumentController.delete_old_files"
  end
-#   def self.DeleteOldFiles    -------> en documents?
-#      puts 'class method'
-#    end
-# every 4.days do
-#   runner "AnotherModel.prune_old_records"
-# end
 
 # Learn more: http://github.com/javan/whenever

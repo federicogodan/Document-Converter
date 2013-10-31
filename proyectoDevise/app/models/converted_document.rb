@@ -1,12 +1,28 @@
 class ConvertedDocument < ActiveRecord::Base
-  validates_presence_of :current_extension
-  
-  attr_accessible :created_at, :format_id,
-                :download_link, :size_in_bytes, :status
-                
-  #A converted document belongs to an original document (before the conversion)
-  belongs_to :document                
-  
-  #The converted document belongs to one and only one format
-  belongs_to :format  
+
+  STATUSES = {:converting => 0, :failed => 1, :ready => 2}
+
+  validates :status, inclusion: {in: STATUSES.values}
+
+  attr_accessible :size, :download_link, :status,
+                  :format_id, :document_id
+
+  #method to set the status to converting
+  def set_to_converting
+  	self.status = STATUSES[:converting]
+  end
+
+  #method to set the status to converting
+  def set_to_failed
+  	self.status = STATUSES[:failed]
+  end
+
+  #method to set the status to converting
+  def set_to_ready
+  	self.status = STATUSES[:ready]
+  end
+
+  belongs_to :document
+  belongs_to :format
+
 end

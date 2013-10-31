@@ -36,16 +36,20 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.json
   def create
-    puts params[:document][:file].original_filename
-    puts '#'*50
-      #{}"document"=>{"document_number"=>"12", , "name"=>"fsdfs", "file"=>#<ActionDispatch::Http::UploadedFile:0x000000056b46a8 @original_filename="modules.order", @content_type="application/octet-stream", @headers="Content-Disposition: form-data; name=\"document[file]\"; filename=\"modules.order\"\r\nContent-Type: application/octet-stream\r\n", @tempfile=#<Tempfile:/tmp/RackMultipart20131024-13630-n9vm71>>}, "commit"=>"Sign up"}
-   
+    #Create document from upload
     @document = Document.new
+    puts "document-new"
     @document.user_id = User.find_by_nick(cookies[:nickname]).id
+    #TODO Obtener format original sacando del name, sacar del nombre extension
     @document.format_id = params[:document][:format_id]
     @document.file = params[:document][:file]
     @document.name = params[:document][:file].original_filename
-    puts params[:document][:file]
+    @document.size = params[:document][:file].size
+    #converted document initialization
+    @document.converted_document = ConvertedDocument.new
+    @document.converted_document.format_id = 1
+    @document.converted_document.set_to_converting
+    puts "matias"*20
 
 
     respond_to do |format|
@@ -86,6 +90,5 @@ class DocumentsController < ApplicationController
       format.html { redirect_to documents_url }
       format.json { head :no_content }
     end
-  end 
-  
+  end
 end
