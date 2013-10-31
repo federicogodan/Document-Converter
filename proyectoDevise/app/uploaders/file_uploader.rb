@@ -31,21 +31,27 @@ class FileUploader < CarrierWave::Uploader::Base
     file_url = "s3" + url[0].split('https')[1] + url[1]
     puts file_url
     #https://magicrepository.s3.amazonaws.com/uploads/document/file/21/prueba1.odt
-    
+    #TODO: obtain format_origin
+    format_origin = 'odp'
     file_id = model.id.to_s
+    
+    puts "getting server socket"
     if (format_dest=='html') && (format_origin=='odp' || format_origin=='ppt')
       redirect_port = configuration[:port_unoconv]
-    puts "getting server socket"
     else
       redirect_port = configuration[:port_libreoffice]
     end
     
-    puts ip_redirect
     puts redirect_port
     redirect_socket = TCPSocket.new(ip_redirect, redirect_port)
     redirect_socket.puts "16000"
     server_ip = redirect_socket.gets.delete("\n")
     server_port = redirect_socket.gets.delete("\n").to_i
+    puts "server_ip"
+    puts server_ip
+    puts "server_port"
+    puts server_port    
+    
     
     puts '#-'*25
     puts model.to_json
