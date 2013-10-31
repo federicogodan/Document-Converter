@@ -2,6 +2,11 @@
 #TODO: catch timeout exception (when the client shutdown by surprise,
 # the server must to recover and not explode)
 ###
+###
+#TODO: put temporary names to the files because any problem during the convertion 
+#with the name of original file 
+###
+#TODO: filter through the format in function of the original one (for example txt:Text)
 
 
 require 'socket'
@@ -42,6 +47,9 @@ Struct.new("Pending", :to_send, :converted_file, :client_session, :name, :url, :
 #to_send : command to be executed by the server to make the conversion
 #converted_file : path to the converted file
 #client_session : client's socket 
+#name : file's name
+#url: url s3
+#id: file's id
 
 #queue of pending conversions which has elements of 'Pending' Objects
 queue_pending = Queue.new
@@ -115,15 +123,12 @@ Thread.start do
 		end #loop ok
 		puts "sending post message"
 		file = File.basename(@pending_work[:converted_file]) 
-		puts "1"
 		size = File.size(@pending_work[:converted_file]) 
 		puts size
 		url_converted = url_backet_put + @pending_work[:id]
-		puts "2"
 		url = url_converted + '/' + file
 		puts url
 		system('s3cmd put ' + @pending_work[:converted_file] + ' ' + url)
-		puts "subio!"
 		url_post = url_backet_post +  @pending_work[:id] + '/' + file
 		message = "{\"status\":\"finish\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + size.to_s + "\",\"url\":\"\"" + url_post + "\"}"
 		puts message
@@ -134,8 +139,7 @@ Thread.start do
 		puts uri
 		uri_post = URI(uri)
 		res = Net::HTTP.post_form(uri_post, 'message' => message)
-		puts res.body
-		puts "sending post message"   
+		puts res.body   
    end#loop true
 end#thread 
 
