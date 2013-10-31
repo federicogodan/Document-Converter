@@ -10,7 +10,8 @@ ProyectoDevise::Application.routes.draw do
   post "posts/create"
 
   resources :documents
-  
+
+  post '/notification', to: 'notification#create'  
   
   #devise_for :users #BEFORE
   ActiveAdmin.routes(self)

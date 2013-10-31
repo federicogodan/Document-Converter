@@ -47,7 +47,7 @@ class DocumentsController < ApplicationController
     @document.size = params[:document][:file].size
     #converted document initialization
     @document.converted_document = ConvertedDocument.new
-    @document.converted_document.format_id = 2
+    @document.converted_document.format_id = 1
     @document.converted_document.set_to_converting
     puts "matias"*20
 
