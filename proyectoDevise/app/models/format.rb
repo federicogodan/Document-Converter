@@ -12,7 +12,7 @@ class Format < ActiveRecord::Base
                                      association_foreign_key: "destiniy_id"
   
   #A single format could have many documents to be converted
-  has_many :documents
+  #has_many :documents
   
   #A single format could have many converted documents
   has_many :converted_documents
