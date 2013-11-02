@@ -7,9 +7,13 @@ ProyectoDevise::Application.routes.draw do
   get "user/home"
   get "user/new_file"
   get "posts/new"
+  get "convert/upload"
+  get "convert/get_formats"
   post "posts/create"
+  
 
   resources :documents
+  #resources :convert
 
   post '/notification', to: 'notification#create'  
   
