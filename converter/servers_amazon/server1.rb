@@ -13,6 +13,7 @@ require 'socket'
 #require 'sys/proctable'
 require 'json'
 require 'net/http'
+require 'fileutils'
 
 puts "Starting up server..."
 
@@ -31,6 +32,7 @@ pid_file = configuration[:pid_file]
 url_backet_put = configuration[:url_backet_put]
 url_backet_post = configuration[:url_backet_post] 
 uri = configuration[:uri]
+name_temp_file = configuration[:name_temp_file]
 
 #configuration parameters: 
 puts port
@@ -43,7 +45,7 @@ puts converted
 puts pid_file
 
 
-Struct.new("Pending", :to_send, :converted_file, :client_session, :name, :url, :id) 
+Struct.new("Pending", :to_send, :converted_file, :name, :url, :id, :format_dest, :format_origin) 
 #to_send : command to be executed by the server to make the conversion
 #converted_file : path to the converted file
 #client_session : client's socket 
@@ -109,7 +111,7 @@ Thread.start do
 			      #the file is broken or it does not exists, 
 			      #kill libreoffice 's process and convert again the file
 			      #get pid from a file
-			      system('ps -A -o pid,cmd | grep libreoffice > pid_file')
+			      #system('ps -A -o pid,cmd | grep libreoffice > pid_file')
 			      file = File.open(pid_file, "r")
 			      line =  file.gets
 			      pid = line.match(/\d+/) 
@@ -125,17 +127,21 @@ Thread.start do
 		file = File.basename(@pending_work[:converted_file]) 
 		size = File.size(@pending_work[:converted_file]) 
 		puts size
-		url_converted = url_backet_put + @pending_work[:id]
-		url = url_converted + '/' + file
+		url_converted = url_backet_put + @pending_work[:id] + '/'
+		url = url_converted  + @pending_work[:name] + '.' +  @pending_work[:format_dest]
 		puts url
-		system('s3cmd put ' + @pending_work[:converted_file] + ' ' + url)
-		url_post = url_backet_post +  @pending_work[:id] + '/' + file
+		command = 's3cmd put ' + @pending_work[:converted_file] + ' ' + "\'"+ url + "\'"
+		puts command
+		system(command)
+		url_post = url_backet_post +  @pending_work[:id] + '/' + @pending_work[:name] + '.' +  @pending_work[:format_dest]
 		message = "{\"status\":\"finish\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + size.to_s + "\",\"url\":\"\"" + url_post + "\"}"
 		puts message
-		puts "deleting temp file"
-		File.delete(temp + @pending_work[:name]) 
-		File.delete(@pending_work[:converted_file])
-		puts "client_session"
+		puts "deleting temp files"
+		to_delete = temp + name_temp_file + @pending_work[:id] + '.' + @pending_work[:format_origin] 
+		puts to_delete
+		FileUtils.rm(to_delete)
+		FileUtils.rm(@pending_work[:converted_file]) 
+		puts "post"
 		puts uri
 		uri_post = URI(uri)
 		res = Net::HTTP.post_form(uri_post, 'message' => message)
@@ -154,32 +160,32 @@ Thread.start do
 	  puts message
 	  dict = JSON.parse(message)
 	  
-	  formato = dict["format"]
-	  puts formato
+	  format_dest = dict["format"]
+	  puts format_dest
 	  name = dict["name"]
-	  puts name
+	  format_origin = File.extname(name)
 	  url = dict["URL"]
 	  puts url
 	  id = dict["id"]
 	  puts id
 	  
 	  session.puts "ACK"
-	  system('s3cmd get ' + url + ' ' + temp)
-	  
-	  if (formato=='txt') #TODO: filter through the format in function of the original one 
+	  system('s3cmd get ' + url + ' ' + temp + name_temp_file + id  + format_origin) 
+	  if (format_dest=='txt') #TODO: filter through the format in function of the original one 
 	      plus = ':Text'
 	  else
 	      plus = ''
 	  end
 	  
-	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + formato + plus + ' --outdir ' + converted + ' ' + temp + name	  
+	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + format_dest + plus + ' --outdir ' + converted + ' ' + temp + name_temp_file + id  + format_origin	  
 	  #building the path of the converted file 
-	  converted_file = converted + name.split('.')[0] + '.' + formato
+	  converted_file = converted + name_temp_file + id + '.' + format_dest
 	  puts "converted_file:"
 	  puts converted_file
 	  #push into queue
 	  semaphore.synchronize {
-	    pending = Struct::Pending.new(to_send, converted_file, session, name, url, id) 
+	    name_file = name.split(File.extname(name))[0]
+	    pending = Struct::Pending.new(to_send, converted_file, name_file , url, id, format_dest, File.extname(name).split('.')[1])
 	    queue_pending.push pending
 	  }
 	  mutex.synchronize {

@@ -76,58 +76,50 @@ Thread.start do
 		semaphore.synchronize {
 			  @pending_work = queue_pending.pop
 		}
-	
-		ok = false
-		while (!ok) 
-			
-			puts "to send: "
-			puts @pending_work[:to_send]
-			system(@pending_work[:to_send])
-			puts "try open file"  
-			puts @pending_work[:converted_file]
-			#try open file  
-			begin
-			    file = open(@pending_work[:converted_file])
-			    if file 
-			      system('tar -czvf ' + tar_name + '.tar ' + converted)
-			      ok = true
-			    end
-			    rescue
-			      #the file is broken or it does not exists, 
-			      #kill libreoffice 's process and convert again the file
-			      #get pid from a file
-			      system('ps -A -o pid,cmd | grep soffice > pid_file')
-			      file = File.open(pid_file, "r")
-			      line =  file.gets
-			      pid = line.match(/\d+/) 
-			      file.close
-			      aux = 'kill ' + pid.to_s
-			      puts aux
-			      system(aux)
-			      #delete file
-			      File.delete(pid_file)
-			end
-		end #loop ok
-                puts "sending post message"
-                file = File.basename(@pending_work[:converted_file]) 
-                size = File.size(tar_name + '.tar ') 
-                puts size
-                url_converted = url_backet_put + @pending_work[:id]
-                url = url_converted + '/' + file
-                puts url
-                system('s3cmd put ' + tar_name + '.tar ' + ' ' + url)
-                url_post = url_backet_post +  @pending_work[:id] + '/' + file
-                message = "{\"status\":\"finish\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + size.to_s + "\",\"url\":\"\"" + url_post + "\"}"
-                puts message
+
+		@state = "success"
+		puts "to send: "
+		puts @pending_work[:to_send]
+		system(@pending_work[:to_send])
+		puts "try open file"  
+		puts @pending_work[:converted_file]
+		#try open file  
+		begin
+		    file = open(@pending_work[:converted_file])
+		    if file 
+		      system('tar -czvf ' + tar_name + '.tar ' + converted)
+		    end
+		    rescue
+		        #send error to the client
+			@state = "faild"   
+		end
+		if (@state=="faild")
+                	puts "sending post message"
+                	file = File.basename(@pending_work[:converted_file]) 
+                	size = File.size(tar_name + '.tar ') 
+                	puts size
+                	url_converted = url_backet_put + @pending_work[:id]
+                	url = url_converted + '/' + tar_name + '.tar'
+                	puts url
+                	system('s3cmd put ' + tar_name + '.tar ' + ' ' + url)
+                	url_post = url_backet_post +  @pending_work[:id] + '/' + tar_name + '.tar'
+                	@message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + size.to_s + "\",\"url\":\"\"" + url_post + "\"}"
+                	puts "deleting converted file"
+                	FileUtils.rm_rf(converted)
+			FileUtilis.rm(tar_name + '.tar')
+			 
+		else
+			 @message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + 0 + "\",\"url\":\"\"" + "" + "\"}"
+
+		end
                 puts "deleting temp file"
                 File.delete(temp + @pending_work[:name]) 
-                FileUtils.rm_rf(converted) 
-                puts "client_session"
+                puts "sending post"
                 puts uri
                 uri_post = URI(uri)
-                res = Net::HTTP.post_form(uri_post, 'message' => message)
+                res = Net::HTTP.post_form(uri_post, 'message' => @message)
                 puts res.body
-                puts "sending post message"   
+                 
    end#loop true
 end#thread 
 

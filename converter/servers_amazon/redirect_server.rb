@@ -124,21 +124,21 @@ Thread.start do
 			   puts "Node found: " + amazon_nodes.first["node_ip"]
 			   less_loaded_node = amazon_nodes.first
 			   puts "Looking for the least loaded servers into that node"
-			   less_loaded_servers = queue_sockets.select { |s| s["server_ip"] == less_loaded_node["node_ip"] }
+			   less_loaded_servers = unoconv_servers.select { |s| s["unoconv_ip"] == less_loaded_node["node_ip"] }
 			   puts "Sorting the servers"
-			   less_loaded_servers.sort_by { |a| a["server_load"] }
+			   less_loaded_servers.sort_by { |a| a["unoconv_load"] }
 			   puts "Server found, retriving it to the client"   
 	  		   @to_send = less_loaded_servers.first
 			   puts "Updating server load"  
-			   #less_loaded_servers.first["server_load"] = size + less_loaded_servers.first["server_load"]
-			   #puts "++ " + less_loaded_servers.first["server_load"] 
+			   #less_loaded_servers.first["unoconv_load"] = size + less_loaded_servers.first["unoconv_load"]
+			   #puts "++ " + less_loaded_servers.first["unoconv_load"] 
 			   #puts "Updating server load"
 			   #less_loaded_node["node_load"] = size + less_loaded_node["node_load"]
 			   #puts "++ " + less_loaded_node["node_load"] 
 			}
-			puts  @to_send["server_ip"] + ":" + @to_send["server_port"]
-			session_client2.puts @to_send["server_ip"]
-			session_client2.puts @to_send["server_port"]
+			puts  @to_send["unoconv_ip"]  + ":" + @to_send["unoconv_port"]
+			session_client2.puts @to_send["unoconv_ip"]
+			session_client2.puts @to_send["unoconv_port"]
 			serverMessage = session_client2.gets
 			puts "Recieved serverMessage: " + serverMessage
 			session_client2.close
