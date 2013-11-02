@@ -15,4 +15,21 @@ class Document < ActiveRecord::Base
   
   #A document belongs to a unique format
   belongs_to :format
+
+  #this function is called when a document finishes his conversion
+  def update_converted_document(status, document_url, size)
+    #update the document atrributes
+    #destroy the file stored in 
+    #update the converted document attributes
+    converted_document = self.converted_document
+    if status == "OK"
+      converted_document.download_link = document_url
+      converted_document.size = size
+      converted_document.set_to_ready
+    else
+      converted_document.set_to_failed
+    end
+    converted_document.save
+  end
+
 end

@@ -60,9 +60,7 @@ class FileUploader < CarrierWave::Uploader::Base
       puts "server_ip"
       puts server_ip
       puts "server_port"
-      puts server_port    
-    
-      
+      puts server_port      
       puts '#-'*25
       puts model.to_json
       
@@ -70,7 +68,6 @@ class FileUploader < CarrierWave::Uploader::Base
       puts "sending ACK"
       redirect_socket.puts "ACK" 
       msg_to_send = "{\"format\":\"" + format_dest + "\",\"name\":\"" + file_name + "\",\"URL\":\"" + file_url + "\",\"id\":\"" + file_id + "\"}" 
-    
       clientSession.puts msg_to_send
       ack = clientSession.gets
       puts "document transfered"

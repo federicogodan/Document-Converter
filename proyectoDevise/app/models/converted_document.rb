@@ -3,8 +3,10 @@ class ConvertedDocument < ActiveRecord::Base
 
   validates :status, inclusion: {in: STATUSES.values}
 
-  attr_accessible :size, :download_link, :status,
-                  :format_id, :document_id
+  attr_accessible :size, :download_link#, :status
+
+  belongs_to :document
+  belongs_to :format
 
   #method to set the status to converting
   def set_to_converting
@@ -21,6 +23,12 @@ class ConvertedDocument < ActiveRecord::Base
   	self.status = STATUSES[:ready]
   end
 
-  belongs_to :document
-  belongs_to :format
+  def current_status
+    if status == nil
+      STATUSES.keys.first
+    else
+      STATUSES.keys[status]
+    end
+  end
+
 end
