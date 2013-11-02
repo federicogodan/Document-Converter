@@ -19,14 +19,28 @@ class FileUploader < CarrierWave::Uploader::Base
   after :store, :convert
 
   def convert(file)
+    #begin
     require 'socket'
+    puts '######CONTROLLER##########'
     configuration = eval(File.open('controller.properties') {|f| f.read })
+    puts '#########CONFIGURATION########'
     ip_redirect = configuration[:ip_redirect]
+    puts ip_redirect
+    puts "el modelo esssssssss"
+    puts model
+    puts "la cosa 1: "
+    puts model.converted_document
+    puts "la cosa 2: "
+    puts model.converted_document.format
+    puts "la cosa 3: "
+    puts model.converted_document.format.name
+    
     format_dest = model.converted_document.format.name
-    puts '#'*50
-    puts format_dest
-    puts '#'*50
-    if (format_dest=='html') && (format_origin=='odp' || format_origin=='ppt')
+    file_name = model.name
+    file_url = model.file.url
+    file_id = model.id.to_s
+    
+    if (format_dest=='html') && (format_origin=='ODT' || format_origin=='PPT')
       redirect_port = configuration[:port_unoconv]
     puts "getting server socket"
     else
@@ -41,16 +55,19 @@ class FileUploader < CarrierWave::Uploader::Base
     server_ip = redirect_socket.gets.delete("\n")
     server_port = redirect_socket.gets.delete("\n").to_i
     
+    puts '#-'*25
+    puts model.to_json
+    
     clientSession = TCPSocket.new( server_ip , server_port)
     puts "sending ACK"
     redirect_socket.puts "ACK" 
-    clientSession.puts '{"format":"' + format + '","name":"' + file_name + '",URL":' +
-    file_path + '",id":' + file.id + '"}' 
-    puts "waiting response"
-    serverMessage = clientSession.gets
-    puts "Recieved: " 
-    puts serverMessage
+    msg_to_send = '{"format":"' + format_dest + '","name":"' + file_name + '","URL":"' + file_url + '","id":"' + file_id + '"}' 
+    puts msg_to_send
+    clientSession.puts msg_to_send
+    puts "document transfered"
     clientSession.close
+    #rescue
+    #end
 end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
