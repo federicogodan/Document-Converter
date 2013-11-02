@@ -10,7 +10,6 @@
 
 
 require 'socket'
-#require 'sys/proctable'
 require 'json'
 require 'net/http'
 require 'fileutils'
@@ -20,7 +19,7 @@ puts "Starting up server..."
 #the server takes the port as an argument
 
 #get parameters through a configuration file 
-configuration = eval(File.open('/home/ubuntu/configuration/server1.properties') {|f| f.read })
+configuration = eval(File.open('/home/mika/Escritorio/PIS/prototipoMika/Document-Converter/converter/configuration_amazon/server1.properties') {|f| f.read })
 port = configuration[:port]
 ip = configuration[:ip] 
 redirect_ip = configuration[:redirect_ip]
@@ -134,7 +133,8 @@ Thread.start do
 		puts command
 		system(command)
 		url_post = url_backet_post +  @pending_work[:id] + '/' + @pending_work[:name] + '.' +  @pending_work[:format_dest]
-		message = "{\"status\":\"finish\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + size.to_s + "\",\"url\":\"\"" + url_post + "\"}"
+		#message = "{\"status\":\"ok\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + size.to_s + "\",\"url\":\"\"" + url_post + "\"}"
+		message = '{"status":"ok","id":"' + @pending_work[:id] + '","size":"' + size.to_s + '","url":"' + url_post + '"}'		
 		puts message
 		puts "deleting temp files"
 		to_delete = temp + name_temp_file + @pending_work[:id] + '.' + @pending_work[:format_origin] 
@@ -145,7 +145,7 @@ Thread.start do
 		puts uri
 		uri_post = URI(uri)
 		res = Net::HTTP.post_form(uri_post, 'message' => message)
-		puts res.body   
+		puts res.body
    end#loop true
 end#thread 
 
