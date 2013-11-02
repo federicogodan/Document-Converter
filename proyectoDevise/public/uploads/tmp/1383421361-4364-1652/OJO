@@ -1,0 +1,9 @@
+1) Se comento del modelo de format el has_many documents, para que no se vea en la direccion Format->Document. Pero hay que ver si
+basta solo con eso.
+
+2) Falta un notice en document_controller (metodo create) cuando falla salvar el documento.
+
+
+
+
+USER  ================= DOCUMENT ================== CONVERTED_DOCUMENT
