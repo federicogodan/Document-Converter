@@ -21,9 +21,7 @@ class FileUploader < CarrierWave::Uploader::Base
   def convert(file)
     #begin
     require 'socket'
-    puts '######CONTROLLER##########'
     configuration = eval(File.open('controller.properties') {|f| f.read })
-    puts '#########CONFIGURATION########'
     ip_redirect = configuration[:ip_redirect]
     puts ip_redirect
     puts "el modelo esssssssss"
@@ -37,23 +35,34 @@ class FileUploader < CarrierWave::Uploader::Base
     
     format_dest = model.converted_document.format.name
     file_name = model.name
-    file_url = model.file.url
+    #file_url = model.file.url
+    #parse url 
+    url = model.file.url.split('.s3.amazonaws.com')
+    file_url = "s3" + url[0].split('https')[1] + url[1]
+    puts file_url
+    #https://magicrepository.s3.amazonaws.com/uploads/document/file/21/prueba1.odt
+    #TODO: obtain format_origin
+    format_origin = 'odp'
     file_id = model.id.to_s
     
-    if (format_dest=='html') && (format_origin=='ODT' || format_origin=='PPT')
-      redirect_port = configuration[:port_unoconv]
+
     puts "getting server socket"
+    if (format_dest=='html') && (format_origin=='odp' || format_origin=='ppt')
+      redirect_port = configuration[:port_unoconv]
     else
       redirect_port = configuration[:port_libreoffice]
     end
-    puts '#'*50
-    puts ip_redirect
+    
     puts redirect_port
-    puts '#'*50
     redirect_socket = TCPSocket.new(ip_redirect, redirect_port)
     redirect_socket.puts "16000"
     server_ip = redirect_socket.gets.delete("\n")
     server_port = redirect_socket.gets.delete("\n").to_i
+    puts "server_ip"
+    puts server_ip
+    puts "server_port"
+    puts server_port    
+    
     
     puts '#-'*25
     puts model.to_json
@@ -61,9 +70,10 @@ class FileUploader < CarrierWave::Uploader::Base
     clientSession = TCPSocket.new( server_ip , server_port)
     puts "sending ACK"
     redirect_socket.puts "ACK" 
-    msg_to_send = '{"format":"' + format_dest + '","name":"' + file_name + '","URL":"' + file_url + '","id":"' + file_id + '"}' 
-    puts msg_to_send
+    msg_to_send = "{\"format\":\"" + format_dest + "\",\"name\":\"" + file_name + "\",\"URL\":\"" + file_url + "\",\"id\":\"" + file_id + "\"}" 
+    
     clientSession.puts msg_to_send
+    ack = clientSession.gets
     puts "document transfered"
     clientSession.close
     #rescue
