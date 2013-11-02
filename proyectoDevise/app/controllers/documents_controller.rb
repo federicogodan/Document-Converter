@@ -94,13 +94,7 @@ class DocumentsController < ApplicationController
       @document.converted_document = ConvertedDocument.new 
       @document.converted_document.set_to_converting
       @document.converted_document.format = destiny_format
-      could_save_convdoc = @document.converted_document.save
-      
-      puts "estoy apuntooo de salvarrrrr @documentttttt ACA"
-      could_save_doc =@document.save     
-      
-      puts "supuestamente ya salveeee y el valor eraaa: "
-      puts could_save_doc
+      could_save_convdoc = @document.converted_document.save                      
       
       #conv_doc = 
       #conv_doc.set_to_converting    
@@ -114,7 +108,7 @@ class DocumentsController < ApplicationController
       #end
          
     respond_to do |f|
-      if could_save_doc && could_save_convdoc && @document.save && us.documents.push(@document) && us.save                                   
+      if could_save_convdoc && @document.save && us.documents.push(@document) && us.save                                   
                   
         f.html { redirect_to @document, notice: 'Document was successfully created.' }
         f.json { render json: @document, status: :created, location: @document }

@@ -19,65 +19,67 @@ class FileUploader < CarrierWave::Uploader::Base
   after :store, :convert
 
   def convert(file)
-    #begin
-    require 'socket'
-    configuration = eval(File.open('controller.properties') {|f| f.read })
-    ip_redirect = configuration[:ip_redirect]
-    puts ip_redirect
-    puts "el modelo esssssssss"
-    puts model
-    puts "la cosa 1: "
-    puts model.converted_document
-    puts "la cosa 2: "
-    puts model.converted_document.format
-    puts "la cosa 3: "
-    puts model.converted_document.format.name
+    begin
+      require 'socket'
+      configuration = eval(File.open('controller.properties') {|f| f.read })
+      ip_redirect = configuration[:ip_redirect]      
+      
+      #obtaining the destiny format's name
+      format_dest = model.converted_document.format.name.downcase
+      #obtaining the file's name
+      file_name = model.name
+            
+      #file_url = model.file.url
+      #parse url
+      
+      #Parsing the url to change to a correct url to upload the file in S3  
+      url = model.file.url.split('.s3.amazonaws.com')
+      file_url = "s3" + url[0].split('https')[1] + url[1]
+      puts file_url
+      #https://magicrepository.s3.amazonaws.com/uploads/document/file/21/prueba1.odt
+      #TODO: obtain format_origin
+      
+      
+      #obtaining the origin format's name
+      format_origin = model.format.name.downcase
+      file_id = model.id.to_s
+      
+  
+      puts "getting server socket"
+      if (format_dest=='html') && (format_origin=='odp' || format_origin=='ppt')
+        redirect_port = configuration[:port_unoconv]
+      else
+        redirect_port = configuration[:port_libreoffice]
+      end
+      
+      puts redirect_port
+      redirect_socket = TCPSocket.new(ip_redirect, redirect_port)
+      redirect_socket.puts "16000"
+      server_ip = redirect_socket.gets.delete("\n")
+      server_port = redirect_socket.gets.delete("\n").to_i
+      puts "server_ip"
+      puts server_ip
+      puts "server_port"
+      puts server_port    
     
-    format_dest = model.converted_document.format.name
-    file_name = model.name
-    #file_url = model.file.url
-    #parse url 
-    url = model.file.url.split('.s3.amazonaws.com')
-    file_url = "s3" + url[0].split('https')[1] + url[1]
-    puts file_url
-    #https://magicrepository.s3.amazonaws.com/uploads/document/file/21/prueba1.odt
-    #TODO: obtain format_origin
-    format_origin = 'odp'
-    file_id = model.id.to_s
+      
+      puts '#-'*25
+      puts model.to_json
+      
+      clientSession = TCPSocket.new( server_ip , server_port)
+      puts "sending ACK"
+      redirect_socket.puts "ACK" 
+      msg_to_send = "{\"format\":\"" + format_dest + "\",\"name\":\"" + file_name + "\",\"URL\":\"" + file_url + "\",\"id\":\"" + file_id + "\"}" 
     
-
-    puts "getting server socket"
-    if (format_dest=='html') && (format_origin=='odp' || format_origin=='ppt')
-      redirect_port = configuration[:port_unoconv]
-    else
-      redirect_port = configuration[:port_libreoffice]
+      clientSession.puts msg_to_send
+      ack = clientSession.gets
+      puts "document transfered"
+      clientSession.close
+    rescue
+      #if there is an error in the connection, destroys the converted_document's instance and the docuemnt's instance 
+      model.converted_document.destroy
+      model.destroy
     end
-    
-    puts redirect_port
-    redirect_socket = TCPSocket.new(ip_redirect, redirect_port)
-    redirect_socket.puts "16000"
-    server_ip = redirect_socket.gets.delete("\n")
-    server_port = redirect_socket.gets.delete("\n").to_i
-    puts "server_ip"
-    puts server_ip
-    puts "server_port"
-    puts server_port    
-    
-    
-    puts '#-'*25
-    puts model.to_json
-    
-    clientSession = TCPSocket.new( server_ip , server_port)
-    puts "sending ACK"
-    redirect_socket.puts "ACK" 
-    msg_to_send = "{\"format\":\"" + format_dest + "\",\"name\":\"" + file_name + "\",\"URL\":\"" + file_url + "\",\"id\":\"" + file_id + "\"}" 
-    
-    clientSession.puts msg_to_send
-    ack = clientSession.gets
-    puts "document transfered"
-    clientSession.close
-    #rescue
-    #end
 end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
