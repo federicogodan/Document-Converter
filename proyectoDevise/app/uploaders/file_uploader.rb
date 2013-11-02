@@ -19,6 +19,7 @@ class FileUploader < CarrierWave::Uploader::Base
   after :store, :convert
 
   def convert(file)
+    begin
     require 'socket'
     puts '######CONTROLLER##########'
     configuration = eval(File.open('controller.properties') {|f| f.read })
@@ -55,6 +56,8 @@ class FileUploader < CarrierWave::Uploader::Base
     clientSession.puts msg_to_send
     puts "document transfered"
     clientSession.close
+  rescue
+  end
 end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

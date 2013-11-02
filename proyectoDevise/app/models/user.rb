@@ -49,4 +49,5 @@ class User < ActiveRecord::Base
     uc.user = self
     uc.save
   end
+  
 end
