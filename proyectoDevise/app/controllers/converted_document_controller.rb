@@ -1,9 +1,15 @@
 class ConvertedDocumentController < ApplicationController
   
+  #remove expired documents from S3
   def self.delete_old_files
-    puts Time.now
-    #remove expired documents from ConverterDocument model and S3
-    @converter_document = ConvertedDocument.where('conversion_end_date <= ?', 1.day.ago)
-    @converter_document.destroy_all
+    cds =  ConvertedDocument.joins('INNER JOIN documents ON (converted_documents.document_id = documents.id) INNER JOIN users ON (documents.user_id = users.id) where converted_documents.created_at <= now() - users.documents_time_for_expiration')
+    
+    cds.each do |document|
+      AWS::S3::Base.establish_connection!(:access_key_id => 'AKIAI5XVTWY2S636HMWQ', :secret_access_key => '/B1J/ZLzMgqcyLAbvLlgVyPdzwh6WlDRZd7rEYyG')
+      AWS::S3::DEFAULT_HOST.replace "s3-sa-east-1.amazonaws.com"
+      doc = Document.find(document.document_id)
+      user = User.find(doc.user_id)
+      AWS::S3::S3Object.delete("#{doc.name}","/#{user.nick}/#{doc.id}")
+    end
   end
 end

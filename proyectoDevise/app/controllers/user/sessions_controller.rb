@@ -18,6 +18,7 @@ def create
     @invalid_user = 0       
     
     cookies[:nickname] = resource.nick
+    @current_user = User.find_by_nick(cookies[:nickname])
     #respond_with resource, :location => after_sign_in_path_for(resource)
     redirect_to "/user/new_file"
 end

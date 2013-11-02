@@ -4,9 +4,9 @@ CarrierWave.configure do |config|
     :provider               => 'AWS',                        # required
     :aws_access_key_id      => 'AKIAI5XVTWY2S636HMWQ',       # required
     :aws_secret_access_key  => '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',                        # required
-    :region                 => 'sa-east-1'                  # optional, defaults to 'us-east-1'
+    :region                 => 'sa-east-1',                  # optional, defaults to 'us-east-1'
     #:host                   => 's3.amazonaws.com',             # optional, defaults to nil
-    #:endpoint               => 'http://physiotec-rails.s3.amazonaws.com/' # optional, defaults to nil
+    #:endpoint               => 'magicrepository.s3-website-sa-east-1.amazonaws.com' # optional, defaults to nil
   }
 
   config.fog_directory  = 'magicrepository'                                 # required
