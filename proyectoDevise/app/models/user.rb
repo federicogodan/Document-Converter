@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   has_many :converted_documents, through: :documents
   
   #A user could have many webhooks to be alert for some completed conversion
-  has_many :webhooks
+  has_many :webhoooks
   
   #A user has a counter for his/her documents (it's local for every user)
   has_one :users_counters

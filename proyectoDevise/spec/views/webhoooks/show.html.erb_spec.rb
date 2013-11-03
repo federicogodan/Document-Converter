@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe "webhooks/show" do
+describe "webhoooks/show" do
   before(:each) do
-    @webhook = assign(:webhook, stub_model(Webhook,
+    @webhoook = assign(:webhoook, stub_model(Webhoook,
       :url => "Url",
       :deleted => false,
       :user_id => 1
