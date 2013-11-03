@@ -1,4 +1,5 @@
 class ConvertedDocument < ActiveRecord::Base
+
   STATUSES = {:converting => 0, :failed => 1, :ready => 2}
 
   validates :status, inclusion: {in: STATUSES.values}
@@ -23,6 +24,10 @@ class ConvertedDocument < ActiveRecord::Base
   	self.status = STATUSES[:ready]
   end
 
+<<<<<<< HEAD
+  belongs_to :document
+  belongs_to :format
+=======
   def current_status
     if status == nil
       STATUSES.keys.first
@@ -30,5 +35,6 @@ class ConvertedDocument < ActiveRecord::Base
       STATUSES.keys[status]
     end
   end
+>>>>>>> a832f7595ae8aba3509b228a9c9e6378b7a12159
 
 end

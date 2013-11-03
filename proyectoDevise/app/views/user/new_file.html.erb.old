@@ -1,6 +1,5 @@
 <%= javascript_include_tag :all%>
 
-
 	<header class="navbar navbar-inverse" role="navigation">
 	 <div class="container">
 	 	  

@@ -50,4 +50,12 @@ class User < ActiveRecord::Base
     uc.save
   end
   
+  #function that return the used storage for one user
+  def used_storage
+    used_size = 0
+    self.documents.each do |doc|
+      used_size += (ConvertedDocument.find_by_document_id(doc.id)).size if !doc.expired
+    end    
+    used_size
+  end
 end
