@@ -1,5 +1,8 @@
 ProyectoDevise::Application.routes.draw do
   
+  resources :webhooks
+
+
   root to: 'user#home'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
