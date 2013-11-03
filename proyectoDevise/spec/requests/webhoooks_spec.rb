@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe "Webhooks" do
-  describe "GET /webhooks" do
+describe "Webhoooks" do
+  describe "GET /webhoooks" do
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get webhooks_path
+      get webhoooks_path
       response.status.should be(200)
     end
   end

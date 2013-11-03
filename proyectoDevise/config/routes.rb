@@ -1,6 +1,8 @@
 ProyectoDevise::Application.routes.draw do
   
-  resources :webhooks
+  resources :webhoooks
+  
+  get "/user/:id/webhoooks", to: "webhoooks#index"
 
 
   root to: 'user#home'
