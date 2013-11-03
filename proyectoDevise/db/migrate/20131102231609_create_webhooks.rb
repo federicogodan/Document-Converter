@@ -3,9 +3,7 @@ class CreateWebhooks < ActiveRecord::Migration
     create_table :webhooks do |t|
       t.string :url
       t.boolean :deleted
-
-      #Associations
-      t.belongs_to :user
+      t.integer :user_id
 
       t.timestamps
     end

@@ -166,3 +166,6 @@ for i in 0..50
   pass = "passuser" + i.to_s 
   User.create(email: em, nick: nik, password: pass) 
 end
+
+User.create(email: "marco.uy@hotmail.com", nick: "marcouy", password: "sacala1234")
+
