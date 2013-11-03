@@ -8,7 +8,7 @@ ProyectoDevise::Application.routes.draw do
   ActiveAdmin.routes(self)
 
   get "user/home"
-  get "user/new_file"
+  get "user/dashboard"
   get "posts/new"
   get "convert/upload"
   get "convert/get_formats"
