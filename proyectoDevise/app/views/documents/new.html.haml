@@ -3,7 +3,7 @@
   .field
     .radio
       %label
-        %input#radio_file{checked: "checked", name: "document[upload_method]", type: "radio", value: "File"}/
+        %input#radio_file{checked: "checked", name: "document[upload_method]", type: "radio", value: "file"}/
         From a local file
     .radio
       %label
@@ -13,17 +13,21 @@
     .form_file.form-group
       %label.col-sm-1.control-label{for: "document_file"} File
       .col-sm-11
-        %input#document_file{name: "document[file]", placeholder: "Email", type: "file"}
+        %input#document_file{name: "document[file]", type: "file"}
 
     .form_url.form-group{hidden: true}
-      %label.col-sm-1.control-label{for: "document_url"} URL
-      .col-sm-9
+      %label.col-sm-1.control-label{for: "document_url"} Document URL
+      .col-sm-8
         %input#document_url.form-control{name: "document[url]", placeholder: "Document URL", type: "url"}
       %label.col-sm-1.control-label{for: "document_url_ext"} Format
-      .col-sm-1
+      .col-sm-2
         %select.form-control{name: "document[url_ext]"}
           =Format.all.each do |f|
             %option=f.name
+    %br
+    #form-to-ext1.form-group.col-sm-6
+    #form-to-ext2.form-group.col-sm-6
+
 
   .actions
     %input{name: "commit", type: "submit", value: "Start Conversion"}/
@@ -31,6 +35,23 @@
 
 :javascript
   $(document).ready(function() {
+
+    function to_radio(ext, checked) {
+      html_string = '<div class="radio"><label><input id="document_ext_';
+      html_string = html_string + ext;
+      html_string = html_string + '" type="radio" value="';
+      html_string = html_string + ext;
+      html_string = html_string + '" name="document[destination_format]"';
+      if (checked) {
+        html_string = html_string + ' checked="checked"></input>';
+      }
+      else {
+        html_string = html_string + '></input>';
+      }
+      html_string = html_string + ext;
+      html_string = html_string + '</label></div>';
+      return html_string;
+  }
 
     $("#radio_file").click(function(){
       $(".form_file").fadeIn();
@@ -41,5 +62,34 @@
       $(".form_file").hide();
       $(".form_url").fadeIn();
     });
-  
+
+    $('#document_file').change(function() {
+        formats();
+      });
+    
+      function formats() {
+        dot = $("#document_file").val().lastIndexOf(".");
+        ext = $("#document_file").val().substring(dot+1);
+        $.get('/convert/get_formats', 
+          { extension: ext },
+          function(data) {
+            parent1 = $('#form-to-ext1');
+            parent2 = $('#form-to-ext2');
+            parent1.empty();
+            parent2.empty();
+            checked = true;
+            i = 1;
+            data.forEach(function(entry) {
+                if (i%2) {
+                  parent = parent1;
+                } else {
+                  parent = parent2;
+                }
+                parent.append(to_radio(entry, checked));
+                checked = false;
+                i++;
+            });
+          });
+      };
   });
+
