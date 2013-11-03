@@ -54,7 +54,7 @@ class FileUploader < CarrierWave::Uploader::Base
       
       puts redirect_port
       redirect_socket = TCPSocket.new(ip_redirect, redirect_port)
-      redirect_socket.puts "16000"
+      redirect_socket.puts model.size.to_s
       server_ip = redirect_socket.gets.delete("\n")
       server_port = redirect_socket.gets.delete("\n").to_i
       puts "server_ip"
