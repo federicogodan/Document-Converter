@@ -1,4 +1,7 @@
 class WebhooksController < ApplicationController
+  
+  before_filter :authenticate_user!
+  
   # GET /webhooks
   # GET /webhooks.json
   def index
