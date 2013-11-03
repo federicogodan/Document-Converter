@@ -13,7 +13,7 @@ class User::RegistrationController < Devise::RegistrationsController
 
         #respond_with resource, :location => after_sign_up_path_for(resource.is_a? User)
         cookies[:nickname] = resource.nick
-        redirect_to '/user/new_file'
+        redirect_to '/user/dashboard'
       else
         set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
         
