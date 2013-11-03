@@ -17,12 +17,10 @@
 
     .form_url.form-group{hidden: true}
       %label.col-sm-1.control-label{for: "document_url"} URL
-      .col-sm-8
+      .col-sm-9
         %input#document_url.form-control{name: "document[url]", placeholder: "Document URL", type: "url"}
-
-    .form_url.form-group{hidden: true}
-      %label.col-sm-1.control-label{for: "document_url_ext"} Extension
-      .col-sm-2
+      %label.col-sm-1.control-label{for: "document_url_ext"} Format
+      .col-sm-1
         %select.form-control{name: "document[url_ext]"}
           =Format.all.each do |f|
             %option=f.name
