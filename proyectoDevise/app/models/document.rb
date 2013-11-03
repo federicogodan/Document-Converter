@@ -22,7 +22,7 @@ class Document < ActiveRecord::Base
     #destroy the file stored in 
     #update the converted document attributes
     converted_document = self.converted_document
-    if status == "OK"
+    if status.upcase == "OK"
       converted_document.download_link = document_url
       converted_document.size = size
       converted_document.set_to_ready
