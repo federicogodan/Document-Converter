@@ -1,6 +1,6 @@
 class ConvertedDocumentController < ApplicationController
   
-  before_filter :authenticate_user!
+  #before_filter :authenticate_user!
   
   #remove expired documents from S3
   def self.delete_old_files
