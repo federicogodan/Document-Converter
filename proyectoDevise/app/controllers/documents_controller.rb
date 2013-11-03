@@ -114,7 +114,7 @@ class DocumentsController < ApplicationController
       #end
          
     respond_to do |f|
-      if could_save_doc && could_save_convdoc && us.documents.push(@document) && us.save                                   
+      if could_save_doc && could_save_convdoc && us.save                                   
                   
         f.html { redirect_to @document, notice: 'Document was successfully created.' }
         f.json { render json: @document, status: :created, location: @document }

@@ -3,8 +3,19 @@ class NotificationController < ApplicationController
  def create
     request_body = request.body.read()
     puts params[:message]
+    
+    
+    message = JSON.parse(params[:message])
+    puts message
+    status = message["status"]
+    document_id = message["id"]
+    size = message["size"]
+    document_url = message["url"]
     puts '='*50
-    puts request_body.to_json
+    puts status
+    puts document_id
+    puts size
+    puts document_url
     puts '\n','-'*50
 
 

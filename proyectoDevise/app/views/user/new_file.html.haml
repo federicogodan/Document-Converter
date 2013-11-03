@@ -17,7 +17,7 @@
           %a{href: "#"} Documentation
       %ul.nav.navbar-nav.navbar-right
         %li
-          %a Hello, name!
+          %a="Hello, " + @user.nick.capitalize + "!"
         %li.dropdown
           %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
             My Account
@@ -33,40 +33,41 @@
             %li.divider{role: "presentation"}
             %li= link_to "sign out", destroy_user_session_path, :method => :delete
   / /.navbar-collapse
-.container
-  = form_for :post, :url=>{ :controller=>"posts", :action=>"create"}, :html => {:multipart => true} do |f|
-    = f.file_field :uploaded_file
-    = f.radio_button(:format, 'pdf')
-    pdf
-    \#{f.radio_button(:format, 'txt')} txt
-    \#{f.submit "Convert"}
-.container-fluid
-  .row
-    .col-sm-offset-1.col-sm-11
-      %h4
-        %a{href: "/posts/new"} Start the Wizard
-        to start converting documents.
-      %hr/
-  .row
-    .col-sm-offset-1.col-sm-2
-      .well.well-sm
-        %ul.nav.nav-list
-          %li.nav-header
-            General
-          %li.active
-            %a{href: "#"} Dasboard
-          %li.nav-header
-            Requests
-          %li
-            %a{href: "#"} Events Report
-          %li
-            %a{href: "#"} Webhooks Events
-          %li.divider
-    .col-sm-8
+.row
+  .col-sm-12
+    %h4
+      %a{href: "/posts/new"} Start the Wizard
+      to start converting documents.
+    %hr/
+.row
+  .col-sm-2
+    .well.well-sm
+      %ul.nav.nav-list
+        %li.nav-header
+          General
+        %li.active
+          %a{href: "#"} Dasboard
+        %li.nav-header
+          Requests
+        %li
+          %a{href: "#"} Events Report
+        %li
+          %a{href: "#"} Webhooks Events
+        %li.divider
+  .col-sm-10
+    %table.table.table-hover.table-responsive
+      %tr
+        %th Date
+        %th Hour
+        %th Name
+        %th Source Format
+        %th Converted To
+        %th Status
       -@user.documents.each do |d|
-        .panel.panel-default
-          .panel-body
-            .pull-left
-              %p.text-muted= "Uploaded date: " + d.created_at.to_s
-              %h4= "Document name: " + d.name
-              %h5="Source and destination format: "+ d.format.name + " to " +d.converted_document.format.name
+        %tr
+          %td=d.created_at.strftime("%d/%m/%Y")
+          %td=d.created_at.strftime("%H:%M")
+          %td=d.name
+          %td=d.format.name
+          %td=d.converted_document.format.name
+          %td=d.converted_document.current_status.capitalize
