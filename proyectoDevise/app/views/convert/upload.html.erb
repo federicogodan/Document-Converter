@@ -5,7 +5,23 @@
     <%= label_tag ("File")   %><br>
     <%= file_field_tag(:uploaded_file) %><br><br>
   </p>
-  <p>
-    <%= submit_tag("Upload") %>
-  </p>
 <% end %>
+
+<script>
+	
+	$('#uploaded_file').change(function() {
+		formats();
+	});
+
+	function formats() {
+		dot = $("#uploaded_file").val().lastIndexOf(".");
+		ext = $("#uploaded_file").val().substring(dot+1);
+		$.get('/convert/get_formats', 
+			{ extension: ext },
+			function(data) {
+				data.forEach(function(entry) {
+				    console.log(entry.name);
+				});
+			});
+	}
+</script>
