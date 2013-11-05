@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   before_validation :check_birthdate
   
-  after_save :insert_counter
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -25,9 +24,7 @@ class User < ActiveRecord::Base
   
   #A user could have many webhooks to be alert for some completed conversion
   has_many :webhooks
-  
-  #A user has a counter for his/her documents (it's local for every user)
-  has_one :users_counters
+ 
   
   # Allow to login with a nick or email. 
   def self.find_for_database_authentication(conditions={})
@@ -41,13 +38,6 @@ class User < ActiveRecord::Base
        errors.add(:user,"Birthdate is in the future.")
        false
     end
-  end
-  
-  #function that inserts a row on the table users_counters, containing the default documents'counter of a user(counter = 1)
-  def insert_counter
-    uc = UsersCounter.new(counter:1)
-    uc.user = self
-    uc.save
   end
   
 end

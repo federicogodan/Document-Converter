@@ -74,8 +74,8 @@ class FileUploader < CarrierWave::Uploader::Base
       clientSession.close
     rescue
       #if there is an error in the connection, destroys the converted_document's instance and the docuemnt's instance 
-      model.converted_document.destroy
-      model.destroy
+   #   model.converted_document.destroy. NOT WORKING
+   #   model.destroy NOT WORKING
     end
 end
 
