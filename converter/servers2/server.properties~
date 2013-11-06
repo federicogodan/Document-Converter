@@ -8,6 +8,6 @@
 	:converted => '/home/mika/Escritorio/PIS/prototipoMika/Document-Converter/converter/servers2/',
 	:pid_file => 'pid_file',
 	:url_backet_put => 's3://magicrepository/uploads/document/file/',
-	:url_backet_post=> 'https://magicrepository.s3.amazonaws.com/uploads/document/file/'
+	:url_backet_post=> 'https://magicrepository.s3.amazonaws.com/uploads/document/file/',
 	:uri => 'http://192.168.1.113:3000/notification'
 }

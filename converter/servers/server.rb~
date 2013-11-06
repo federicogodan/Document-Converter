@@ -5,15 +5,15 @@
 
 
 require 'socket'
-require 'sys/proctable'
+#require 'sys/proctable'
 
 puts "Starting up server..."
 
 #the server takes the port as an argument
-port = ARGV[0]
 
 #get parameters through a configuration file 
 configuration = eval(File.open('server.properties') {|f| f.read })
+port = configuration[:port]
 ip = configuration[:ip] 
 redirect_ip = configuration[:redirect_ip]
 redirect_port = configuration[:redirect_port]
@@ -22,13 +22,14 @@ libreoffice = configuration[:libreoffice]
 converted = configuration[:converted]
 pid_file = configuration[:pid_file]
 #configuration parameters: 
-#puts ip
-#puts redirect_ip
-#puts redirect_port
-#puts temp
-#puts libreoffice
-#puts converted
-#puts pid_file
+puts port
+puts ip
+puts redirect_ip
+puts redirect_port
+puts temp
+puts libreoffice
+puts converted
+puts pid_file
 
 Struct.new("Pending", :to_send, :converted_file, :client_session, :name) 
 #to_send : command to be executed by the server to make the conversion
@@ -156,6 +157,7 @@ Thread.start do
 	  mutex.synchronize {
 	      work.signal
 	  }
+	  
 	  end # thread 
       end#loop 
 end#thread 

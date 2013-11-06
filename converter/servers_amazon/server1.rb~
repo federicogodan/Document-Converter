@@ -154,9 +154,8 @@ Thread.start do
 		puts to_delete
 		FileUtils.rm(to_delete)
 		puts "Sending size to redirect server"
-		puts @pending_work[:original_size]
-		size_socket = TCPSocket.new(redirect_ip, port_size)	
-		size_socket.puts @pending_work[:original_size]			
+		size_socket.puts @pending_work[:original_size]
+		size_socket = TCPSocket.new(redirect_ip, port_size)				
 		size_socket.puts ip
 		size_socket.puts port
 		size_socket.puts "L"	

@@ -144,7 +144,7 @@ Thread.start do
 	  
 	  puts "plus: "
 	  puts plus
-	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + format + plus + ' ' + temp + name	  
+	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + format + plus + ' ' + '--outdir ' + converted + temp + name	  
 	  #building the path of the converted file 
 	  converted_file = converted + name.split('.')[0] + '.' + format
 	  puts "converted_file:"

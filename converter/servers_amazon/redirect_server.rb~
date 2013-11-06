@@ -139,7 +139,7 @@ Thread.start do
 			else
 				puts "Sending error"
 				session_client1.puts "error"
-				session_client1.gets
+				session_client1.gets.delete("\n")
 			end
 			session_client1.close	
 								

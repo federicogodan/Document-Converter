@@ -1,16 +1,16 @@
 {
-	:port   => 8007,
+	:port   => 8006,
 	:ip   => '172.16.108.181',
 	:redirect_ip  => '172.16.108.181',
 	:redirect_port  => 8103,
-	:temp => 'temp1/',
+	:temp => 'temp2/',
 	:libreoffice => '/usr/bin/libreoffice',
-	:converted => '/home/mika/Escritorio/PIS/prototipoMika/Document-Converter/converter/servers_amazon/dest1/',
+	:converted => '/home/mika/Escritorio/PIS/prototipoMika/Document-Converter/converter/servers_amazon/dest2/',
 	:pid_file => 'pid_file',
 	:url_backet_put => 's3://magicrepository/uploads/document/file/',
 	:url_backet_post=> 'https://magicrepository.s3.amazonaws.com/uploads/document/file/',
 	:uri => 'http://localhost:3000/notification',
 	:name_temp_file => 'archivo',
-	:port_size => 8200,
+	:port_size => 8101,
 	:retries => 5
 }
