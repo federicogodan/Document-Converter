@@ -1,6 +1,4 @@
 class DocumentsController < ApplicationController
-
-  #before_filter :authenticate_user!
   
   # GET /documents
   # GET /documents.json
@@ -26,19 +24,19 @@ class DocumentsController < ApplicationController
 
   # GET /documents/new
   # GET /documents/new.json
+
   def new
    @document = Document.new 
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :layout => false  } 
       format.json { render json: @document }
     end
   end
 
   # POST /documents
   # POST /documents.json
-  def create
-    
+  def create    
     #Previous checks to prevent null values 
     if params[:document][:file]
       file_name = params[:document][:file].original_filename
