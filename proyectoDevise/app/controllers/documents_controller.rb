@@ -37,20 +37,30 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.json
   def create    
+    
+    puts params
     #Previous checks to prevent null values 
     if params[:document][:file]
       file_name = params[:document][:file].original_filename
       file_content = params[:document][:file] 
       f_size = file_content.size if file_content
     end    
-    id_destiny_format = params[:document]["format_id"]    
-    destiny_format = Format.find_by_id(id_destiny_format) if id_destiny_format # != ''
+    destiny_format_name = params[:document][:destination_format]    
+    destiny_format = Format.find_by_name(destiny_format_name) if destiny_format_name # != ''
     us = User.find_by_nick(cookies[:nickname])
     has_extension = File.extname(file_name).split('.')[1] if file_name
     ext = has_extension.upcase if has_extension
     #file_path = params[:document][:uploaded_file].path    
 
     valid_parameters = true
+   # puts "222222222222222222222 Los parametros son:"
+   # puts "file_name: " + file_name
+   # puts "file_content: " + file_content.to_s
+   # puts "f_size: " + f_size.to_s
+   # puts "destiny_format: " + destiny_format.name
+   # puts "us: " + us.to_s
+   # puts "ext: " + ext.to_s
+    
     if (file_name && file_content && f_size && destiny_format && us && ext)
       #Creating association between the user and the document uploaded. Also creating the converted document's object
   
@@ -70,12 +80,12 @@ class DocumentsController < ApplicationController
 
     respond_to do |f|
       if valid_parameters && @document.converted_document.save && @document.save && us.save
-
+        puts "Document created"
         f.html { redirect_to @document, notice: 'Document was successfully created.' }
         f.json { render json: @document, status: :created, location: @document }
       else
         puts "Error in the validation of the document's parameters"
-        f.html { redirect_to action: "new", notice: 'An error has ocurred, please try to upload again'}
+        f.html { render action: "new", notice: 'An error has ocurred, please try to upload again'}
         f.json { render json: @document.errors, status: :unprocessable_entity }
       end
     end

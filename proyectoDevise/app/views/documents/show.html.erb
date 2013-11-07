@@ -4,5 +4,4 @@
 <p>Document URL: <%=link_to @document.file %> </p>
 <p>Creation date: <%= @document.created_at %> </p>
 <p>Original Format: <%= @document.format.name %> </p>
-<%= link_to 'Edit', edit_document_path(@document) %> |
 <%= link_to 'Back', documents_path %>
