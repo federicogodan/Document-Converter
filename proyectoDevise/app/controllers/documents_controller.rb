@@ -1,6 +1,4 @@
 class DocumentsController < ApplicationController
-
-  #before_filter :authenticate_user!
   
   # GET /documents
   # GET /documents.json
@@ -26,11 +24,12 @@ class DocumentsController < ApplicationController
 
   # GET /documents/new
   # GET /documents/new.json
+
   def new
     @document = Document.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :layout => false  } 
       format.json { render json: @document }
     end
   end
@@ -60,8 +59,8 @@ class DocumentsController < ApplicationController
     puts "File name es: "
     puts file_name
 
-    id_destiny_format = params[:document]["format_id"]
-    destiny_format = Format.find(id_destiny_format)
+    name_destiny_format = params[:document]["destination_format"]
+    destiny_format = Format.where(:name => name_destiny_format).first
     puts "El formato destino es: "
     puts destiny_format
 

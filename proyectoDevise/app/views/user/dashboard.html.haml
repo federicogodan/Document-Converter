@@ -1,3 +1,6 @@
+#create_document_modal.modal
+
+//Main Page
 %header.navbar.navbar-inverse{role: "navigation"}
   .container
     / Brand and toggle get grouped for better mobile display
@@ -36,7 +39,7 @@
 .row
   .col-sm-12
     %h4
-      %a{href: "/posts/new"} Start the Wizard
+      %a#create_document_button Start the Wizard
       to start converting documents.
     %hr/
 .row
@@ -71,3 +74,16 @@
           %td=d.format.name
           %td=d.converted_document.format.name
           %td=d.converted_document.current_status.capitalize
+:javascript
+$(document).ready(function() {
+  
+  $('#create_document_button').click(function(){
+      var dom = $("#create_document_modal")
+      $.get('/documents/new',
+          function(data) {
+            dom.append(data);
+          });
+      $("#create_document_modal").modal(); 
+    });
+
+});
