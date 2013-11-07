@@ -159,3 +159,13 @@ f14.destinies.push(f11)
 f14.destinies.push(f13)
 f14.save
 
+#Create users
+for i in 0..50
+  em = "user" + i.to_s + "@pruebap.com" 
+  nik = "userexample" + i.to_s 
+  pass = "passuser" + i.to_s 
+  User.create(email: em, nick: nik, password: pass) 
+end
+
+User.create(email: "marco.uy@hotmail.com", nick: "marcouy", password: "sacala1234")
+

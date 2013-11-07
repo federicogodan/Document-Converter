@@ -35,6 +35,6 @@ production:
   port: 3306
   database: doconvprod
   username: root
-  password: pis2013 
+  password: pis2013
   pool: 5
   timeout: 5000

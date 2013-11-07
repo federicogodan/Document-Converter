@@ -6,6 +6,7 @@ class CreateConvertedDocuments < ActiveRecord::Migration
       t.string   :download_link
       t.integer  :status
       t.integer  :size
+      t.date     :conversion_end_date
 
       t.timestamps
     end

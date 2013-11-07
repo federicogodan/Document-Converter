@@ -1,15 +1,24 @@
 ProyectoDevise::Application.routes.draw do
   
+  resources :webhoooks
+  
+  get "/user/:id/webhoooks", to: "webhoooks#index"
+
+
   root to: 'user#home'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
   get "user/home"
-  get "user/new_file"
+  get "user/dashboard"
   get "posts/new"
+  get "convert/upload"
+  get "convert/get_formats"
   post "posts/create"
+  
 
   resources :documents
+  #resources :convert
 
   post '/notification', to: 'notification#create'  
   
