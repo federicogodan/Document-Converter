@@ -81,11 +81,11 @@ class DocumentsController < ApplicationController
     respond_to do |f|
       if valid_parameters && @document.converted_document.save && @document.save && us.save
         puts "Document created"
-        f.html { redirect_to @document, notice: 'Document was successfully created.' }
+        f.html { redirect_to "/user/dashboard", notice: 'Document was successfully created.' }
         f.json { render json: @document, status: :created, location: @document }
       else
         puts "Error in the validation of the document's parameters"
-        f.html { render action: "new", notice: 'An error has ocurred, please try to upload again'}
+        f.html { redirect_to "/user/dashboard", notice: 'An error has ocurred, please try to upload again'}
         f.json { render json: @document.errors, status: :unprocessable_entity }
       end
     end
