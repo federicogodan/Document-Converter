@@ -16,25 +16,29 @@
               From a remote URL
 
           .form_file.form-group
-            %label.col-sm-1.control-label{for: "document_file"} File
+            %label.col-sm-1.control-label{for: "document_file"}File
             .col-sm-11
               =file_field(:document, :file)
 
           .form_url.form-group{hidden: true}
-            %label.col-sm-1.control-label{for: "document_url"} Document URL
-            .col-sm-8
+            %label.col-sm-1.control-label{for: "document_url"}URL
+            .col-sm-7
               %input#document_url.form-control{name: "document[url]", placeholder: "Document URL", type: "url"}
-            %label.col-sm-1.control-label{for: "document_url_ext"} Format
-            .col-sm-2
+            %label.col-sm-1.control-label{for: "document_url_ext"}Format
+            .col-sm-3
               %select.form-control{name: "document[url_ext]"}
                 =Format.all.each do |f|
                   %option=f.name
           %br
-          #form-to-ext1.form-group.col-sm-6
-          #form-to-ext2.form-group.col-sm-6
-    .modal-footer
-      %a.btn.cancel{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
-      =submit_tag "Upload"
+          %br
+          #formats_panel.panel.panel-default{hidden: true}
+            .panel-heading Destination Format
+            .panel-body
+              #form-to-ext1.form-group.col-sm-6
+              #form-to-ext2.form-group.col-sm-6
+        .modal-footer
+          %a.btn.cancel{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+          =submit_tag "Upload", :class => 'btn btn-primary'
 
 :javascript
   $(document).ready(function() {
@@ -59,11 +63,23 @@
     $("#radio_file").click(function(){
       $(".form_file").fadeIn();
       $(".form_url").hide();
+      if ($("#document_file").val().length > 0) {
+        $('#formats_panel').fadeIn();
+      }
+      else {
+       $('#formats_panel').fadeOut();
+      };
     });
 
     $("#radio_url").click(function(){
       $(".form_file").hide();
       $(".form_url").fadeIn();
+      if ($("#document_url").val().length > 0) {
+        $('#formats_panel').fadeIn();
+      }
+      else {
+       $('#formats_panel').fadeOut();
+      };
     });
 
     $('#document_file').change(function() {
@@ -93,6 +109,7 @@
                 i++;
             });
           });
+          $('#formats_panel').fadeIn();
       };
   });
 

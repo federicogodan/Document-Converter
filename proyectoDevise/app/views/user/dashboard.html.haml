@@ -78,7 +78,8 @@
 $(document).ready(function() {
   
   $('#create_document_button').click(function(){
-      var dom = $("#create_document_modal")
+      var dom = $("#create_document_modal");
+      dom.empty();
       $.get('/documents/new',
           function(data) {
             dom.append(data);
