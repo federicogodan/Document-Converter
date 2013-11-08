@@ -20,7 +20,7 @@ def create
     cookies[:nickname] = resource.nick
     @user = User.find_by_nick(cookies[:nickname])
     #respond_with resource, :location => after_sign_in_path_for(resource)
-    redirect_to "/user/new_file"
+    redirect_to "/user/dashboard"
 end
 def destroy
   super

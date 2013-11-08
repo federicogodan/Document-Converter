@@ -161,12 +161,10 @@ f14.save
 
 #Create users
 for i in 0..50
-  em = "user" + i.to_s + "@pruebap.com"
-  nm = "name" + i.to_s
-  surnm = "surname" + i.to_s 
+  em = "user" + i.to_s + "@pruebap.com" 
   nik = "userexample" + i.to_s 
   pass = "passuser" + i.to_s 
-  User.create(email: em, nick: nik, password: pass, name: nm, surname: surnm) 
+  User.create(email: em, nick: nik, password: pass) 
 end
 
 #Create Document for user

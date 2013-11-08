@@ -1,0 +1,90 @@
+#create_document_modal.modal
+
+//Main Page
+%header.navbar.navbar-inverse{role: "navigation"}
+  .container
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header
+      %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", type: "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{href: "#"} Document Converter
+    / Collect the nav links, forms, and other content for toggling
+    .collapse.navbar-collapse.navbar-ex1-collapse
+      %ul.nav.navbar-nav
+        %li.active
+          %a{href: "#"} Dashboard
+        %li
+          %a{href: "#"} Documentation
+      %ul.nav.navbar-nav.navbar-right
+        %li
+          %a="Hello, " + @user.nick.capitalize + "!"
+        %li.dropdown
+          %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+            My Account
+            %b.caret
+          %ul.dropdown-menu
+            %li.dropdown-header{role: "presentation"} Account Settings
+            %li
+              %a{href: "#"} My profile
+            %li
+              %a{href: "#"} My API Keys
+            %li
+              %a{href: ("/users/"+ @user.id.to_s) +"/webhooks"} My Webhooks 
+            %li.divider{role: "presentation"}
+            %li= link_to "sign out", destroy_user_session_path, :method => :delete
+  / /.navbar-collapse
+.row
+  .col-sm-12
+    %h4
+      %a#create_document_button Start the Wizard
+      to start converting documents.
+    %hr/
+.row
+  .col-sm-2
+    .well.well-sm
+      %ul.nav.nav-list
+        %li.nav-header
+          General
+        %li.active
+          %a{href: "#"} Dasboard
+        %li.nav-header
+          Requests
+        %li
+          %a{href: "#"} Events Report
+        %li
+          %a{href: "#"} Webhooks Events
+        %li.divider
+  .col-sm-10
+    %table.table.table-hover.table-responsive
+      %tr
+        %th Date
+        %th Hour
+        %th Name
+        %th Source Format
+        %th Converted To
+        %th Status
+      -@user.documents.each do |d|
+        %tr
+          %td=d.created_at.strftime("%d/%m/%Y")
+          %td=d.created_at.strftime("%H:%M")
+          %td=d.name
+          %td=d.format.name
+          %td=d.converted_document.format.name
+          %td=d.converted_document.current_status.capitalize
+:javascript
+$(document).ready(function() {
+  
+  $('#create_document_button').click(function(){
+      var dom = $("#create_document_modal");
+      dom.empty();
+      $.get('/documents/new',
+          function(data) {
+            dom.append(data);
+          });
+      $("#create_document_modal").modal(); 
+    });
+
+});

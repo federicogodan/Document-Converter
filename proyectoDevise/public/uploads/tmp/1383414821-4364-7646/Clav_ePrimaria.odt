@@ -1,9 +1,0 @@
-Willi: El campo de la clave primaria no se deberia cambiar, sirve para hacer mas rapido
-los joins, etc. Lo que si se puede hacer es indicar otro campo (por ejemplo
-el email) como un indice. Esto hara que las consultas sean mas rapidas debido
-a que el indice hace lo que mas le conviene(por ejemplo un hash).
-Para encontrar un usario por su email debo hacer: User.where(email = "matacinco@hotmail.com")
-[En realidad es mejor hacer un User.scope1 y scope1 definirlo en el modelo
-en el que voy a hacer el find].
-Para una clave que tengo varios campos hacer que cada campo sea un indice
-y encontrarlo con where(algo1 = a1 and algo2 = a2)

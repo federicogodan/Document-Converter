@@ -1,0 +1,27 @@
+<h1>Listing webhoooks</h1>
+
+<table>
+  <tr>
+    <th>Url</th>
+    <th>Deleted</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @webhoooks.each do |webhoook| %>
+  <tr>
+    <td><%= webhoook.url %></td>
+    <td><%= webhoook.deleted %></td>
+    <td><%= webhoook.user_id %></td>
+    <td><%= link_to 'Show', webhoook %></td>
+    <td><%= link_to 'Edit', edit_webhoook_path(webhoook) %></td>
+    <td><%= link_to 'Destroy', webhoook, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Webhoook', new_webhoook_path %>

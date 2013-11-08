@@ -1,22 +1,31 @@
 ProyectoDevise::Application.routes.draw do
   
+  resources :webhoooks
+  
+  get "/user/:id/webhoooks", to: "webhoooks#index"
+
+
   root to: 'user#home'
   devise_for :admin_users, ActiveAdmin::Devise.config
+
+
   ActiveAdmin.routes(self)
 
   get "user/home"
-  get "user/new_file"
+  get "user/dashboard"
   get "posts/new"
+  get "convert/upload"
+  get "convert/get_formats"
   post "posts/create"
+  
 
   resources :documents
+  #resources :convert
 
   post '/notification', to: 'notification#create'  
   
   #devise_for :users #BEFORE
-  
   devise_for :users, :controllers => {:registrations => "user/registration", :sessions => "user/sessions"}
-  ActiveAdmin.routes(self)
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

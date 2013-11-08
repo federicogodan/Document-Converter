@@ -3,7 +3,7 @@ class UserController < ApplicationController
     cookies[:nickname] = ""     
   end
   
-  def new_file
+  def dashboard
      #us = User.find_by_nick(cookies[:nickname])            
      #doc = Document.new(document_number:1,name:"holaDoc",uploading:true)
      #doc.format = Format.find(8) #EL FORMATO ES TXT
