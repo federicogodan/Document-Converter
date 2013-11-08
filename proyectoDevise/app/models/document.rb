@@ -31,5 +31,15 @@ class Document < ActiveRecord::Base
     end
     converted_document.save
   end
+  
+  def time_of_conversion
+    diff_time = 0
+    conv_doc = ConvertedDocument.find_by_document_id(self.id)
+    if !conv_doc.nil?
+      #cambiar conv_doc.created_at para conv_doc.conversion_end_date
+        diff_time = conv_doc.created_at - self.created_at
+    end
+    (diff_time/60).round(4)
+  end
 
 end

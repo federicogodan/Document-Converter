@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   before_validation :check_birthdate
   
-  after_save :insert_counter
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -26,9 +25,7 @@ class User < ActiveRecord::Base
   #A user could have many webhooks to be alert for some completed conversion
   has_many :webhooks
   
-  #A user has a counter for his/her documents (it's local for every user)
-  has_one :users_counters
-  
+
   # Allow to login with a nick or email. 
   def self.find_for_database_authentication(conditions={})
     self.where("nick = ?", conditions[:email]).limit(1).first ||
@@ -43,19 +40,42 @@ class User < ActiveRecord::Base
     end
   end
   
-  #function that inserts a row on the table users_counters, containing the default documents'counter of a user(counter = 1)
-  def insert_counter
-    uc = UsersCounter.new(counter:1)
-    uc.user = self
-    uc.save
-  end
-  
   #function that return the used storage for one user
   def used_storage
     used_size = 0
     self.documents.each do |doc|
-      used_size += (ConvertedDocument.find_by_document_id(doc.id)).size if !doc.expired
-    end    
+      cd = (ConvertedDocument.find_by_document_id(doc.id)) if !doc.expired
+      used_size = cd.size if !cd.nil?
+    end
     used_size
+  end
+  
+  def percentage_of_converted_document
+    documents = Document.where('user_id = ?', self.id)
+    total_document = documents.count
+    total_conv_doc = 0
+    documents.each do |td|
+      if !(ConvertedDocument.find_by_document_id(documents)).nil?
+        total_conv_doc += 1
+      end
+    end
+    porcentage = 100
+    porcentage = total_conv_doc*100/total_document if total_conv_doc > 0
+    
+    porcentage
+  end
+  
+  def average_time_to_convert
+    total_time = 0
+    conversions = 0
+    self.documents.each do |doc|
+      total_time += doc.time_of_conversion
+      if doc.time_of_conversion > 0
+        conversions += 1
+      end
+    end
+    average = 0
+    average = total_time/conversions if conversions > 0
+    average.round(2)
   end
 end

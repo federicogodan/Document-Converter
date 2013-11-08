@@ -9,7 +9,6 @@ development:
   host: localhost
   port: 3306
   database: docconv
-  #database: doconvtest
   username: root
   #password: pis2013pis
   password: nicolas
@@ -25,11 +24,7 @@ test:
   port: 3306
   database: doconvtest
   username: root
-<<<<<<< HEAD
   password: nicolas  
-=======
-  password: pis2013
->>>>>>> 3c0d96495e04266c5a935cb80b78e5c42dc7fa43
   pool: 5
   timeout: 5000
 
@@ -39,10 +34,6 @@ production:
   port: 3306
   database: doconvprod
   username: root
-<<<<<<< HEAD
-  password: nicolas 
-=======
-  password: pis2013 
->>>>>>> 3c0d96495e04266c5a935cb80b78e5c42dc7fa43
+  password: nicolas
   pool: 5
   timeout: 5000
