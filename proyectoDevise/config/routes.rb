@@ -14,7 +14,7 @@ ProyectoDevise::Application.routes.draw do
   post '/notification', to: 'notification#create'  
   
   #devise_for :users #BEFORE
-  ActiveAdmin.routes(self)
+  
   devise_for :users, :controllers => {:registrations => "user/registration", :sessions => "user/sessions"}
   ActiveAdmin.routes(self)
 
