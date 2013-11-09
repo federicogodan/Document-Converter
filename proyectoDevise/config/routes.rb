@@ -17,12 +17,15 @@ ProyectoDevise::Application.routes.draw do
   get "convert/upload"
   get "convert/get_formats"
   post "posts/create"
+    
+  namespace :api do 
+    resources :convert_document
+  end
   
-
   resources :documents
   #resources :convert
 
-  post '/notification', to: 'notification#create'  
+  post 'api/notification', to: 'notification#create'  
   
   #devise_for :users #BEFORE
   devise_for :users, :controllers => {:registrations => "user/registration", :sessions => "user/sessions"}
