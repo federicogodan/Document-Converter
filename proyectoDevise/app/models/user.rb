@@ -9,12 +9,13 @@ class User < ActiveRecord::Base
 
   #validates_uniqueness_of :nick
   validates :nick, presence: true, uniqueness: true, length: { minimum: 6 }
-
+  validates :public_key, uniqueness: true
+  validates :secret_key, uniqueness: true
   
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, 
                   :remember_me, :name, :nick, :surname, :birth_date, :profile_type,
-                  :api_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration, 
+                  :public_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration, 
                   :used_bandwidth_in_bytes
   
   # A user has many documents to be converted.

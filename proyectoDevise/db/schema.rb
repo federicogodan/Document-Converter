@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(:version => 20131103233354) do
     t.string   "nick"
     t.string   "surname"
     t.datetime "birth_date"
-    t.string   "api_key"
+    t.string   "public_key"
     t.string   "secret_key"
     t.integer  "total_storage_assigned"
     t.integer  "documents_time_for_expiration"
