@@ -164,7 +164,7 @@ for i in 0..50
   em = "user" + i.to_s + "@pruebap.com" 
   nik = "userexample" + i.to_s 
   pass = "passuser" + i.to_s 
-  User.create(email: em, nick: nik, password: pass) 
+  User.create(email: em, nick: nik, password: pass, public_key: i, secret_key: i) 
 end
 
 #Create Document for user
