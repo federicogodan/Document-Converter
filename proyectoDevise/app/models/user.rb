@@ -9,13 +9,13 @@ class User < ActiveRecord::Base
 
   #validates_uniqueness_of :nick
   validates :nick, presence: true, uniqueness: true, length: { minimum: 6 }
-  validates :public_key, uniqueness: true
+  validates :api_key, uniqueness: true
   validates :secret_key, uniqueness: true
   
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, 
                   :remember_me, :name, :nick, :surname, :birth_date, :profile_type,
-                  :public_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration, 
+                  :api_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration, 
                   :used_bandwidth_in_bytes
   
   # A user has many documents to be converted.
@@ -87,6 +87,22 @@ class User < ActiveRecord::Base
     average = 0
     average = total_time/conversions if conversions > 0
     average.round(2)
+  end
+
+  before_create :create_api_keys
+
+  #method for create the api keys
+  def create_api_keys
+    #creates the public key
+    begin
+      token = SecureRandom.urlsafe_base64(nil, false)
+    end until !User.exists?(api_key: token)
+    self.api_key = token
+    #creates the secret key
+    begin
+      token = SecureRandom.urlsafe_base64(nil, false)
+    end until !User.exists?(api_key: token)
+    self.secret_key = token
   end
 
 end

@@ -52,9 +52,8 @@ ActiveRecord::Schema.define(:version => 20131103233354) do
     t.string   "download_link"
     t.integer  "status"
     t.integer  "size"
-    t.date     "conversion_end_date"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "documents", :force => true do |t|
@@ -95,17 +94,33 @@ ActiveRecord::Schema.define(:version => 20131103233354) do
     t.string   "nick"
     t.string   "surname"
     t.datetime "birth_date"
-    t.string   "public_key"
+    t.string   "api_key"
     t.string   "secret_key"
     t.integer  "total_storage_assigned"
     t.integer  "documents_time_for_expiration"
-    t.integer  "bandwidth_in_bytes",            :default => 0,  :null => false
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "users_counters", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "counter"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "users_counters", ["user_id"], :name => "index_users_counters_on_user_id"
+
+  create_table "webhooks", :force => true do |t|
+    t.string   "url"
+    t.boolean  "deleted"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "webhoooks", :force => true do |t|
     t.string   "url"

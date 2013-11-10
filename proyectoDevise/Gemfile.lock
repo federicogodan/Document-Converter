@@ -212,6 +212,7 @@ GEM
     unicode (0.4.4)
     warden (1.2.3)
       rack (>= 1.0)
+    webhook (0.1.0)
     websocket (1.0.7)
     whenever (0.8.4)
       activesupport (>= 2.3.4)
@@ -242,4 +243,5 @@ DEPENDENCIES
   selenium-webdriver
   therubyracer
   uglifier (>= 1.0.3)
+  webhook (~> 0.1.0)
   whenever
