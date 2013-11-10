@@ -40,7 +40,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :surname
       t.datetime :birth_date
       
-      t.string :api_key
+      t.string :public_key
       t.string :secret_key
       t.integer :total_storage_assigned
       t.integer :documents_time_for_expiration

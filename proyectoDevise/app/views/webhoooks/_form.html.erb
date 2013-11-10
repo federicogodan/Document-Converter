@@ -1,7 +1,7 @@
 <%= form_for(@webhoook) do |f| %>
   <% if @webhoook.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@webhoook.errors.count, "error") %> prohibited this webhoook from being saved:</h2>
+      <h2><%= pluralize(@webhoook.errors.count, "error") %> prohibited this webhook from being saved:</h2>
 
       <ul>
       <% @webhoook.errors.full_messages.each do |msg| %>
@@ -18,10 +18,6 @@
   <div class="field">
     <%= f.label :deleted %><br />
     <%= f.check_box :deleted %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.number_field :user_id %>
   </div>
   <div class="actions">
     <%= f.submit %>

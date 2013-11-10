@@ -53,6 +53,13 @@ class User < ActiveRecord::Base
     used_size
   end
   
+  #function that throw the url of the converted documento through each webhook json={:action => 'ConvertedDocument', :data => urldoc}
+  def alertallwebhooks( urldoc )
+    self.webhoooks.each do |wh|
+       wh.throwebhook( urldoc )  
+    end  
+  end 
+
   def percentage_of_converted_document
     documents = Document.where('user_id = ?', self.id)
     total_document = documents.count
@@ -81,4 +88,5 @@ class User < ActiveRecord::Base
     average = total_time/conversions if conversions > 0
     average.round(2)
   end
+
 end
