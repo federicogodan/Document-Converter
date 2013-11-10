@@ -3,7 +3,7 @@ class ConvertedDocument < ActiveRecord::Base
 
   validates :status, inclusion: {in: STATUSES.values}
 
-  attr_accessible :size, :download_link#, :status
+  attr_accessible :size, :download_link, :conversion_end_date#, :status
 
   belongs_to :document
   belongs_to :format

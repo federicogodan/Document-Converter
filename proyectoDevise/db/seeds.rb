@@ -164,8 +164,26 @@ for i in 0..50
   em = "user" + i.to_s + "@pruebap.com" 
   nik = "userexample" + i.to_s 
   pass = "passuser" + i.to_s 
-  User.create(email: em, nick: nik, password: pass) 
+  User.create(email: em, nick: nik, password: pass, public_key: i, secret_key: i) 
 end
 
-User.create(email: "marco.uy@hotmail.com", nick: "marcouy", password: "sacala1234")
+#Create Document for user
+for i in 0..10
+  usr_id = 1
+  ft_id = 1
+  fl = "file_" + i.to_s
+  nm = "file_name" + i.to_s
+  sz = i
+  Document.create(user_id: usr_id, format_id: ft_id, file: fl, name: nm, size: sz)
+end
 
+#Create ConvertedDocument for user 
+for i in 1..10
+  dw_lk = "www.algo.com.uy"
+  sz = i * 10
+  cd = ConvertedDocument.new(download_link: dw_lk, size: sz)
+  cd.document = Document.find(i)
+  cd.format = Format.find(i)
+  cd.set_to_converting
+  cd.save
+end

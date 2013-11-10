@@ -19,7 +19,7 @@ class FileUploader < CarrierWave::Uploader::Base
   after :store, :convert
 
   def convert(file)
-    begin
+
       require 'socket'
       configuration = eval(File.open('controller.properties') {|f| f.read })
       ip_redirect = configuration[:ip_redirect]      
@@ -79,10 +79,12 @@ class FileUploader < CarrierWave::Uploader::Base
       ack = @clientSession.gets
       puts "document transfered"
       @clientSession.close
+       
       #if there is an error in the connection, destroys the converted_document's instance and the docuemnt's instance 
-      #model.converted_document.destroy
-      #model.destroy
-    end
+   #   model.converted_document.destroy. NOT WORKING
+   #   model.destroy NOT WORKING
+
+
 end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

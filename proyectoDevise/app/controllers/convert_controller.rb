@@ -10,9 +10,12 @@ class ConvertController < ApplicationController
   
   def get_formats
     ext = params[:extension]
-    reg_filename = Format.find_by_name(ext) 
-    formatos = reg_filename.destinies
-    render :json => formatos
+    reg_filename = Format.find_by_name(ext)
+    formats = []
+    reg_filename.destinies.each do |f|
+      formats.push(f.name)
+    end
+    render :json => formats
   end
 
 end

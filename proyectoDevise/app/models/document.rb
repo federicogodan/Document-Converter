@@ -18,18 +18,35 @@ class Document < ActiveRecord::Base
 
   #this function is called when a document finishes his conversion
   def update_converted_document(status, document_url, size)
-    #update the document atrributes
+    #update the document attributes
     #destroy the file stored in 
     #update the converted document attributes
     converted_document = self.converted_document
     if status.upcase == "OK"
       converted_document.download_link = document_url
       converted_document.size = size
+      converted_document.conversion_end_date = Time.now
       converted_document.set_to_ready
+      
+      
+      #updating the bandwidth's information 
+      us = self.user 
+      us.used_bandwidth_in_bytes += size + 3 * self.size
+      us.save
     else
       converted_document.set_to_failed
     end
     converted_document.save
+  end
+  
+  def time_of_conversion
+    diff_time = 0
+    conv_doc = ConvertedDocument.find_by_document_id(self.id)
+    if !conv_doc.nil?
+      #cambiar conv_doc.created_at para conv_doc.conversion_end_date
+        diff_time = conv_doc.created_at - self.created_at
+    end
+    (diff_time/60).round(4)
   end
 
 end

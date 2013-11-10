@@ -6,6 +6,8 @@ ProyectoDevise::Application.routes.draw do
     
   root to: 'user#home'
   devise_for :admin_users, ActiveAdmin::Devise.config
+
+
   ActiveAdmin.routes(self)
 
   get "user/home"
@@ -14,17 +16,18 @@ ProyectoDevise::Application.routes.draw do
   get "convert/upload"
   get "convert/get_formats"
   post "posts/create"
+    
+  namespace :api do 
+    resources :convert_document
+  end
   
-
   resources :documents
   #resources :convert
 
-  post '/notification', to: 'notification#create'  
+  post 'api/notification', to: 'notification#create'  
   
   #devise_for :users #BEFORE
-  ActiveAdmin.routes(self)
   devise_for :users, :controllers => {:registrations => "user/registration", :sessions => "user/sessions"}
-  ActiveAdmin.routes(self)
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
