@@ -55,7 +55,7 @@ class FileUploader < CarrierWave::Uploader::Base
         size = model.size.to_s 
         puts  size
         redirect_socket.puts size
-        server_ip = redirect_socket.gets.delete("\n")
+        server_ip = redirect_socket.gets.delete("\n").to_s
         server_port = redirect_socket.gets.delete("\n").to_i
         puts "server_ip"
         puts server_ip
@@ -64,9 +64,10 @@ class FileUploader < CarrierWave::Uploader::Base
         puts '#-'*25
         puts model.to_json
         begin
-          @clientSession = TCPSocket.new( server_ip , server_port)
+          @clientSession = TCPSocket.new(server_ip , server_port)
           ok = true
         rescue(Errno::ECONNREFUSED)
+          ok = false
           redirect_socket.puts "error"
         end
         if(ok)
@@ -79,44 +80,6 @@ class FileUploader < CarrierWave::Uploader::Base
       ack = @clientSession.gets
       puts "document transfered"
       @clientSession.close
-       
-      #if there is an error in the connection, destroys the converted_document's instance and the docuemnt's instance 
-   #   model.converted_document.destroy. NOT WORKING
-   #   model.destroy NOT WORKING
-
-
-end
-
-  # Provide a default URL as a default if there hasn't been a file uploaded:
-  # def default_url
-  #   # For Rails 3.1+ asset pipeline compatibility:
-  #   # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
-  #
-  #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
-  # end
-
-  # Process files as they are uploaded:
-  # process :scale => [200, 300]
-  #
-  # def scale(width, height)
-  #   # do something
-  # end
-
-  # Create different versions of your uploaded files:
-  # version :thumb do
-  #   process :scale => [50, 50]
-  # end
-
-  # Add a white list of extensions which are allowed to be uploaded.
-  # For images you might use something like this:
-  # def extension_white_list
-  #   %w(jpg jpeg gif png)
-  # end
-
-  # Override the filename of the uploaded files:
-  # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
+  end
 
 end
