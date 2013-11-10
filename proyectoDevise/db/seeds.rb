@@ -189,4 +189,4 @@ for i in 1..10
   cd.save
 end
 
-AdminUser.create!(:email => 'admin@example.com', :password => 'password', :password_confirmation => 'password') if AdminUser.where(:email => 'admin@example.com').nil?
+AdminUser.create!(:email => 'admin@example.com', :password => 'password', :password_confirmation => 'password') unless AdminUser.where(:email => 'admin@example.com').nil?
