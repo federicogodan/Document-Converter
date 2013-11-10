@@ -58,4 +58,12 @@ class User < ActiveRecord::Base
     end    
     used_size
   end
+  
+  #function that throw the url of the converted documento through each webhook json={:action => 'ConvertedDocument', :data => urldoc}
+  def alertallwebhooks( urldoc )
+    self.webhoooks.each do |wh|
+       wh.throwebhook( urldoc )  
+    end  
+  end 
+  
 end

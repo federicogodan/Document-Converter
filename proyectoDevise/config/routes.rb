@@ -2,9 +2,8 @@ ProyectoDevise::Application.routes.draw do
   
   resources :webhoooks
   
-  get "/user/:id/webhoooks", to: "webhoooks#index"
-
-
+  #map.resources :user, :has_many => [:webhoooks]  
+    
   root to: 'user#home'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

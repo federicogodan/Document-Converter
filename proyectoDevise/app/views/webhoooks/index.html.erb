@@ -1,12 +1,9 @@
-<h1>Listing webhoooks</h1>
+<h1>Listing webhooks</h1>
 
 <table>
   <tr>
     <th>Url</th>
     <th>Deleted</th>
-    <th>User</th>
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
 
@@ -14,7 +11,6 @@
   <tr>
     <td><%= webhoook.url %></td>
     <td><%= webhoook.deleted %></td>
-    <td><%= webhoook.user_id %></td>
     <td><%= link_to 'Show', webhoook %></td>
     <td><%= link_to 'Edit', edit_webhoook_path(webhoook) %></td>
     <td><%= link_to 'Destroy', webhoook, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -22,6 +18,8 @@
 <% end %>
 </table>
 
-<br />
+<br/>
 
-<%= link_to 'New Webhoook', new_webhoook_path %>
+<%= link_to 'New Webhook', new_webhoook_path %>
+<br/>
+<%= link_to 'Back', '/user/dashboard' %>
