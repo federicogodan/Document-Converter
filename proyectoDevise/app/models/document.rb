@@ -29,10 +29,10 @@ class Document < ActiveRecord::Base
       converted_document.set_to_ready
       
       
-      #updating the bandwidth's information 
-      us = self.user 
-      us.used_bandwidth_in_bytes += size + 3 * self.size
-      us.save
+      #TODO updating the bandwidth's information 
+      #us = self.user 
+      #us.used_bandwidth_in_bytes += size + 3 * self.size
+      #us.save
     else
       converted_document.set_to_failed
     end
