@@ -1,0 +1,38 @@
+      
+    #curl -F "file=@prueba1.odt" -F "destination_format=pdf" http://localhost:3000/api/convert_document/
+
+    #Previous checks to prevent null values 
+    #if params[:document][:file]
+      #file_name = params[:document][:file].original_filename
+      #file_content = params[:document][:file] 
+      #f_size = file_content.size if file_content
+    #end    
+    #destiny_format_name = params[:document][:destination_format]    
+    #destiny_format = Format.find_by_name(destiny_format_name) if destiny_format_name # != ''
+    #us = User.find_by_nick(cookies[:nickname])
+    #has_extension = File.extname(file_name).split('.')[1] if file_name
+    #ext = has_extension.upcase if has_extension
+    #file_path = params[:document][:uploaded_file].path    
+
+    #valid_parameters = true
+   
+    #if (file_name && file_content && f_size && destiny_format && us && ext)
+      #Creating association between the user and the document uploaded. Also creating the converted document's object
+  
+      #@document = Document.new(name:file_name,expired:false,size:f_size)
+      #@document.file = params[:document][:file]  
+  
+      #origin_format = Format.find_by_name(ext) if ext
+  
+      #@document.format = origin_format
+      #@document.user = us
+      #@document.converted_document = ConvertedDocument.new
+      #@document.converted_document.set_to_converting
+      #@document.converted_document.format = destiny_format
+    #else
+      #valid_parameters = false
+    #end  
+  #end
+
+  # PUT /documents/1
+  # PUT /documents/1.json

@@ -154,13 +154,13 @@ Thread.start do
 		puts to_delete
 		FileUtils.rm(to_delete)
 		puts "Sending size to redirect server"
-		size_socket.puts @pending_work[:original_size]
-		size_socket = TCPSocket.new(redirect_ip, port_size)				
+		puts @pending_work[:original_size]
+		size_socket = TCPSocket.new(redirect_ip, port_size)	
+		size_socket.puts @pending_work[:original_size]			
 		size_socket.puts ip
 		size_socket.puts port
 		size_socket.puts "L"	
 		size_socket.gets
-		size_socket.close
 		puts "post"
 		puts uri
 		uri_post = URI(uri)
@@ -170,50 +170,49 @@ end#thread
 
 #thread that is charged on attending clients and add into queue pending work
 Thread.start do
-      while (session = server.accept)
-	Thread.start do
-	  puts "accepting client"
-	  
-	  message = session.gets.delete("\n")
-	  
-	  puts message
-	  dict = JSON.parse(message)
-	  
-	  format_dest = dict["format"]
-	  puts format_dest
-	  name = dict["name"]
-	  format_origin = File.extname(name)
-	  url = dict["URL"]
-	  puts url
-	  id = dict["id"]
-	  puts id
-	  size = dict["size"]
-	  puts size
-	  session.puts "ACK"
-	  system('s3cmd get ' + url + ' ' + temp + name_temp_file + id  + format_origin) 
-	  if (format_dest=='txt') #TODO: filter through the format in function of the original one 
-	      plus = ':Text'
-	  else
-	      plus = ''
-	  end
-	  
-	  to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + format_dest + plus + ' --outdir ' + converted + ' ' + temp + name_temp_file + id  + format_origin	  
-	  #building the path of the converted file 
-	  converted_file = converted + name_temp_file + id + '.' + format_dest
-	  puts "converted_file:"
-	  puts converted_file
-	  #push into queue
-	  semaphore.synchronize {
-	    name_file = name.split(File.extname(name))[0]
-	    pending = Struct::Pending.new(to_send, converted_file, name_file , url, id, format_dest, File.extname(name).split('.')[1],size)
-	    queue_pending.push pending
-	  }
-	  mutex.synchronize {
-	      work.signal
-	  }
-	  
-	  end # thread 
-      end#loop 
+  while(true)  
+    Thread.start(server.accept) do |session|
+      puts "accepting client"
+      message = session.gets.delete("\n")
+      puts message
+      dict = JSON.parse(message)
+      
+      format_dest = dict["format"]
+      puts format_dest
+      name = dict["name"]
+      format_origin = File.extname(name)
+      url = dict["URL"]
+      puts url
+      id = dict["id"]
+      puts id
+      size = dict["size"]
+      puts size
+      session.puts "ACK"
+      session.close
+      system('s3cmd get ' + url + ' ' + temp + name_temp_file + id  + format_origin) 
+      if (format_dest=='txt') #TODO: filter through the format in function of the original one 
+	  plus = ':Text'
+      else
+	  plus = ''
+      end
+      
+      to_send = libreoffice+ ' --headless --invisible ' + '--pidfile=' +  pid_file +  ' --convert-to ' + format_dest + plus + ' --outdir ' + converted + ' ' + temp + name_temp_file + id  + format_origin	  
+      #building the path of the converted file 
+      converted_file = converted + name_temp_file + id + '.' + format_dest
+      puts "converted_file:"
+      puts converted_file
+      #push into queue
+      semaphore.synchronize {
+	name_file = name.split(File.extname(name))[0]
+	pending = Struct::Pending.new(to_send, converted_file, name_file , url, id, format_dest, File.extname(name).split('.')[1],size)
+	queue_pending.push pending
+      }
+      mutex.synchronize {
+	  work.signal
+      }
+      
+    end # thread 
+  end#loop 
 end#thread 
 
 while(true)   
