@@ -13,7 +13,7 @@ puts "Starting up server..."
 
 #TODO: get parameters through a configuration file 
 port = ARGV[0]
-ip =  "localhost"
+ip =  "177.71.195.102"
 redirect_ip = "localhost"
 redirect_port = 8103
 
@@ -121,7 +121,7 @@ Thread.start do
 	  puts "to send " + to_send
 	  
 	  #building the path of the converted file 
-	  converted_file = '/home/ubuntu/pruebas/' + name.split('.')[0] + '.' + format
+	  converted_file = '/home/ubuntu/Document-Converter/converter/pruebas/' + name.split('.')[0] + '.' + format
 	  puts converted_file
 	  #push into queue
 	  semaphore.synchronize {
