@@ -85,16 +85,21 @@ Thread.start do
 		system(@pending_work[:to_send])
 		puts "try open file"  
 		puts @pending_work[:converted_file]
-		system('tar -czvf ' + tar_name +  @pending_work[:id] +  '.tar ' + 'dir')
+		
 		#try open file  
 		begin
+		    puts "open converted file"
 		    file = open(@pending_work[:converted_file])
+		    #renaming original file
+		    FileUtils.mv(@pending_work[:converted_file], 'dir' + @pending_work[:original_name] + '.html')
+		    tar_dir = 'tar -czvf ' + tar_name +  @pending_work[:id] +  '.tar ' + 'dir'
+		    puts tar_dir
+		    system(tar_dir)
 		rescue
 		        #send error to the client
 			@state = "error"   
 		end
 		if (@state!="error")
-                	puts "sending post message"
                 	size = File.size(tar_name + @pending_work[:id] + '.tar') 
                 	puts size
                 	url_converted = url_backet_put + @pending_work[:id]
@@ -112,7 +117,7 @@ Thread.start do
 
 		end
                 puts "deleting temp file"
-		FileUtils.rm(temp + tar_name + @pending_work[:id] +  @pending_work[:format_origin] )
+		FileUtils.rm(temp + tar_name + @pending_work[:id]  + @pending_work[:format_origin] )
 		puts "Sending size to redirect server"
 		puts @pending_work[:original_size]
 		size_socket = TCPSocket.new(redirect_ip, port_size)	
@@ -121,7 +126,7 @@ Thread.start do
 		size_socket.puts port
 		size_socket.puts "U"	
 		size_socket.gets
-		puts "post"
+		puts "sending post message"
 		puts uri
 		uri_post = URI(uri)
 		res = Net::HTTP.post_form(uri_post, 'message' => @message)
@@ -160,16 +165,17 @@ Thread.start do
 	  puts 'system'
 	  error = false
 	  begin
+	    puts "open temp file to check download"
 	    file = open(temp + tar_name + id  + format_origin)
 	  rescue
 	    error = true
 	    @message = "{\"status\":\"" + "error" + "\",\"id\":\"" + id + "\",\"size\":\"" + 0 + "\",\"url\":\"\"" + "" + "\"}"
 	  end
 	  if (!error)
-	    to_send = uno + ' -f ' + file_format + ' ' + ' -o ' + converted + ' ' + temp + name 
+	    to_send = uno + ' -f ' + file_format + ' ' + ' -o ' + converted + ' ' + temp + tar_name + id + format_origin
 	    puts to_send	  
 	    #building the path of the converted file 
-	    converted_file = converted + name.split('.')[0] + '.' + file_format
+	    converted_file = converted +  tar_name + id +  '.' + file_format
 	    puts "converted_file:"
 	    puts converted_file
 	    #push into queue

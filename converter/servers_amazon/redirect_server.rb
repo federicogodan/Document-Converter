@@ -34,24 +34,16 @@ Thread.start do #thread to attend a unoconv servers
       semaphore.synchronize { #push a new server into available servers
 	
 	unoconv = Hash.new
-	puts "1"
 	unoconv = { "unoconv_ip" => unoconv_ip, "unoconv_port" => unoconv_port, "unoconv_load" => 0 } 
-	puts "2"
 	@unoconv_servers.push unoconv
 	puts @unoconv_servers 
-	puts "3"
 	@aux = @amazon_nodes.select { |node| node["node_ip"] == unoconv_ip }
-	puts "4"
 	if @aux.empty? 
-	  puts "5"
 	  amazon_node = Hash.new
-	  puts "6"
 	  amazon_node = { "node_ip" => unoconv_ip, "node_load" => 0 } 
-	  puts "6"
 	  @amazon_nodes.push amazon_node
 	  puts"new Amazon node queued"
 	end  
-	puts "7"
       }  
       unoconv_server.puts "ACK"
       unoconv_server.close	
