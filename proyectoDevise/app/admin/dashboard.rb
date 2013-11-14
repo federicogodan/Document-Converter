@@ -33,7 +33,7 @@ ActiveAdmin.register_page "Dashboard" do
       
       column do
           panel "Used Bandwidth" do
-            
+            total_bandwidth_used
           end
       end
     end
@@ -72,3 +72,11 @@ end
     end
     total_cant
   end
+  
+def total_bandwidth_used
+  total_bandwidth = 0
+  User.all.each do |u|
+    total_bandwidth += u.bandwidth_in_bytes_per_sec
+  end
+  total_bandwidth
+end

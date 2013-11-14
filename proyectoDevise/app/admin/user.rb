@@ -8,6 +8,7 @@ ActiveAdmin.register User do
     #column :surname
     column :email
     column "Converted Documents", :cant_converted_document, :sortable => false
+    column "Bandwidth/ B/s", :bandwidth_in_bytes_per_sec
     #column "Conversions /%", :percentage_of_converted_document, :sortable => false
     column "Used storage/Bytes", :used_storage, :sortable => false
     column "Storage assigned/Bytes",:total_storage_assigned, :sortable => false
