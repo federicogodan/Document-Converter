@@ -163,8 +163,8 @@ f14.save
 for i in 0..50
   em = "user" + i.to_s + "@pruebap.com" 
   nik = "userexample" + i.to_s 
-  pass = "passuser" + i.to_s 
-  User.create(email: em, nick: nik, password: pass, public_key: i, secret_key: i) 
+  pass = "passuser" + i.to_s
+  User.create(email: em, nick: nik, password: pass, public_key: i, secret_key: i,total_storage_assigned: 10000, documents_time_for_expiration: 86400) 
 end
 
 #Create Document for user
@@ -180,7 +180,7 @@ end
 #Create ConvertedDocument for user 
 for i in 1..10
   dw_lk = "www.algo.com.uy"
-  sz = i * 10
+  sz = i * 5
   cd = ConvertedDocument.new(download_link: dw_lk, size: sz)
   cd.document = Document.find(i)
   cd.format = Format.find(i)

@@ -4,8 +4,12 @@ class User::RegistrationController < Devise::RegistrationsController
   end
 
   def create
-    #set up profile_tyme manually
+    #set up profile_type manually
     puts sign_up_params[:profile_type] = "standard"
+    #set the default storage assigned
+    sign_up_params[:total_storage_assigned] = 10000
+    #set the default the documents time for expiration in seconds
+    sign_up_params[:documents_time_for_expiration] = 86400 #one day
     build_resource(sign_up_params)
     if resource.save
       if resource.active_for_authentication?

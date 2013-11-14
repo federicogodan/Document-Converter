@@ -8,7 +8,8 @@ development:
   #host: docconv.cvlaaw5wfllb.sa-east-1.rds.amazonaws.com
   host: localhost
   port: 3306
-  database: docconv
+  database: doconvdev
+  #database: doconvtest
   username: root
   #password: pis2013pis
   password: nicolas
@@ -24,7 +25,7 @@ test:
   port: 3306
   database: doconvtest
   username: root
-  password: nicolas  
+  password: nicolas
   pool: 5
   timeout: 5000
 
