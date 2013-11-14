@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(:version => 20131103233354) do
     t.string   "download_link"
     t.integer  "status"
     t.integer  "size"
-    t.date     "conversion_end_date"
+    t.datetime "conversion_end_date"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end

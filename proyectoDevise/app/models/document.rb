@@ -25,7 +25,7 @@ class Document < ActiveRecord::Base
     if status.upcase == "OK"
       converted_document.download_link = document_url
       converted_document.size = size
-      converted_document.conversion_end_date = Time.now
+      converted_document.conversion_end_date = Time.now()
       converted_document.set_to_ready
       
       converted_document.save #It's necessary because the function time_of_conversion use converted_document.conversion_end_date's value                  
