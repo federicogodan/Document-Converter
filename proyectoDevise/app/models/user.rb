@@ -9,14 +9,14 @@ class User < ActiveRecord::Base
 
   #validates_uniqueness_of :nick
   validates :nick, presence: true, uniqueness: true, length: { minimum: 6 }
-  validates :public_key, uniqueness: true
+  validates :api_key, uniqueness: true
   validates :secret_key, uniqueness: true
   
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, 
                   :remember_me, :name, :nick, :surname, :birth_date, :profile_type,
-                  :public_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration, 
-                  :used_bandwidth_in_bytes
+                  :api_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration, 
+                  :bandwidth_in_bytes_per_sec
   
   # A user has many documents to be converted.
   has_many :documents
@@ -53,6 +53,13 @@ class User < ActiveRecord::Base
     used_size
   end
   
+  #function that throw the url of the converted documento through each webhook json={:action => 'ConvertedDocument', :data => urldoc}
+  def alertallwebhooks( urldoc )
+    self.webhoooks.each do |wh|
+       wh.throwebhook( urldoc )  
+    end  
+  end 
+
   def percentage_of_converted_document
     documents = Document.where('user_id = ?', self.id)
     total_document = documents.count
@@ -91,4 +98,21 @@ class User < ActiveRecord::Base
     average = total_time/conversions if conversions > 0
     average.round(2)
   end
+
+  before_create :create_api_keys
+
+  #method for create the api keys
+  def create_api_keys
+    #creates the public key
+    begin
+      token = SecureRandom.urlsafe_base64(nil, false)
+    end until !User.exists?(api_key: token)
+    self.api_key = token
+    #creates the secret key
+    begin
+      token = SecureRandom.urlsafe_base64(nil, false)
+    end until !User.exists?(api_key: token)
+    self.secret_key = token
+  end
+
 end

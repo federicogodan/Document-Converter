@@ -102,6 +102,7 @@ f6.save
 #ODT to DOC,DOCX,JPG,PNG,HTML
 f7.destinies.push(f1)
 f7.destinies.push(f2)
+f7.destinies.push(f11)
 f7.destinies.push(f12)
 f7.destinies.push(f13)
 f7.destinies.push(f14)
@@ -138,8 +139,8 @@ f11.destinies.push(f14)
 f11.save
 
 #HTML to TXT,PDF
+f12.destinies.push(f10)
 f12.destinies.push(f11)
-f12.destinies.push(f12)
 f12.save
 
 #JPG to DOC,DOCX,ODT,ODP,TXT,PDF,PNG
@@ -163,8 +164,8 @@ f14.save
 for i in 0..50
   em = "user" + i.to_s + "@pruebap.com" 
   nik = "userexample" + i.to_s 
-  pass = "passuser" + i.to_s
-  User.create(email: em, nick: nik, password: pass, public_key: i, secret_key: i,total_storage_assigned: 10000, documents_time_for_expiration: 86400) 
+  pass = "passuser" + i.to_s 
+  User.create(email: em, nick: nik, password: pass) 
 end
 
 #Create Document for user
@@ -180,10 +181,12 @@ end
 #Create ConvertedDocument for user 
 for i in 1..10
   dw_lk = "www.algo.com.uy"
-  sz = i * 5
+  sz = i * 10
   cd = ConvertedDocument.new(download_link: dw_lk, size: sz)
   cd.document = Document.find(i)
   cd.format = Format.find(i)
   cd.set_to_converting
   cd.save
 end
+
+AdminUser.create!(:email => 'admin@example.com', :password => 'password', :password_confirmation => 'password') unless AdminUser.where(:email => 'admin@example.com').nil?

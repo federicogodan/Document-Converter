@@ -95,11 +95,11 @@ ActiveRecord::Schema.define(:version => 20131103233354) do
     t.string   "nick"
     t.string   "surname"
     t.datetime "birth_date"
-    t.string   "public_key"
+    t.string   "api_key"
     t.string   "secret_key"
     t.integer  "total_storage_assigned"
     t.integer  "documents_time_for_expiration"
-    t.integer  "bandwidth_in_bytes",            :default => 0,  :null => false
+    t.integer  "bandwidth_in_bytes_per_sec",    :default => 0,  :null => false
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
   end

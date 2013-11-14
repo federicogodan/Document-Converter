@@ -32,7 +32,7 @@
             %li
               %a{href: "#"} My API Keys
             %li
-              %a{href: ("/users/"+ @user.id.to_s) +"/webhooks"} My Webhooks 
+              %a{href: "/webhoooks"} My Webhooks 
             %li.divider{role: "presentation"}
             %li= link_to "sign out", destroy_user_session_path, :method => :delete
   / /.navbar-collapse
