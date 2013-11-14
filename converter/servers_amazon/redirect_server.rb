@@ -32,16 +32,26 @@ Thread.start do #thread to attend a unoconv servers
       unoconv_port = unoconv_server.gets.delete("\n")
       puts unoconv_ip + ":" + unoconv_port
       semaphore.synchronize { #push a new server into available servers
+	
 	unoconv = Hash.new
+	puts "1"
 	unoconv = { "unoconv_ip" => unoconv_ip, "unoconv_port" => unoconv_port, "unoconv_load" => 0 } 
+	puts "2"
 	@unoconv_servers.push unoconv
-	@aux = amazon_nodes.select { |node| node["node_ip"] == unoconv_ip }
+	puts @unoconv_servers 
+	puts "3"
+	@aux = @amazon_nodes.select { |node| node["node_ip"] == unoconv_ip }
+	puts "4"
 	if @aux.empty? 
+	  puts "5"
 	  amazon_node = Hash.new
+	  puts "6"
 	  amazon_node = { "node_ip" => unoconv_ip, "node_load" => 0 } 
+	  puts "6"
 	  @amazon_nodes.push amazon_node
 	  puts"new Amazon node queued"
 	end  
+	puts "7"
       }  
       unoconv_server.puts "ACK"
       unoconv_server.close	
@@ -79,9 +89,9 @@ end#libreoffice servers
 
 Thread.start do #thread to attend libreoffice clients 
   while(true)  
-    Thread.start(accept_libreoffice.accept) do |session_client1| 
+    Thread.start(accept_libreoffice.accept) do |session_client| 
       puts "Accepting a client"
-      size = session_client1.gets.delete("\n").to_i
+      size = session_client.gets.delete("\n").to_i
       puts size
       @to_send = 0
       @ok = true
@@ -111,9 +121,9 @@ Thread.start do #thread to attend libreoffice clients
       }
       if (@ok)
 	puts  @to_send["server_ip"] + ":" + @to_send["server_port"]
-	session_client1.puts @to_send["server_ip"]
-	session_client1.puts @to_send["server_port"]
-	serverMessage = session_client1.gets.delete("\n")			
+	session_client.puts @to_send["server_ip"]
+	session_client.puts @to_send["server_port"]
+	serverMessage = session_client.gets.delete("\n")			
 	puts "serverMessage"
 	puts serverMessage
 	if (serverMessage!="ok")
@@ -128,39 +138,74 @@ Thread.start do #thread to attend libreoffice clients
 	end
       else
 	puts "Sending error"
-	session_client1.puts "error"
-	session_client1.gets
+	session_client.puts "error"
+	session_client.gets
       end
-      session_client1.close		    
+      session_client.close		    
     end#end thread 
     end#end loop
 end# libreoffice clients
 
-Thread.start do #thread to attend unoconv clients
+Thread.start do #thread to attend unoconv clients 
   while(true)  
-    Thread.start(accept_unoconv.accept) do |session_client2| 
+    Thread.start(accept_unoconv.accept) do |session_client| 
       puts "Accepting a client"
-      size = session_client2.gets.delete("\n").to_i
+      size = session_client.gets.delete("\n").to_i
       puts size
       @to_send = 0
+      @ok = true
       semaphore.synchronize {
-	  @amazon_nodes.sort_by { |a| a["node_load"] }
+	  @amazon_nodes = @amazon_nodes.sort_by { |a| a["node_load"] }
+	  puts "Node found: " + @amazon_nodes.first["node_ip"]
 	  less_loaded_node = @amazon_nodes.first
-	  less_loaded_servers = @unoconv_servers.select { |s| s["unoconv_ip"] == less_loaded_node["node_ip"] }
-	  less_loaded_servers.sort_by { |a| a["unoconv_load"] }
-	  puts "Server found, retriving server to the client"   
-	  @to_send = less_loaded_servers.first
-	  puts "Updating unoconv_server load"  
+	  if  !@unoconv_servers.empty?
+	    less_loaded_servers = @unoconv_servers.select { |s| s["unoconv_ip"] == less_loaded_node["node_ip"] }
+	    less_loaded_servers = less_loaded_servers.sort_by { |a| a["unoconv_load"] }
+	    puts "Server found, retriving it to the client"   
+	    @to_send = less_loaded_servers.first 
+	puts "1"
+	    server_selected = @unoconv_servers.select { |s| s["unoconv_ip"] == @to_send["unoconv_ip"] && s["unoconv_port"]==@to_send["unoconv_port"]}
+	puts "1"   
+      @s = server_selected.first
+	    puts "unoconv_load before"
+	    puts @s["unoconv_load"] 
+	    @s["unoconv_load"] = @s["unoconv_load"] + size
+	    puts "unoconv_load after"
+	    puts @s["unoconv_load"]
+	    puts @unoconv_servers.last			
+	    @amazon_nodes.first["node_load"] = less_loaded_node["node_load"] + size  
+	    puts "node load after"
+	    puts @amazon_nodes.first
+	   else 
+	    @ok = false			
+	   end	
       }
-      puts  @to_send["unoconv_ip"]  + ":" + @to_send["unoconv_port"]
-      session_client2.puts @to_send["unoconv_ip"]
-      session_client2.puts @to_send["unoconv_port"]
-      serverMessage = session_client2.gets
-      puts "Recieved serverMessage: " + serverMessage
-      session_client2.close
+      if (@ok)
+	puts  @to_send["unoconv_ip"] + ":" + @to_send["unoconv_port"]
+	session_client.puts @to_send["unoconv_ip"]
+	session_client.puts @to_send["unoconv_port"]
+	serverMessage = session_client.gets.delete("\n")			
+	puts "serverMessage"
+	puts serverMessage
+	if (serverMessage!="ok")
+	  semaphore.synchronize {
+	    puts "Deleting server unoconv"
+	    node = @amazon_nodes.select{|d| d["node_ip"]==@s["server_ip"]}.first
+	    puts node["node_load"]
+	    node["node_load"] = node["node_load"] - @s["server_load"]
+	    @unoconv_servers.delete(@s)
+	    puts "Node unoconv deleted"
+	  }
+	end
+      else
+	puts "Sending error"
+	session_client.puts "error"
+	session_client.gets
+      end
+      session_client.close		    
     end#end thread 
-  end#end loop
-end#unconv clients 
+    end#end loop
+end# unoconv clients
 
 Thread.start do #thread to update server and node load
   while(true)  
@@ -175,10 +220,10 @@ Thread.start do #thread to update server and node load
       session_size.close
       semaphore.synchronize {
 	if (@param=="L")
-	  puts "fisrt libreoffice"
-	  puts @libreoffice_servers.first
+	  puts "libreoffice"
 	  @server_selected = @libreoffice_servers.select { |s| s["server_ip"] == @ip && s["server_port"]== @port }
 	else
+	  puts "unoconv"
 	  @server_selected = @unoconv_servers.select { |s| s["server_ip"] == @ip && s["server_port"]== @port }
 	end
 	@ss = @server_selected.first

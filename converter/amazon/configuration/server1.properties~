@@ -3,7 +3,7 @@
 	:ip   => '54.207.16.36',
 	:redirect_ip  => '54.207.16.36',
 	:redirect_port  => 8103,
-	:temp => '/home/ubuntu/servers/temp/',
+	:temp => 'temp',
 	:libreoffice => '/home/ubuntu/rpms/LibreOffice_4.1.2.3_Linux_x86_rpm/RPMS/install1/opt/libreoffice4.1/program/soffice',
 	:converted => '/home/ubuntu/servers/dest/',
 	:pid_file => 'pid_file',

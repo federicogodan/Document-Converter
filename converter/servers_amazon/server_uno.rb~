@@ -28,7 +28,6 @@ url_backet_put = configuration[:url_backet_put]
 url_backet_post = configuration[:url_backet_post] 
 uri = configuration[:uri]
 tar_name = configuration[:tar_name]
-port_size = configuration[:port_size]
 
 Struct.new("Pending", :to_send, :converted_file, :url, :id, :original_size, :original_name, :format_origin) 
 

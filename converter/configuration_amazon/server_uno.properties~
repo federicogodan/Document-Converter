@@ -10,5 +10,6 @@
         :url_backet_post=> 'https://magicrepository.s3.amazonaws.com/uploads/document/file/',
         :uri => 'http://localhost:3000/api/notification',
         :tar_name => 'archivo',
-	:port_size => 8200        
+	:port_size => 8200
+        
 }
