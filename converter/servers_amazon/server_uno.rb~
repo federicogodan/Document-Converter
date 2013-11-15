@@ -107,13 +107,13 @@ Thread.start do
                 	puts url
                 	system('s3cmd put ' + tar_name +  @pending_work[:id] +  '.tar ' + ' ' + url)
                 	url_post = url_backet_post +  @pending_work[:id] + '/' + @pending_work[:original_name] + '.tar'
-                	@message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + size.to_s + "\",\"url\":\"\"" + url_post + "\"}"
+                	@message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + size.to_s + "\",\"url\":\"" + url_post + "\"}"
                 	puts "deleting converted file"
                 	FileUtils.rm_rf(converted)
 			FileUtils.rm(tar_name + @pending_work[:id] + '.tar')
 			 
 		else
-			 @message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + 0 + "\",\"url\":\"\"" + "" + "\"}"
+			 @message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + 0 + "\",\"url\":\"" + "" + "\"}"
 
 		end
                 puts "deleting temp file"
