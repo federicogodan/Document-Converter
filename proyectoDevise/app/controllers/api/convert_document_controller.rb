@@ -1,9 +1,6 @@
 class Api::ConvertDocumentController < ApplicationController#ApiController
+    
   def create
-    render :nothing=>true, :status => 200, :content_type => 'text/html'
-  end
-  
-  def test
     
     puts "!"*50
     @current_user = User.find_by_nick('userexample1')
@@ -39,15 +36,17 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     else
       valid_parameters = false
     end  
-
+    
     respond_to do |f|
-      if valid_parameters #&& @document.save && @document.converted_document.save
+      if valid_parameters && @document.save && @document.converted_document.save
         puts "Document created"
-        puts "rerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"
+        
+        f.html { redirect_to @document, notice: 'Document was successfully updated.' }
         f.json { render json: @document, status: :created }
       else
         puts "Error in the validation of the document's parameters"
-        f.html {redirect_to '/user/dashboard'}
+        #f.html {redirect_to '/user/dashboard'}
+        format.html { render action: "edit" }
         f.json { render json: @document.errors, status: :unprocessable_entity }
       end
     end

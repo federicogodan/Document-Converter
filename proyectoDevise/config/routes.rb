@@ -19,12 +19,13 @@ ProyectoDevise::Application.routes.draw do
     
   namespace :api do 
     resources :convert_document
+    resources :notification
   end
   
   resources :documents
   #resources :convert
 
-  post 'api/notification', to: 'notification#create'  
+  #post 'api/notification/create'#, to: 'notification#create'  
   
   #devise_for :users #BEFORE
   devise_for :users, :controllers => {:registrations => "user/registration", :sessions => "user/sessions"}
