@@ -90,9 +90,10 @@ Thread.start do
 		begin
 		    puts "open converted file"
 		    file = open(@pending_work[:converted_file])
-		    #renaming original file
-		    FileUtils.mv(@pending_work[:converted_file], 'dir' + @pending_work[:original_name] + '.html')
-		    tar_dir = 'tar -czvf ' + tar_name +  @pending_work[:id] +  '.tar ' + 'dir'
+		    #puts 'renaming original file'
+		    File.rename('dir', @pending_work[:original_name])
+		    #FileUtils.mv(@pending_work[:converted_file], 'dir/' + @pending_work[:original_name] + '.html')
+		    tar_dir = 'tar -czvf ' + tar_name +  @pending_work[:id] +  '.tar ' + @pending_work[:original_name]
 		    puts tar_dir
 		    system(tar_dir)
 		rescue
@@ -109,7 +110,7 @@ Thread.start do
                 	url_post = url_backet_post +  @pending_work[:id] + '/' + @pending_work[:original_name] + '.tar'
                 	@message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + size.to_s + "\",\"url\":\"" + url_post + "\"}"
                 	puts "deleting converted file"
-                	FileUtils.rm_rf(converted)
+                	FileUtils.rm_rf(@pending_work[:original_name])
 			FileUtils.rm(tar_name + @pending_work[:id] + '.tar')
 			 
 		else
