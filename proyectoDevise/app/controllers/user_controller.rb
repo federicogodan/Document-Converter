@@ -13,8 +13,7 @@ class UserController < ApplicationController
      #us.documents.push(doc)
      #us.save
      @user = User.find_by_nick(cookies[:nickname])
-    #respond_with resource, :location => after_sign_in_path_for(resource)                                
-         
+    #respond_with resource, :location => after_sign_in_path_for(resource)       
   end
 end
   

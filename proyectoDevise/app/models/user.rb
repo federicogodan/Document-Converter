@@ -75,6 +75,16 @@ class User < ActiveRecord::Base
     porcentage
   end
   
+  def cant_converted_document
+    cant = 0
+    self.documents.each do |doc|
+      if !(ConvertedDocument.find_by_document_id(documents)).nil?
+        cant += 1
+      end
+    end
+    cant
+  end
+  
   def average_time_to_convert
     total_time = 0
     conversions = 0

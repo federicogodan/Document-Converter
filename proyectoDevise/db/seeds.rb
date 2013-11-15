@@ -175,18 +175,28 @@ for i in 0..10
   fl = "file_" + i.to_s
   nm = "file_name" + i.to_s
   sz = i
-  Document.create(user_id: usr_id, format_id: ft_id, file: fl, name: nm, size: sz)
+  Document.create(user_id: usr_id, format_id: ft_id, file: fl, name: nm, size: sz, expired:false)
+  
 end
 
-#Create ConvertedDocument for user 
-for i in 1..10
-  dw_lk = "www.algo.com.uy"
-  sz = i * 10
-  cd = ConvertedDocument.new(download_link: dw_lk, size: sz)
-  cd.document = Document.find(i)
-  cd.format = Format.find(i)
-  cd.set_to_converting
-  cd.save
+#Create ConvertedDocument for user
+Document.all.each do |d|
+  d.converted_document = ConvertedDocument.new(status: 2)
+  d.converted_document.save
+  d.update_converted_document("OK","www.algo.com.uy",10)  
 end
+
+
+ 
+#for i in 1..10
+#  dw_lk = "www.algo.com.uy"
+#  sz = i * 10
+#  cd = ConvertedDocument.new(download_link: dw_lk, size: sz)
+#  cd.update_converted_document("OK","www.algo.com.uy",10)
+#  cd.document = Document.find(i)
+#  cd.format = Format.find(i)
+#  cd.set_to_converting
+#  cd.save
+#end
 
 AdminUser.create!(:email => 'admin@example.com', :password => 'password', :password_confirmation => 'password') unless AdminUser.where(:email => 'admin@example.com').nil?
