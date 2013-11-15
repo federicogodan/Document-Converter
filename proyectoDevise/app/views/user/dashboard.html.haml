@@ -39,7 +39,7 @@
 .row
   .col-sm-12
     %h4
-      %a#create_document_button Start the Wizard
+      %a#create_document_button Start the Wizzard
       to start converting documents.
     %hr/
 .row
@@ -73,7 +73,11 @@
           %td=d.name
           %td=d.format.name
           %td=d.converted_document.format.name
-          %td=d.converted_document.current_status.capitalize
+          -if d.converted_document.current_status.to_s == "ready"
+            %td
+              %a{href: d.converted_document.download_link}=d.converted_document.current_status.capitalize
+          -else
+            %td=d.converted_document.current_status.capitalize
 :javascript
 $(document).ready(function() {
   
