@@ -4,7 +4,11 @@ class WebhoooksController < ApplicationController
   before_filter :find_user
   
   def find_user
-    @user = User.find_by_nick(cookies[:nickname])
+    if cookies[:nickname]!= ''
+      @user = User.find_by_nick(cookies[:nickname])
+    else
+      redirect_to '/', notice: 'You must login to get access'
+    end  
   end
   
   

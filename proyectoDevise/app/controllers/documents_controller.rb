@@ -1,10 +1,20 @@
 class DocumentsController < ApplicationController
   
+  before_filter :find_user
+  
+  def find_user
+    if cookies[:nickname]!= ''
+      @user = User.find_by_nick(cookies[:nickname])
+    else
+      redirect_to '/', notice: 'You must login to get access'
+    end  
+  end
+  
+  
   # GET /documents
   # GET /documents.json
   def index
-    @current_user = User.find_by_nick('userexample1')
-    @documents = User.find_by_nick(@current_user).documents
+    @documents = @user.documents
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +25,7 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.json
   def show
-    @document = Document.find(params[:id])
+    @document = @user.documents.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -65,7 +75,7 @@ class DocumentsController < ApplicationController
   end
 
   def update
-    @document = Document.find(params[:id])
+    @document = @user.documents.find(params[:id])
 
     respond_to do |format|
       if @document.update_attributes(params[:document])
@@ -81,7 +91,7 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1
   # DELETE /documents/1.json
   def destroy
-    @document = Document.find(params[:id])
+    @document = @user.documents.find(params[:id])
     @document.destroy
 
     respond_to do |format|
