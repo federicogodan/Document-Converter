@@ -8,7 +8,7 @@ ActiveAdmin.register Document do
     column :file
     column :size
     column :format
-    column "conversion time/min", :time_of_conversion
+    column "conversion time/min", :time_of_conversion, :sortable => false
     default_actions
   end
   

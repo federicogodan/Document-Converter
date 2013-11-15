@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, 
                   :remember_me, :name, :nick, :surname, :birth_date, :profile_type,
                   :api_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration, 
-                  :used_bandwidth_in_bytes
+                  :bandwidth_in_bytes_per_sec
   
   # A user has many documents to be converted.
   has_many :documents
@@ -73,6 +73,16 @@ class User < ActiveRecord::Base
     porcentage = total_conv_doc*100/total_document if total_conv_doc > 0
     
     porcentage
+  end
+  
+  def cant_converted_document
+    cant = 0
+    self.documents.each do |doc|
+      if !(ConvertedDocument.find_by_document_id(documents)).nil?
+        cant += 1
+      end
+    end
+    cant
   end
   
   def average_time_to_convert
