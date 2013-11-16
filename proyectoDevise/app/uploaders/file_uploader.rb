@@ -28,9 +28,9 @@ class FileUploader < CarrierWave::Uploader::Base
       format_dest = model.converted_document.format.name.downcase
       #obtaining the file's name
       file_name = model.name
+      #obtaining the origin format's name 
+      format_origin = File.extname(file_name).split('.')[1]
      
-      #file_url = model.file.url
-      #parse url
       
       #Parsing the url to change to a correct url to upload the file in S3  
       url = model.file.url.split('.s3.amazonaws.com')
@@ -38,10 +38,12 @@ class FileUploader < CarrierWave::Uploader::Base
       puts file_url
      
       #obtaining the origin format's name
-      format_origin = model.format.name.downcase
+      #format_origin = model.format.name.downcase
       file_id = model.id.to_s
-     
+      
       puts "getting server socket"
+      puts format_dest
+      puts format_origin
       if (format_dest=='html') && (format_origin=='odp' || format_origin=='ppt')
         redirect_port = configuration[:port_unoconv]
       else
@@ -79,7 +81,6 @@ class FileUploader < CarrierWave::Uploader::Base
       @clientSession.puts msg_to_send
       ack = @clientSession.gets
       puts "document transfered"
-      @clientSession.close
   end
 
 end
