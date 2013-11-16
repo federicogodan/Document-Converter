@@ -1,5 +1,5 @@
 ActiveAdmin.register_page "Dashboard" do
-
+  
   menu :priority => 1, :label => proc{ I18n.t("active_admin.dashboard") }
 
   content :title => proc{ I18n.t("active_admin.dashboard") } do
@@ -37,8 +37,21 @@ ActiveAdmin.register_page "Dashboard" do
           end
       end
     end
-      
+    
+    columns do
+      column do
+        panel "Default values" do
+          ul do
+            li "Default storage(bytes): " + get_default_storage.to_s
+            li "Document max size(bytes): " + get_max_document_size.to_s 
+            li "Limit of conversions: " + get_limit_of_conversions.to_s
+            li "Time for expiration(seconds): " + get_default_documents_time_expiration.to_s
+          end
+        end
+      end
+    end
   end
+
 end
 
   def total_used_storage
@@ -79,4 +92,28 @@ def total_bandwidth_used
     total_bandwidth += u.bandwidth_in_bytes_per_sec
   end
   total_bandwidth
+end
+
+def get_default_storage
+  default_values = eval(File.open('default_values.properties') {|f| f.read })
+  storage = default_values[:storage]
+  storage
+end
+
+def get_default_documents_time_expiration
+  default_values = eval(File.open('default_values.properties') {|f| f.read })
+  time = default_values[:documents_time_expiration]
+  time
+end
+
+def get_max_document_size
+  default_values = eval(File.open('default_values.properties') {|f| f.read })
+  max_doc = default_values[:max_document_size]
+  max_doc
+end
+
+def get_limit_of_conversions
+  default_values = eval(File.open('default_values.properties') {|f| f.read })
+  limit = default_values[:limit_of_conversions]
+  limit
 end

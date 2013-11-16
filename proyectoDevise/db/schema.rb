@@ -100,6 +100,8 @@ ActiveRecord::Schema.define(:version => 20131103233354) do
     t.integer  "total_storage_assigned"
     t.integer  "documents_time_for_expiration"
     t.integer  "bandwidth_in_bytes_per_sec",    :default => 0,  :null => false
+    t.integer  "max_document_size"
+    t.integer  "limit_of_conversions"
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
   end

@@ -1,5 +1,4 @@
 ActiveAdmin.register User do
-  config.per_page = 20
   config.sort_order = "nick"
   
   index do
