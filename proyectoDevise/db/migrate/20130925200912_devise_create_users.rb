@@ -44,7 +44,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :secret_key
       t.integer :total_storage_assigned
       t.integer :documents_time_for_expiration
-      t.integer :bandwidth_in_bytes_per_sec, null: false, default:0      
+      t.integer :bandwidth_in_bytes_per_sec, null: false, default:0
+      t.integer :max_document_size
+      t.integer :limit_of_conversions
       t.timestamps
     end
 

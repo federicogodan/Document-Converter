@@ -54,6 +54,9 @@ gem 'haml'
 # Use unicorn as the app server
 # gem 'unicorn'
 
+# multiple requests
+gem 'puma'
+
 # Deploy with Capistrano
 # gem 'capistrano'
 
@@ -64,5 +67,7 @@ gem 'devise'
 
 gem "carrierwave", "~> 0.9.0"
 gem "fog"
+
+gem 'rest-client'
 
 #gem 'rspec-rails'

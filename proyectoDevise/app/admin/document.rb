@@ -1,5 +1,4 @@
 ActiveAdmin.register Document do
-  config.per_page = 20
   config.sort_order = "user_id"
   
   index do
