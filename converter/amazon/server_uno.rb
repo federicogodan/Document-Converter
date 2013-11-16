@@ -24,13 +24,15 @@ redirect_port = configuration[:redirect_port]
 temp = configuration[:temp]
 uno = configuration[:uno]
 converted = configuration[:converted]
-pid_file = configuration[:pid_file]
 url_backet_put = configuration[:url_backet_put]
 url_backet_post = configuration[:url_backet_post] 
 uri = configuration[:uri]
 tar_name = configuration[:tar_name]
+port_size = configuration[:port_size]
 
-Struct.new("Pending", :to_send, :converted_file, :client_session, :name, :url, :id) 
+Struct.new("Pending", :to_send, :converted_file, :url, :id, :original_size, :original_name, :format_origin) 
+
+
 #to_send : command to be executed by the server to make the conversion
 #converted_file : path to the converted file
 #client_session : client's socket 
@@ -77,56 +79,67 @@ Thread.start do
 			  @pending_work = queue_pending.pop
 		}
 
-		@state = "success"
+		@state = "ok"
 		puts "to send: "
 		puts @pending_work[:to_send]
 		system(@pending_work[:to_send])
 		puts "try open file"  
 		puts @pending_work[:converted_file]
+		
 		#try open file  
 		begin
+		    puts "open converted file"
 		    file = open(@pending_work[:converted_file])
-		    if file 
-		      system('tar -czvf ' + tar_name + '.tar ' + converted)
-		    end
-		    rescue
+		    #puts 'renaming original file'
+		    File.rename('dir', @pending_work[:original_name])
+		    #FileUtils.mv(@pending_work[:converted_file], 'dir/' + @pending_work[:original_name] + '.html')
+		    tar_dir = 'tar -czvf ' + tar_name +  @pending_work[:id] +  '.tar ' + @pending_work[:original_name]
+		    puts tar_dir
+		    system(tar_dir)
+		rescue
 		        #send error to the client
-			@state = "faild"   
+			@state = "error"   
 		end
-		if (@state=="faild")
-                	puts "sending post message"
-                	file = File.basename(@pending_work[:converted_file]) 
-                	size = File.size(tar_name + '.tar ') 
+		if (@state!="error")
+                	size = File.size(tar_name + @pending_work[:id] + '.tar') 
                 	puts size
                 	url_converted = url_backet_put + @pending_work[:id]
-                	url = url_converted + '/' + tar_name + '.tar'
+                	url = url_converted + '/' + @pending_work[:original_name] + '.tar'
                 	puts url
-                	system('s3cmd put ' + tar_name + '.tar ' + ' ' + url)
-                	url_post = url_backet_post +  @pending_work[:id] + '/' + tar_name + '.tar'
-                	@message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + size.to_s + "\",\"url\":\"\"" + url_post + "\"}"
+                	system('s3cmd put ' + tar_name +  @pending_work[:id] +  '.tar ' + ' ' + url)
+                	url_post = url_backet_post +  @pending_work[:id] + '/' + @pending_work[:original_name] + '.tar'
+                	@message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + size.to_s + "\",\"url\":\"" + url_post + "\"}"
                 	puts "deleting converted file"
-                	FileUtils.rm_rf(converted)
-			FileUtilis.rm(tar_name + '.tar')
+                	FileUtils.rm_rf(@pending_work[:original_name])
+			FileUtils.rm(tar_name + @pending_work[:id] + '.tar')
 			 
 		else
-			 @message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + 0 + "\",\"url\":\"\"" + "" + "\"}"
+			 @message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + 0 + "\",\"url\":\"" + "" + "\"}"
 
 		end
                 puts "deleting temp file"
-                File.delete(temp + @pending_work[:name]) 
-                puts "sending post"
-                puts uri
-                uri_post = URI(uri)
-                res = Net::HTTP.post_form(uri_post, 'message' => @message)
-                puts res.body
+		FileUtils.rm(temp + tar_name + @pending_work[:id]  + @pending_work[:format_origin] )
+		puts "Sending size to redirect server"
+		puts @pending_work[:original_size]
+		size_socket = TCPSocket.new(redirect_ip, port_size)	
+		size_socket.puts @pending_work[:original_size]			
+		size_socket.puts ip
+		size_socket.puts port
+		size_socket.puts "U"	
+		size_socket.gets
+		puts "sending post message"
+		puts uri
+		uri_post = URI(uri)
+		res = Net::HTTP.post_form(uri_post, 'message' => @message)
+                
                  
    end#loop true
 end#thread 
 
 #thread that is charged on attending clients and add into queue pending work
 Thread.start do
-      while (session = server.accept)
-	Thread.start do
+      while(true)  
+    Thread.start(server.accept) do |session|
 	  puts "accepting client"
 	  message = session.gets.delete("\n")
 	  puts message
@@ -134,28 +147,51 @@ Thread.start do
           file_format = dict["format"]
           puts file_format
           name = dict["name"]
+	  format_origin = File.extname(name)
           puts name
           url = dict["URL"]
           puts url
           id = dict["id"]
           puts id
+	  size = dict["size"]
+	  puts size
 	  session.puts "ACK"
-          system('s3cmd get ' + url + ' ' + temp)
-	  to_send = uno + ' -f ' + file_format + ' ' + ' -o ' + converted + ' ' + temp + name 
-	  puts to_send	  
-	  #building the path of the converted file 
-	  converted_file = converted + name.split('.')[0] + '.' + file_format
-	  puts "converted_file:"
-	  puts converted_file
-	  #push into queue
-	  semaphore.synchronize {
-	    pending = Struct::Pending.new(to_send, converted_file, session, name) 
-	    queue_pending.push pending
-	  }
-	  mutex.synchronize {
-	      work.signal
-	  }
-	  end # thread 
+	  puts "close"
+	  session.close
+	  puts 'temp ' + temp
+	  puts 'name ' + tar_name
+	  puts 'id ' + id
+	  puts 'f ' + format_origin
+          system('s3cmd get ' + url + ' ' + temp + tar_name + id  + format_origin) 
+	  puts 'system'
+	  error = false
+	  begin
+	    puts "open temp file to check download"
+	    file = open(temp + tar_name + id  + format_origin)
+	  rescue
+	    error = true
+	    @message = "{\"status\":\"" + "error" + "\",\"id\":\"" + id + "\",\"size\":\"" + 0 + "\",\"url\":\"\"" + "" + "\"}"
+	  end
+	  if (!error)
+	    to_send = uno + ' -f ' + file_format + ' ' + ' -o ' + converted + ' ' + temp + tar_name + id + format_origin
+	    puts to_send	  
+	    #building the path of the converted file 
+	    converted_file = converted +  tar_name + id +  '.' + file_format
+	    puts "converted_file:"
+	    puts converted_file
+	    #push into queue
+	    puts "semaphore"
+	    semaphore.synchronize {
+	      name_file = name.split(File.extname(name))[0]
+	      pending = Struct::Pending.new(to_send, converted_file, url, id, size, name_file, format_origin)
+	      queue_pending.push pending
+	      puts "push"
+	    }
+	    mutex.synchronize {
+		work.signal
+	    }
+	  end#if
+	 end # thread 
       end#loop 
 end#thread 
 
