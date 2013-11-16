@@ -53,34 +53,45 @@ class FileUploader < CarrierWave::Uploader::Base
       ok = false
       while(!ok)
         puts redirect_port
-        redirect_socket = TCPSocket.new(ip_redirect, redirect_port)
-        size = model.size.to_s 
-        puts  size
-        redirect_socket.puts size
-        server_ip = redirect_socket.gets.delete("\n").to_s
-        server_port = redirect_socket.gets.delete("\n").to_i
-        puts "server_ip"
-        puts server_ip
-        puts "server_port"
-        puts server_port      
-        puts '#-'*25
-        puts model.to_json
         begin
-          @clientSession = TCPSocket.new(server_ip , server_port)
-          ok = true
+          redirect_socket = TCPSocket.new(ip_redirect, redirect_port)
+          err_redirect = true
         rescue(Errno::ECONNREFUSED)
-          ok = false
-          redirect_socket.puts "error"
+          err_redirect = false
+          uri = "http://localhost:3000/api/notification"
+          puts uri
+          uri_post = URI(uri)
+          res = Net::HTTP.post_form(uri_post, 'message' => '{"status":"failed","id":"' + model.id + '"}')
         end
-        if(ok)
-          redirect_socket.puts "ok" 
-        end
-     end
-      msg_to_send = "{\"format\":\"" + format_dest + "\",\"name\":\"" + file_name + "\",\"URL\":\"" + file_url + "\",\"id\":\"" + file_id + "\",\"size\":\""+  size + "\"}" 
-      puts msg_to_send 
-      @clientSession.puts msg_to_send
-      ack = @clientSession.gets
-      puts "document transfered"
+        if !err_redirect
+          size = model.size.to_s 
+          puts  size
+          redirect_socket.puts size
+          server_ip = redirect_socket.gets.delete("\n").to_s
+          server_port = redirect_socket.gets.delete("\n").to_i
+          puts "server_ip"
+          puts server_ip
+          puts "server_port"
+          puts server_port      
+          puts '#-'*25
+          puts model.to_json
+          begin
+            @clientSession = TCPSocket.new(server_ip , server_port)
+            ok = true
+          rescue(Errno::ECONNREFUSED)
+            ok = false
+            redirect_socket.puts "error"
+          end
+          if(ok)
+            redirect_socket.puts "ok" 
+          end
+       end
+        msg_to_send = "{\"format\":\"" + format_dest + "\",\"name\":\"" + file_name + "\",\"URL\":\"" + file_url + "\",\"id\":\"" + file_id + "\",\"size\":\""+  size + "\"}" 
+        puts msg_to_send 
+        @clientSession.puts msg_to_send
+        ack = @clientSession.gets
+        puts "document transfered"
+      end
   end
 
 end
