@@ -19,9 +19,9 @@ class Api::NotificationController < ApplicationController
     puts '\n','-'*50
 
 
-    #message = JSON.parse(request_body["Message"])
+    #message = JSON.parse(request_body["Message"])  
     document = Document.find(document_id)
-    document.update_converted_document(status, document_url, size)
+    document.update_converted_document(status, document_url, size.to_i)
     #throws an exception but the method works
     begin
       document.remove_file!
