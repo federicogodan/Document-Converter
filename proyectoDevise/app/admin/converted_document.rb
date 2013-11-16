@@ -1,5 +1,4 @@
 ActiveAdmin.register ConvertedDocument do
-  config.per_page = 20
   config.sort_order = "document_id"
   
   index do

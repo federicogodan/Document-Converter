@@ -1,5 +1,4 @@
 ProyectoDevise::Application.routes.draw do
-  
   resources :webhoooks
   
   #map.resources :user, :has_many => [:webhoooks]  
@@ -16,15 +15,18 @@ ProyectoDevise::Application.routes.draw do
   get "convert/upload"
   get "convert/get_formats"
   post "posts/create"
+  
+  post "/admindefaultvalues", to: "admindefaultvalues#set_default_values"
     
   namespace :api do 
     resources :convert_document
+    resources :notification
   end
   
   resources :documents
   #resources :convert
 
-  post 'api/notification', to: 'notification#create'  
+  #post 'api/notification/create'#, to: 'notification#create'  
   
   #devise_for :users #BEFORE
   devise_for :users, :controllers => {:registrations => "user/registration", :sessions => "user/sessions"}

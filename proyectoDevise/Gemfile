@@ -11,6 +11,9 @@ gem 'whenever'
 gem 'execjs'
 gem 'therubyracer', :platforms => :ruby
 
+gem 'rest-client'
+gem 'puma'
+
 gem "webhook", "~> 0.1.0"
 
 group :development, :test do
