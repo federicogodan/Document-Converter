@@ -13,8 +13,8 @@ ProyectoDevise::Application.routes.draw do
   get "user/home"
   get "user/dashboard"
   get "posts/new"
-  get "convert/upload"
   get "convert/get_formats"
+  get "convert/get_status"
   post "posts/create"
     
   namespace :api do 
@@ -22,7 +22,7 @@ ProyectoDevise::Application.routes.draw do
   end
   
   resources :documents
-  #resources :convert
+
 
   post 'api/notification', to: 'notification#create'  
   

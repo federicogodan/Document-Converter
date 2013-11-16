@@ -21,3 +21,6 @@
 
 # Ignore Gemfile.lock
 Gemfile.lock
+
+# Ignore controller propierties
+controller.properties
