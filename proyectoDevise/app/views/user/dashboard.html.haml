@@ -99,13 +99,18 @@ $(document).ready(function() {
       $.get('/convert/get_status', { id: id },
         function(data) {
           if (data.status == 'Ready') {
-            new_html = '<a href='+data.url+'><button type="button" class="btn btn-success">'+data.status+'</button></a>';
+            new_html = '<a href='+data.url+'><button type="button" class="btn btn-success">Download</button></a>';
             if (new_html != $('#'+id).html())
               $('#'+id).html(new_html);
           }
-          else {
+          else if (data.status == 'Converting') {
             img = '<img id="loading_img" src="/assets/loading.gif" width=20>';
             new_html = img+data.status;
+            if (new_html != $('#'+id).html())
+              $('#'+id).html(new_html);
+          }
+          else{
+            new_html = data.status;
             if (new_html != $('#'+id).html())
               $('#'+id).html(new_html);
           }

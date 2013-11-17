@@ -40,7 +40,7 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     respond_to do |f|
       if valid_parameters && @document.save && @document.converted_document.save
         puts "Document created"
-        puts "rerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"
+        #f.html {redirect_to '/user/dashboard'}
         f.json { render json: @document, status: :created }
       else
         puts "Error in the validation of the document's parameters"
