@@ -52,16 +52,18 @@ class FileUploader < CarrierWave::Uploader::Base
       
       ok = false
       err_redirect = false
-      while(!ok)
+      cant = configuration[:cant_retries]      
+      while(!ok && cant!=0)
+        puts "&"*50
+        cant = cant - 1
         puts redirect_port
         begin
           redirect_socket = TCPSocket.new(ip_redirect, redirect_port)
         rescue(Errno::ECONNREFUSED)
           err_redirect = true
-          uri = "http://localhost:3000/api/notification"
-          puts uri
-          uri_post = URI(uri)
-          res = Net::HTTP.post_form(uri_post, 'message' => '{"status":"failed","id":"' + model.id + '"}')
+          if cant == 0
+            model.converted_document.set_to_failed
+          end
         end
         if !err_redirect
           size = model.size.to_s 
