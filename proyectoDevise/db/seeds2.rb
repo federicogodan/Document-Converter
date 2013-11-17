@@ -41,7 +41,7 @@ f14.save
 f15.save
 
 #Load the associations
-#DOC to DOCX,ODT,ODS,ODP,TXT,PDF,HTML
+#DOC to DOCX,ODT,ODS,ODP,TXT,PDF,JPG,PNG,HTML
 f1.destinies.push(f2)
 f1.destinies.push(f7)
 f1.destinies.push(f8)
@@ -49,6 +49,8 @@ f1.destinies.push(f9)
 f1.destinies.push(f10)
 f1.destinies.push(f11)
 f1.destinies.push(f12)
+f1.destinies.push(f13)
+f1.destinies.push(f14)
 f1.save
 
 
@@ -97,17 +99,16 @@ f6.destinies.push(f14)
 f6.destinies.push(f5)
 f6.save
 
-#ODT to DOC,DOCX,PNG,HTML
+#ODT to DOC,DOCX,JPG,PNG,HTML
 f7.destinies.push(f1)
 f7.destinies.push(f2)
 f7.destinies.push(f11)
 f7.destinies.push(f12)
+f7.destinies.push(f13)
 f7.destinies.push(f14)
 f7.save
 
-#ODS to XLS,XLSX,PDF,JPG,PNG,HTML
-f8.destinies.push(f5)
-f8.destinies.push(f6)
+#ODS to PDF,JPG,PNG,HTML
 f8.destinies.push(f11)
 f8.destinies.push(f12)
 f8.destinies.push(f13)
@@ -123,15 +124,13 @@ f9.destinies.push(f13)
 f9.destinies.push(f14)
 f9.save
 
-#TXT to DOC,DOCX,RTF,ODT,PDF,HTML,ODP,ODS
+#TXT to DOC,DOCX,RTF,ODT,PDF,HTML
 f10.destinies.push(f1)
 f10.destinies.push(f2)
 f10.destinies.push(f11)
 f10.destinies.push(f12)
 f10.destinies.push(f7)
 f10.destinies.push(f15)
-f10.destinies.push(f8)
-f10.destinies.push(f9) 
 f10.save
 
 #PDF to JPG,PNG
@@ -144,11 +143,12 @@ f12.destinies.push(f10)
 f12.destinies.push(f11)
 f12.save
 
-#JPG to DOC,DOCX,ODT,ODP,PDF,PNG
+#JPG to DOC,DOCX,ODT,ODP,TXT,PDF,PNG
 f13.destinies.push(f1)
 f13.destinies.push(f2)
 f13.destinies.push(f7)
 f13.destinies.push(f9)
+f13.destinies.push(f10)
 f13.destinies.push(f11)
 f13.destinies.push(f14)
 f13.save
@@ -182,7 +182,6 @@ end
 #Create ConvertedDocument for user
 Document.all.each do |d|
   d.converted_document = ConvertedDocument.new(status: 2)
-  d.converted_document.format = d.format.destinies.first
   d.converted_document.save
   d.update_converted_document("OK","www.algo.com.uy",10)  
 end
@@ -201,4 +200,3 @@ end
 #end
 
 AdminUser.create!(:email => 'admin@example.com', :password => 'password', :password_confirmation => 'password') unless AdminUser.where(:email => 'admin@example.com').nil?
-
