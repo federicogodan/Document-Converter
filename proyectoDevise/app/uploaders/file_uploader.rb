@@ -36,7 +36,7 @@ class FileUploader < CarrierWave::Uploader::Base
       url = model.file.url.split('.s3.amazonaws.com')
       file_url = "s3" + url[0].split('https')[1] + url[1]
       puts file_url
-     
+      size =0     
       #obtaining the origin format's name
       #format_origin = model.format.name.downcase
       file_id = model.id.to_s
@@ -51,13 +51,13 @@ class FileUploader < CarrierWave::Uploader::Base
       end
       
       ok = false
+      err_redirect = false
       while(!ok)
         puts redirect_port
         begin
           redirect_socket = TCPSocket.new(ip_redirect, redirect_port)
-          err_redirect = true
         rescue(Errno::ECONNREFUSED)
-          err_redirect = false
+          err_redirect = true
           uri = "http://localhost:3000/api/notification"
           puts uri
           uri_post = URI(uri)
@@ -65,7 +65,7 @@ class FileUploader < CarrierWave::Uploader::Base
         end
         if !err_redirect
           size = model.size.to_s 
-          puts  size
+          puts size
           redirect_socket.puts size
           server_ip = redirect_socket.gets.delete("\n").to_s
           server_port = redirect_socket.gets.delete("\n").to_i
@@ -86,11 +86,18 @@ class FileUploader < CarrierWave::Uploader::Base
             redirect_socket.puts "ok" 
           end
        end
-        msg_to_send = "{\"format\":\"" + format_dest + "\",\"name\":\"" + file_name + "\",\"URL\":\"" + file_url + "\",\"id\":\"" + file_id + "\",\"size\":\""+  size + "\"}" 
-        puts msg_to_send 
-        @clientSession.puts msg_to_send
-        ack = @clientSession.gets
-        puts "document transfered"
+       if (ok) && (!err_redirect)
+         puts format_dest
+         puts file_name
+         puts file_url
+         puts file_id
+         puts size
+         msg_to_send = "{\"format\":\"" + format_dest + "\",\"name\":\"" + file_name + "\",\"URL\":\"" + file_url + "\",\"id\":\"" + file_id + "\",\"size\":\""+  size.to_s + "\"}" 
+          puts msg_to_send 
+          @clientSession.puts msg_to_send
+          ack = @clientSession.gets
+          puts "document transfered"
+       end
       end
   end
 
