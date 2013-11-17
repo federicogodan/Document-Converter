@@ -39,8 +39,9 @@
 .row
   .col-sm-12
     %h4
-      %a#create_document_button Start the Wizzard
-      to start converting documents.
+
+      %button.btn.btn-primary#create_document_button Convert document
+
     %hr/
 .row
   .col-sm-2
@@ -73,11 +74,9 @@
           %td=d.name
           %td=d.format.name
           %td=d.converted_document.format.name
-          -if d.converted_document.current_status.to_s == "ready"
-            %td
-              %a{href: d.converted_document.download_link}=d.converted_document.current_status.capitalize
-          -else
-            %td=d.converted_document.current_status.capitalize
+
+          %td{'class'=>"status",'id'=>"#{d.id}"}=d.converted_document.current_status.capitalize
+
 :javascript
 $(document).ready(function() {
   
@@ -91,4 +90,29 @@ $(document).ready(function() {
       $("#create_document_modal").modal(); 
     });
 
+
+  getStatus();
+
+  function getStatus() {
+    $('.status').each(function() {
+      var id = this.id;
+      $.get('/convert/get_status', { id: id },
+        function(data) {
+          if (data.status == 'Ready') {
+            new_html = '<a href='+data.url+'><button type="button" class="btn btn-success">'+data.status+'</button></a>';
+            if (new_html != $('#'+id).html())
+              $('#'+id).html(new_html);
+          }
+          else {
+            img = '<img id="loading_img" src="/assets/loading.gif" width=20>';
+            new_html = img+data.status;
+            if (new_html != $('#'+id).html())
+              $('#'+id).html(new_html);
+          }
+        });
+    });
+
+    setTimeout('getStatus()',5000);
+  }
 });
+

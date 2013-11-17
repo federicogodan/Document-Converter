@@ -12,8 +12,8 @@ ProyectoDevise::Application.routes.draw do
   get "user/home"
   get "user/dashboard"
   get "posts/new"
-  get "convert/upload"
   get "convert/get_formats"
+  get "convert/get_status"
   post "posts/create"
   
   post "/admindefaultvalues", to: "admindefaultvalues#set_default_values"
@@ -24,7 +24,7 @@ ProyectoDevise::Application.routes.draw do
   end
   
   resources :documents
-  #resources :convert
+
 
   #post 'api/notification/create'#, to: 'notification#create'  
   
