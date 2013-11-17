@@ -40,25 +40,25 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     
       #obtains the data error
       if (f_size <= @current_user.max_document_size)
-         @doc_error = "max_document_size"
+         @doc_error = '{"status":"max_document_size"}'#"max_document_size"
       elsif (@current_user && ((@current_user.used_storage + f_size) <= @current_user.total_storage_assigned))
-         @doc_error = "total_storage_assigned"
+         @doc_error = '{"status":"total_storage_assigned"}'#"total_storage_assigned"
       else
-          @doc_error = "unprocessable_entity"
+          @doc_error = '{"status":"unprocessable_entity"}'#"unprocessable_entity"
       end
       
       valid_parameters = false
     end  
-    
+    require 'json'
     respond_to do |f|
       if valid_parameters && @document.save && @document.converted_document.save
         puts "Document created"
         #f.html {redirect_to '/user/dashboard'}
         f.json { render json: @document, status: :created }
-      else
+      else     
         puts "Error in the validation of the document's parameters"
         #f.html {redirect_to '/user/dashboard'}
-        f.json { render json: @document.errors, status: :unprocessable_entity }
+        f.json { render json: @doc_error, status: :created }#:unprocessable_entity }
       end
     end
   end
