@@ -14,12 +14,13 @@ ProyectoDevise::Application.routes.draw do
   get "posts/new"
   get "convert/get_status"
   post "posts/create"
-  get "user/get_free_space"
+  #get "api/get_free_space"
   post "/admindefaultvalues", to: "admindefaultvalues#set_default_values"
     
   namespace :api do 
     resources :convert_document
     resources :notification
+    resources :free_space
   end
   
   resources :documents
