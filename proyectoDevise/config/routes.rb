@@ -12,10 +12,9 @@ ProyectoDevise::Application.routes.draw do
   get "user/home"
   get "user/dashboard"
   get "posts/new"
-  get "convert/get_formats"
   get "convert/get_status"
   post "posts/create"
-  
+  get "user/get_free_space"
   post "/admindefaultvalues", to: "admindefaultvalues#set_default_values"
     
   namespace :api do 

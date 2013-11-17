@@ -50,8 +50,8 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     end
   end
   
-  def show
-    ext = params[:id]
+   def index
+    ext = params[:extension]
     reg_filename = Format.find_by_name(ext)
     formats = []
     reg_filename.destinies.each do |f|
