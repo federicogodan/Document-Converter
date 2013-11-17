@@ -42,11 +42,13 @@ class DeviseCreateUsers < ActiveRecord::Migration
       
       t.string :api_key
       t.string :secret_key
-      t.integer :total_storage_assigned
-      t.integer :documents_time_for_expiration
-      t.integer :bandwidth_in_bytes_per_sec, null: false, default:0
-      t.integer :max_document_size
-      t.integer :limit_of_conversions
+      
+      default_values = obtain_default_values
+      t.integer :total_storage_assigned, null: false, default: default_values[:storage].to_i
+      t.integer :documents_time_for_expiration,null:false, default: default_values[:documents_time_expiration].to_i
+      t.integer :bandwidth_in_bytes_per_sec, null: false, default: 0
+      t.integer :max_document_size, null: false, default: default_values[:max_document_size].to_i
+      t.integer :limit_of_conversions, null: false, default: 0
       t.timestamps
     end
 
@@ -57,4 +59,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
        
   end
   
+  def obtain_default_values
+    eval(File.open('default_values.properties') {|f| f.read })
+  end
 end
