@@ -83,10 +83,10 @@
     });
 
     $('#document_file').change(function() {
-        formats();
+         formats_file();
       });
     
-      function formats() {
+       function formats_file() {
         dot = $("#document_file").val().lastIndexOf(".");
         ext = $("#document_file").val().substring(dot+1);
         $.get('/convert/get_formats', 
@@ -110,6 +110,36 @@
             });
           });
           $('#formats_panel').fadeIn();
+         };
+      
+      $('#document_url').change(function() {
+        formats_url();
+      });
+    
+      function formats_url() {
+        dot = $("#document_url").val().lastIndexOf(".");
+        ext = $("#document_url").val().substring(dot+1);
+        $.get('/convert/get_formats', 
+          { extension: ext },
+          function(data) {
+            parent1 = $('#form-to-ext1');
+            parent2 = $('#form-to-ext2');
+            parent1.empty();
+            parent2.empty();
+            checked = true;
+            i = 1;
+            data.forEach(function(entry) {
+                if (i%2) {
+                  parent = parent1;
+                } else {
+                  parent = parent2;
+                }
+                parent.append(to_radio(entry, checked));
+                checked = false;
+                i++;
+            });
+          });
+          $('#formats_panel').fadeIn();  
       };
   });
 
