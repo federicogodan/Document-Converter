@@ -47,8 +47,9 @@ class User < ActiveRecord::Base
   def used_storage
     used_size = 0
     self.documents.each do |doc|
-      cd = (ConvertedDocument.find_by_document_id(doc.id)) if !doc.expired
-      used_size = cd.size if !cd.nil?
+      #cd = (ConvertedDocument.find_by_document_id(doc.id)) if !doc.expired
+      cd = doc.converted_document if !doc.expired
+      used_size += cd.size if !(cd.nil? || cd.size.nil?)
     end
     used_size
   end
