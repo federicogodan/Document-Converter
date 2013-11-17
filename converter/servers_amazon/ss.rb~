@@ -1,0 +1,2 @@
+require 'doc_converter'
+DocConverter.convert_document("/home/mika/Descargas/LLLL.docx", "pdf")
