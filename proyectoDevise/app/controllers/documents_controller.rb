@@ -57,7 +57,7 @@ class DocumentsController < ApplicationController
    
     request = RestClient::Request.new(
           :method => :post,
-          :url => 'http://localhost:3000/api/convert_document/',
+          :url => 'http://localhost:80/api/convert_document/',
           :payload => {
             :multipart => true,
             :document => { :file => params[:document][:file],
@@ -69,6 +69,7 @@ class DocumentsController < ApplicationController
    
     puts "respond!"
     respond_to do |format|
+      format.html { redirect_to '/user/dashboard'}
       format.json { head :no_content }
     end
     
