@@ -89,7 +89,7 @@
        function formats_file() {
         dot = $("#document_file").val().lastIndexOf(".");
         ext = $("#document_file").val().substring(dot+1);
-        $.get('/api/convert_document', 
+        $.get('/documents/get_formats', 
           { extension: ext },
           function(data) {
             parent1 = $('#form-to-ext1');
