@@ -85,6 +85,7 @@ class DocumentsController < ApplicationController
               :destination_format => params[:document][:destination_format]
               }
           })      
+
     response = request.execute
     
     puts "respond!"
