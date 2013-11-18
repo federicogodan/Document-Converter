@@ -1,0 +1,15 @@
+gonzaloavila16
+gK2500R4304
+
+-------------------------------------------------------------
+Al sincronizar nos con el repositorio online se genera 
+un repositorio local donde un documento puede estar en 
+distintos estados, estos son:
+
+*Bajo control de versiones - staged
+ No controlado - unstaged
+
+*Almacenado en la base de datos local - staged y commited
+ No almacenado - staged y not commited
+
+*Almacenado en repositorio online (staged, commited y pushed)

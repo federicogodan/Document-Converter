@@ -9,10 +9,13 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     #RestClient.post 'http://localhost:3000/api/convert_document/', :document => {  :destination_format => params[:document][:destination_format] }
      if params[:document][:upload_method] == 'URL'
        @file_name =  File.basename(URI.parse(params[:document][:url]).path)
-       File.open(@file_name, 'wb') do |fo|
+       temp_path = "./" + Time.now.to_s
+       FileUtils.mkdir(temp_path)
+       puts temp_path
+       File.open(temp_path + '/' + @file_name, 'wb') do |fo|
           fo.write(open(params[:document][:url]).read)
        end
-       @file_content = File.open("./" + @file_name)
+       @file_content = File.open(temp_path + "/" + @file_name)
        @f_size = @file_content.size if @file_content      
     else 
       @file_name = params[:document][:file].original_filename
@@ -78,7 +81,11 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
       end
       
       valid_parameters = false
-    end  
+    end
+    
+    if params[:document][:upload_method] == 'URL'
+      FileUtils.rm_rf(temp_path)
+    end
     
     respond_to do |f|
       if valid_parameters && @document.save && @document.converted_document.save
