@@ -7,5 +7,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Gonzalo Avila"]
   s.email       = ["gonzaloavila16@gmail.com"]
   s.files       = ["lib/doc_converter.rb"]
-  #s.add_dependency "HTTParty", "~>0.12.0"
+  #REVISAR DEPENDENCIAS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  #s.add_dependency('base64')
+  #s.add_dependency('openssl')
+  #s.add_dependency('rest_client')
 end

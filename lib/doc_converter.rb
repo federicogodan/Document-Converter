@@ -1,44 +1,47 @@
-require 'rubygems'
 require 'base64'
 require 'openssl'
 require 'rest_client'
+require 'rubygems'
 
 class DocConverter
+  include Base64
+  include OpenSSL
   include RestClient
-  attr_accessible :api_key, :secret_key
   
   def self.set_keys
-    api_key = 'vo9H_h3YS2VxfHd8SlveNw' #userexample50 ARREGLAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    secret_key = '5-mvibcPsUx1NBMEoQhobQ' #userexample50 ARREGLAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #configuration = eval(File.open('controller.properties') {|f| f.read })
+    @api_key = 'vo9H_h3YS2VxfHd8SlveNw' #userexample50 ARREGLAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    @secret_key = '5-mvibcPsUx1NBMEoQhobQ' #userexample50 ARREGLAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   end
   
   def self.convert_document(file_path, destiny_format, upload_method)
    
-   hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, 'http://localhost:3000/api/convert_document')).strip
+   hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), @secret_key, 'http://localhost:3000/api/convert_document')).strip
    
    if upload_method == 'FILE'
     RestClient.post 'http://localhost:3000/api/convert_document', :document => { :file => File.new(file_path), :destination_format => destiny_format, 
-                              :upload_method => upload_method }, :api_key => api_key, :hash => hash, :content_type => :json, :accept => :json  
+                              :upload_method => upload_method }, :api_key => @api_key, :hash => hash, :content_type => :json, :accept => :json  
    else
     RestClient.post 'http://localhost:3000/api/convert_document', :document => { :url => file_path, :destination_format => destiny_format, 
-                              :upload_method => upload_method }, :api_key => api_key, :hash => hash, :content_type => :json, :accept => :json
+                              :upload_method => upload_method }, :api_key => @api_key, :hash => hash, :content_type => :json, :accept => :json
+   end
   end
 
   def self.get_formats(ext)
-    hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, 'http://localhost:3000/api/convert_document')).strip
-    RestClient.get 'http://localhost:3000/api/convert_document', {:params => {:extension => ext, :api_key => api_key, :hash => hash}, 
+    hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), @secret_key, 'http://localhost:3000/api/convert_document')).strip
+    RestClient.get 'http://localhost:3000/api/convert_document', {:params => {:extension => ext, :api_key => @api_key, :hash => hash}, 
                                                                   :content_type => :json, :accept => :json}
   end
   
   def self.get_free_space
-    hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, 'http://localhost:3000/api/free_space')).strip
-    RestClient.get 'http://localhost:3000/api/free_space', {:params => {:api_key => api_key, :hash => hash}, :content_type => :json, :accept => :json}
+    hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), @secret_key, 'http://localhost:3000/api/free_space')).strip
+    RestClient.get 'http://localhost:3000/api/free_space', {:params => {:api_key => @api_key, :hash => hash}, :content_type => :json, :accept => :json}
   end
   
 end
 
 
-#MARCOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoo
+#MARCOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 #require 'rubygems'
 #require 'rest_client'
 #require 'yaml'
@@ -92,7 +95,3 @@ end
 #    puts config[:server_adress]+'/user/get_free_space'
 #    RestClient.get config[:server_adress]+'/user/get_free_space', :content_type => :json, :accept => :json
 #  end
-  
-#end
-
-
