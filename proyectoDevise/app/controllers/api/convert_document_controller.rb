@@ -23,7 +23,7 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     
    
     
-    if (file_name && file_content && f_size && origin_format && destiny_format && @current_user && 
+    if (file_name && file_content && f_size && origin_format && destiny_format && @current_user && @current_user.max_document.size && 
        (f_size <= @current_user.max_document_size) && ((@current_user.used_storage + f_size) <= @current_user.total_storage_assigned))
       #Creating association between the user and the document uploaded. Also creating the converted document's object
   
@@ -39,11 +39,14 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     else
     
       #obtains the data error
-      if (f_size <= @current_user.max_document_size)
-         @doc_error = "max_document_size"
+      if (@current_user.max_document_size)
+         @doc_error = "max document size nil"
       elsif (@current_user && ((@current_user.used_storage + f_size) <= @current_user.total_storage_assigned))
          @doc_error = "total_storage_assigned"
-      else
+      elsif
+         (f_size <= @current_user.max_document_size)
+         @doc_error = "max_document_size"
+      else   
           @doc_error = "unprocessable_entity"
       end
       
