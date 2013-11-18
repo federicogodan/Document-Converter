@@ -1,4 +1,5 @@
 
+1 - rescue en file_uploader de redirecr server , si no se conecta que no se pudra todo
 2 - s3 : cuando baja o sube archivo capturar error, porque sino sigue reintentando o nose bien que hace, en el caso que de error debemos devolver error al cliente 
 3 - migrar servers y redirect a rails
 4 - obtener ip dinamicamente cuando inicia el server para mandarselo al redirect

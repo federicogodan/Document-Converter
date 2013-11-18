@@ -198,7 +198,7 @@ Thread.start do
 	@message = "{\"status\":\"" + "error" + "\",\"id\":\"" + id + "\",\"size\":\"" + 0 + "\",\"url\":\"\"" + "" + "\"}"
       end
       if (!error)
-	if (format_dest=='txt') #TODO: filter through the format in function of the original one 
+	if (format_dest=='txt') 
 	    plus = ':Text'
 	else
 	    plus = ''

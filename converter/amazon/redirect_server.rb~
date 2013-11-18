@@ -8,7 +8,7 @@ require 'socket'
 semaphore = Mutex.new
 
 #get parameters through a configuration file 
-configuration = eval(File.open('/home/ubuntu/configuration/redirect.properties') {|f| f.read })
+configuration = eval(File.open('/home/mika/Escritorio/PIS/prototipoMika/Document-Converter/converter/configuration_amazon/redirect.properties') {|f| f.read })
 port_servers_unoconv = configuration[:port_servers_unoconv]
 port_servers_libreoffice = configuration[:port_servers_libreoffice]
 port_unoconv= configuration[:port_unoconv]

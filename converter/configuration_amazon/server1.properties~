@@ -1,7 +1,7 @@
 {
 	:port   => 8007,
-	:ip   => '172.16.108.181',
-	:redirect_ip  => '172.16.108.181',
+	:ip   => 'localhost',
+	:redirect_ip  => 'localhost',
 	:redirect_port  => 8103,
 	:temp => 'temp1/',
 	:libreoffice => '/usr/bin/libreoffice',

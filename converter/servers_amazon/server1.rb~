@@ -188,7 +188,6 @@ Thread.start do
       size = dict["size"]
       puts size
       session.puts "ACK"
-      puts "close"
       session.close
       system('s3cmd get ' + url + ' ' + temp + name_temp_file + id  + format_origin) 
       error = false
