@@ -97,13 +97,13 @@ ActiveRecord::Schema.define(:version => 20131103233354) do
     t.datetime "birth_date"
     t.string   "api_key"
     t.string   "secret_key"
-    t.integer  "total_storage_assigned",        :default => 10000, :null => false
-    t.integer  "documents_time_for_expiration", :default => 86400, :null => false
-    t.integer  "bandwidth_in_bytes_per_sec",    :default => 0,     :null => false
-    t.integer  "max_document_size",             :default => 1000,  :null => false
-    t.integer  "limit_of_conversions",          :default => 0,     :null => false
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.integer  "total_storage_assigned",        :default => 10000000, :null => false
+    t.integer  "documents_time_for_expiration", :default => 86400,    :null => false
+    t.integer  "bandwidth_in_bytes_per_sec",    :default => 0,        :null => false
+    t.integer  "max_document_size",             :default => 1000000,  :null => false
+    t.integer  "limit_of_conversions",          :default => 0,        :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

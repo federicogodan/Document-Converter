@@ -115,5 +115,9 @@ class User < ActiveRecord::Base
     end until !User.exists?(api_key: token)
     self.secret_key = token
   end
+  
+  def get_total_storage_assigned
+    return self.total_storage_assigned
+  end
 
 end
