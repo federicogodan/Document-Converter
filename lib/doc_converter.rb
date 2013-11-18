@@ -1,7 +1,7 @@
 require 'rubygems'
-require 'rest_client'
 require 'base64'
 require 'openssl'
+require 'rest_client'
 
 class DocConverter
   include RestClient
@@ -31,7 +31,8 @@ class DocConverter
   end
   
   def self.get_free_space
-    RestClient.get 'http://localhost:3000/api/free_space', :content_type => :json, :accept => :json
+    hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, 'http://localhost:3000/api/free_space')).strip
+    RestClient.get 'http://localhost:3000/api/free_space', {:params => {:api_key => api_key, :hash => hash}, :content_type => :json, :accept => :json}
   end
   
 end
