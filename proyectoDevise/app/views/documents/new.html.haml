@@ -23,6 +23,10 @@
           .form_url.form-group{hidden: true}
             %label.col-sm-1.control-label{for: "document_url"}URL
             .col-sm-7
+              %input#document_url.form-control{name: "document[url]", placeholder: "Document URL", type: "url"}
+            %label.col-sm-1.control-label{for: "document_url_ext"}
+            .col-sm-3
+
           %br
           %br
           #formats_panel.panel.panel-default{hidden: true}
