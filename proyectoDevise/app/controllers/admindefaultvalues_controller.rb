@@ -21,7 +21,7 @@ class AdmindefaultvaluesController < ApplicationController
     File.open('default_values.properties', 'w') do |f|
       f.puts default_values
     end
-    
+    puts "****************************************************************"
     redirect_to "/admin/dashboard"
   end
 end
