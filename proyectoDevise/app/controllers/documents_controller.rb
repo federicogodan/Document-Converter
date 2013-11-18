@@ -145,4 +145,31 @@ class DocumentsController < ApplicationController
     render :json => response    
   end
 
+  def show_api_keys
+      puts 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa------------------------------------------------------------------------------AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa------------------------------------------------------------------------------'*50
+  end
+
+  def regenerate_keys
+    puts 'keys regeneradas'*90
+    
+    #creates the public key
+    begin
+      token = SecureRandom.urlsafe_base64(nil, false)
+    end until !User.exists?(api_key: token)
+    api_key = token
+    puts 'Nueva Api key: '+ api_key
+
+    #creates the secret key
+    begin
+      token = SecureRandom.urlsafe_base64(nil, false)
+    end until !User.exists?(api_key: token)
+    secret_key = token
+    puts 'Nueva Secret key: ' + secret_key
+
+    @user.api_key = api_key
+    @user.secret_key = secret_key
+
+    @user.save
+  end
+
 end
