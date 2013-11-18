@@ -1,4 +1,32 @@
 class Api::ConvertDocumentController < ApplicationController#ApiController
+
+  before_filter :restrict_access
+  
+  def read_api_key
+    api_key = params[:api_key]
+    api_key
+  end
+  
+  def check_api_token(secret_key, string_to_convert, hash)
+    hash_verification = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, string_to_convert)).strip
+    hash == hash_verification
+  end
+  
+  def restrict_access
+    api_key = read_api_key
+    hash = params[:hash]
+    user_access = User.find_by_api_key(api_key)
+    if !user_access.nil? && !hash.nil?
+      @current_user = user_access
+      access_error = check_api_token(user_access.secret_key, request.original_url, hash)
+    else
+      access_error = false
+    end
+    if !access_error 
+      render json: {:error => "401"}
+    end
+  end
+    
     
   def create            
   
@@ -13,33 +41,33 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     @f_size = nil    
     @doc_error = ''
     
-     #checking method of upload(Remote or local file)  
-     if params[:document][:upload_method] == 'URL'             
+     #checking method of upload(Remote or local file)
+     if params[:document][:upload_method] == 'URL'
        begin
-        @file_name =  File.basename(URI.parse(params[:document][:url]).path)
-        File.open(@@file_name, 'wb') do |fo|
-          fo.write(open(params[:document][:url]).read)
-        end
-        @file_content = File.open("./" + @file_name)
-        @f_size = @file_content.size if !@file_content.nil?
-       rescue     #Catch an exception, if File class fail    
-        is_valid_file_status = false        
-       end       
-      
-    else 
-      if !params[:document][:file].nil?
-        @file_name = params[:document][:file].original_filename 
+          @file_name =  File.basename(URI.parse(params[:document][:url]).path)
+          temp_path = "./" + Time.now.to_s
+          FileUtils.mkdir(temp_path)
+          File.open(temp_path + '/' + @file_name, 'wb') do |fo|
+              fo.write(open(params[:document][:url]).read)
+          end
+          @file_content = File.open(temp_path + "/" + @file_name)
+          @f_size = @file_content.size if @file_content
+       rescue #Catch an exception, if File class fail
+          is_valid_file_status = false
+       end           
+    else
+      if !params[:document][:file].nil? 
+        @file_name = params[:document][:file].original_filename
         @file_content = params[:document][:file] 
-        @f_size = @file_content.size if !@file_content.nil?
+        @f_size = @file_content.size if @file_content
       end  
-    end        
+    end                                      
     
     
     name_plus_extension = File.extname(@file_name) if !@file_name.nil?        
     has_extension = name_plus_extension.split('.')[1] if (!name_plus_extension.nil? && (name_plus_extension.split('.').count > 1))
     ext = has_extension.upcase if !has_extension.nil?        
     @origin_format = Format.find_by_name(ext) if !ext.nil?
-  
     destiny_format_name = params[:document][:destination_format]    
     @destiny_format = Format.find_by_name(destiny_format_name) if !destiny_format_name.nil? 
               
@@ -97,6 +125,11 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
       elsif valid_parameters #It means that the error is in @document.save or @document.converted_document.save     
         @doc_error = '{"status":"File error: Couldn\'t save the file in the database. Please try again later"}'
       end
+      
+      if params[:document][:upload_method] == 'URL'
+        FileUtils.rm_rf(temp_path)
+      end
+
       
       render json: @doc_error  
   end

@@ -47,38 +47,48 @@ class DocumentsController < ApplicationController
 
   # POST /documents
   # POST /documents.json
-  def create     
+  def create    
+    
+    puts "$"*50
+    puts params    
+   
+    #RestClient.post 'http://localhost:3000/api/convert_document/', :document => { :file => params[:document][:file],   :destination_format => params[:document][:destination_format] }
+    #RestClient.post 'http://localhost:3000/api/convert_document/', :document => {  :destination_format => params[:document][:destination_format] }
+     if params[:document][:upload_method] == 'URL'
+       @file_name =  File.basename(URI.parse(params[:document][:url]).path)
+       File.open(@file_name, 'wb') do |fo|
+          fo.write(open(params[:document][:url]).read)
+       end
+       @file_content = File.open("./" + @file_name)
+       #@f_size = @file_content.size if @file_content      
+    else 
+      @file_name = params[:document][:file].original_filename
+      @file_content = params[:document][:file] 
+      #@f_size = @file_content.size if @file_content
+    end 
+    puts '----Parametros previos al post ---------'
+    api_key = @user.api_key
+    secret_key = @user.secret_key
+    url = 'http://localhost:3000/api/convert_document/'
+    hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip
+    puts 'api_key: ' + api_key
+    puts 'secret_key: ' + secret_key
+    puts 'hash: ' + hash
+    request = RestClient::Request.new(
+          :method => :post,
+          :url => url,
+          :payload => {
+            :multipart => true,
+            :api_key => api_key,
+            :hash => hash,
+            :document => { :file =>  @file_content,
+              :destination_format => params[:document][:destination_format]
+              }
+          })      
 
-    if params[:document][:upload_method] == 'URL'
+    response = request.execute    
     
-      request = RestClient::Request.new(
-            :method => :post,
-            :url => 'http://localhost:3000/api/convert_document/',
-            :payload => {
-              :multipart => true,
-              :document => { :url =>  params[:document][:url],
-                             :destination_format => params[:document][:destination_format],
-                             :upload_method => params[:document][:upload_method]
-                }
-            })
-            
-     else
-       request = RestClient::Request.new(
-            :method => :post,
-            :url => 'http://localhost:3000/api/convert_document/',
-            :payload => {
-              :multipart => true,
-              :document => { :file =>  params[:document][:file],
-                             :destination_format => params[:document][:destination_format],
-                             :upload_method => params[:document][:upload_method]
-                }
-            })
-     end
-           
-    puts "antes"*100       
-    response = request.execute
-    
-    puts "******************************************************************************************"
+     puts "******************************************************************************************"
     puts "******************************************************************************************"  
     puts "******************************************************************************************"
     puts "******************************************************************************************"  
@@ -106,6 +116,9 @@ class DocumentsController < ApplicationController
     puts "******************************************************************************************"
     puts "******************************************************************************************"  
    
+    
+    
+    
     puts "respond!"
     respond_to do |format|
       format.html { redirect_to '/user/dashboard'}
@@ -139,4 +152,28 @@ class DocumentsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def get_formats
+    puts '----obtener_formatos ANTES DEL GET---------'
+    api_key = @user.api_key
+    secret_key = @user.secret_key
+    url = 'http://localhost:3000/api/convert_document/'
+    hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip
+    puts 'api_key: ' + api_key
+    puts 'secret_key: ' + secret_key
+    puts 'hash: ' + hash
+    ext = params[:extension]
+    request = RestClient::Request.new(
+          :method => :get,
+          :url => url,
+          :payload => {
+            :multipart => true,
+            :api_key => api_key,
+            :hash => hash,
+            :extension => ext
+          })      
+    response = request.execute
+    render :json => response    
+  end
+
 end
