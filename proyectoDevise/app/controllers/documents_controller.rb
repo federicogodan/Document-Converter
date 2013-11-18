@@ -14,7 +14,7 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    @current_user = User.find_by_nick('userexample1')
+    @current_user = User.find_by_nick('userexample0')
     @documents = @current_user.documents
     respond_to do |format|
       format.html # index.html.erb
@@ -49,31 +49,32 @@ class DocumentsController < ApplicationController
   # POST /documents.json
   def create    
     
-    puts "$"*50
-    puts params
-    
-    #RestClient.post 'http://localhost:3000/api/convert_document/', :document => { :file => params[:document][:file],   :destination_format => params[:document][:destination_format] }
-    #RestClient.post 'http://localhost:3000/api/convert_document/', :document => {  :destination_format => params[:document][:destination_format] }
-     if params[:document][:upload_method] == 'URL'
-       @file_name =  File.basename(URI.parse(params[:document][:url]).path)
-       File.open(@file_name, 'wb') do |fo|
-          fo.write(open(params[:document][:url]).read)
-       end
-       @file_content = File.open("./" + @file_name)
-       #@f_size = @file_content.size if @file_content      
-    else 
-      @file_name = params[:document][:file].original_filename
-      @file_content = params[:document][:file] 
-      #@f_size = @file_content.size if @file_content
-    end 
-    puts '----Parametros previos al post ---------'
+  #   if params[:document][:upload_method] == 'URL'
+  #     @file_name =  File.basename(URI.parse(params[:document][:url]).path)
+  #     File.open(@file_name, 'wb') do |fo|
+  #        fo.write(open(params[:document][:url]).read)
+  #     end
+  #     @file_content = File.open("./" + @file_name)
+  #     #@f_size = @file_content.size if @file_content      
+   # else 
+     # @file_name = params[:document][:file].original_filename
+     # @file_content = params[:document][:file] 
+      # @f_size = @file_content.size if @file_content
+   # end
+     
     api_key = @user.api_key
     secret_key = @user.secret_key
     url = 'http://localhost:3000/api/convert_document/'
-    hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip
-    puts 'api_key: ' + api_key
-    puts 'secret_key: ' + secret_key
-    puts 'hash: ' + hash
+    hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip    
+        
+    if params[:document][:upload_method] == 'URL'
+       @content = params[:document][:file].original_filename
+    else  
+       @content = @file_content
+    end    
+        
+        
+    
     request = RestClient::Request.new(
           :method => :post,
           :url => url,
@@ -81,14 +82,42 @@ class DocumentsController < ApplicationController
             :multipart => true,
             :api_key => api_key,
             :hash => hash,
-            :document => { :file =>  @file_content,
-              :destination_format => params[:document][:destination_format]
+            :document => { :file =>  @content,
+              :destination_format => params[:document][:destination_format],
+              :upload_method => params[:document][:upload_method]
               }
           })      
 
-    response = request.execute
+    response = request.execute    
     
-    puts "respond!"
+     puts "******************************************************************************************"
+    puts "******************************************************************************************"  
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"  
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"  
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"  
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"    
+    puts response.to_s
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"  
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"  
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"  
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"  
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"  
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"  
+    puts "******************************************************************************************"
+    puts "******************************************************************************************"  
+           
     respond_to do |format|
       format.html { redirect_to '/user/dashboard'}
       format.json { head :no_content }
@@ -123,14 +152,10 @@ class DocumentsController < ApplicationController
   end
 
   def get_formats
-    puts '----obtener_formatos ANTES DEL GET---------'
     api_key = @user.api_key
     secret_key = @user.secret_key
     url = 'http://localhost:3000/api/convert_document/'
     hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip
-    puts 'api_key: ' + api_key
-    puts 'secret_key: ' + secret_key
-    puts 'hash: ' + hash
     ext = params[:extension]
     request = RestClient::Request.new(
           :method => :get,
@@ -146,25 +171,20 @@ class DocumentsController < ApplicationController
   end
 
   def show_api_keys
-      puts 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa------------------------------------------------------------------------------AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa------------------------------------------------------------------------------'*50
   end
 
-  def regenerate_keys
-    puts 'keys regeneradas'*90
-    
+  def regenerate_keys    
     #creates the public key
     begin
       token = SecureRandom.urlsafe_base64(nil, false)
     end until !User.exists?(api_key: token)
     api_key = token
-    puts 'Nueva Api key: '+ api_key
 
     #creates the secret key
     begin
       token = SecureRandom.urlsafe_base64(nil, false)
     end until !User.exists?(api_key: token)
     secret_key = token
-    puts 'Nueva Secret key: ' + secret_key
 
     @user.api_key = api_key
     @user.secret_key = secret_key
