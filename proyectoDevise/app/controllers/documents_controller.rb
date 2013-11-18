@@ -67,10 +67,10 @@ class DocumentsController < ApplicationController
     url = 'http://localhost:3000/api/convert_document/'
     hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip    
         
-    if params[:document][:upload_method] == 'URL'
-       @content = params[:document][:file].original_filename
+    if params[:document][:upload_method] != 'URL'
+       @content = params[:document][:file]
     else  
-       @content = @file_content
+       @content = params[:document][:url]
     end    
         
         

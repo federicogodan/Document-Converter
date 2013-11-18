@@ -53,7 +53,7 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
           is_valid_file_status = false
        end           
     else
-      if !params[:document][:file].nil? 
+      if !params[:document][:file].nil? && params[:document][:file]!=""
         @file_name = params[:document][:file].original_filename
         @file_content = params[:document][:file] 
         @f_size = @file_content.size if @file_content
