@@ -29,9 +29,6 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     
     
   def create            
-  
-    #TODO quitar HARD CODE:
-    @current_user = User.find_by_nick("userexample0")
     
     #initializing variables
     valid_parameters = true 
@@ -44,11 +41,11 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
      #checking method of upload(Remote or local file)
      if params[:document][:upload_method] == 'URL'
        begin
-          @file_name =  File.basename(URI.parse(params[:document][:url]).path)
+          @file_name =  File.basename(URI.parse(params[:document][:file]).path)
           temp_path = "./" + Time.now.to_s
           FileUtils.mkdir(temp_path)
           File.open(temp_path + '/' + @file_name, 'wb') do |fo|
-              fo.write(open(params[:document][:url]).read)
+              fo.write(open(params[:document][:file]).read)
           end
           @file_content = File.open(temp_path + "/" + @file_name)
           @f_size = @file_content.size if @file_content
