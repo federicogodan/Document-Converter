@@ -3,63 +3,35 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
   before_filter :restrict_access
   
   def read_api_key
-    #api_key = request.headers["X-API-KEY"]
-    api_key = params[:api_key] #if api_key.nil?
+    api_key = params[:api_key]
     api_key
   end
   
   def check_api_token(secret_key, string_to_convert, hash)
     hash_verification = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, string_to_convert)).strip
-    puts "el hash verificador es:" + hash_verification
     hash == hash_verification
   end
   
   def restrict_access
-    puts '***************ENTRO A restrict_access ***********************'
     api_key = read_api_key
-    puts "La llave es:"
-    puts api_key
-    puts "El hash es:"
     hash = params[:hash]
-    puts hash  
     user_access = User.find_by_api_key(api_key)
     if !user_access.nil? && !hash.nil?
-      access_error = false
       @current_user = user_access
-      puts "La secret key es:"
-      puts user_access.secret_key
-      puts formats
-      puts "Antes de entrar a check api token"
-      puts 'el string to convert [request.original_url] es: ' + request.original_url
-      matches = check_api_token(user_access.secret_key, request.original_url, hash)
-      puts 'El resultado de la comparacion fue'
-      puts matches
-      puts 'FIN restrict_access'
-      puts 'antes de json'
+      access_error = check_api_token(user_access.secret_key, request.original_url, hash)
     else
-      access_error = true
+      access_error = false
     end
-    puts 'antes de entrar a access_error'
-    puts 'access_error'
-    if access_error 
-      puts 'ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRRR'
+    if !access_error 
       render json: {:error => "401"}
     end
-    puts 'despues de error'
   end
     
   def create
-    
-    puts "$"*50
-    puts params
-    
-    #RestClient.post 'http://localhost:3000/api/convert_document/', :document => { :file => params[:document][:file],   :destination_format => params[:document][:destination_format] }
-    #RestClient.post 'http://localhost:3000/api/convert_document/', :document => {  :destination_format => params[:document][:destination_format] }
      if params[:document][:upload_method] == 'URL'
        @file_name =  File.basename(URI.parse(params[:document][:url]).path)
        temp_path = "./" + Time.now.to_s
        FileUtils.mkdir(temp_path)
-       puts temp_path
        File.open(temp_path + '/' + @file_name, 'wb') do |fo|
           fo.write(open(params[:document][:url]).read)
        end
@@ -71,17 +43,6 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
       @f_size = @file_content.size if @file_content
     end
 
-    puts "!"*50
-
-    #@current_user = User.find_by_nick('userexample1')    
-    puts "/"*50
-
-    #Previous checks to prevent null values 
-    #if params[:document][:file]
-    #  file_name = params[:document][:file].original_filename
-    #  file_content = params[:document][:file] 
-    #  f_size = file_content.size if file_content
-    #end    
     has_extension = File.extname(@file_name).split('.')[1] if @file_name
     ext = has_extension.upcase if has_extension        
     origin_format = Format.find_by_name(ext) if ext
@@ -91,20 +52,6 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
       
     valid_parameters = true
     @doc_error = nil
-    
-    puts "/"*50
-    puts @file_name
-    puts @file_content
-    puts @f_size
-    puts origin_format
-    puts destiny_format
-    puts @current_user
-    #puts (@f_size <= @current_user.max_document_size) && ((@current_user.used_storage + @f_size) <= @current_user.total_storage_assigned))
-    
-    
-    
-    
-   
     
     if (@file_name && @file_content && @f_size && origin_format && destiny_format && @current_user && 
        (@f_size <= @current_user.max_document_size) && ((@current_user.used_storage + @f_size) <= @current_user.total_storage_assigned))
@@ -139,12 +86,8 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     
     respond_to do |f|
       if valid_parameters && @document.save && @document.converted_document.save
-        puts "Document created"
-        #f.html {redirect_to '/user/dashboard'}
         f.json { render json: @document, status: :created }
       else
-        puts "Error in the validation of the document's parameters"
-        #f.html {redirect_to '/user/dashboard'}
         f.json { render json: @document.errors, status: :unprocessable_entity }
       end
     end
