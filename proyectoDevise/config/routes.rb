@@ -16,6 +16,8 @@ ProyectoDevise::Application.routes.draw do
   post "posts/create"
   get "user/get_free_space"
   post "/admindefaultvalues", to: "admindefaultvalues#set_default_values"
+
+  get "/documents/get_formats"
     
   namespace :api do 
     resources :convert_document

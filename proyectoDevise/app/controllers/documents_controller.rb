@@ -66,19 +66,27 @@ class DocumentsController < ApplicationController
       @file_content = params[:document][:file] 
       #@f_size = @file_content.size if @file_content
     end 
-    
+    puts '----Parametros previos al post ---------'
+    api_key = @user.api_key
+    secret_key = @user.secret_key
+    url = 'http://localhost:3000/api/convert_document/'
+    hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip
+    puts 'api_key: ' + api_key
+    puts 'secret_key: ' + secret_key
+    puts 'hash: ' + hash
     request = RestClient::Request.new(
           :method => :post,
-          :url => 'http://localhost:3000/api/convert_document/',
+          :url => url,
           :payload => {
             :multipart => true,
+            :api_key => api_key,
+            :hash => hash,
             :document => { :file =>  @file_content,
               :destination_format => params[:document][:destination_format]
               }
           })      
     response = request.execute
     
-   
     puts "respond!"
     respond_to do |format|
       format.html { redirect_to '/user/dashboard'}
@@ -112,4 +120,28 @@ class DocumentsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def get_formats
+    puts '----obtener_formatos ANTES DEL GET---------'
+    api_key = @user.api_key
+    secret_key = @user.secret_key
+    url = 'http://localhost:3000/api/convert_document/'
+    hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip
+    puts 'api_key: ' + api_key
+    puts 'secret_key: ' + secret_key
+    puts 'hash: ' + hash
+    ext = params[:extension]
+    request = RestClient::Request.new(
+          :method => :get,
+          :url => url,
+          :payload => {
+            :multipart => true,
+            :api_key => api_key,
+            :hash => hash,
+            :extension => ext
+          })      
+    response = request.execute
+    render :json => response    
+  end
+
 end
