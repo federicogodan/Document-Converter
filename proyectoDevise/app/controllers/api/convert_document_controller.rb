@@ -86,31 +86,31 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     
       #obtains the data error           
       if (@current_user.nil?)
-         @doc_error = '{"status":"Session error: The session has expired. Please sign in again"}'         
+         @doc_error = 'Session error: The session has expired. Please sign in again'         
       elsif (@current_user.max_document_size.nil? || @current_user.total_storage_assigned.nil?)
-         @doc_error = '{"status":"Null variables in the database. Please contact with the technical\'s service"}'
+         @doc_error = 'Null variables in the database. Please contact with the technical\'s service'
       elsif (@file_name.nil?)
-         @doc_error = '{"status":"File error: Can\'t obtain the route of the file"}' 
+         @doc_error = 'File error: Can\'t obtain the route of the file' 
       elsif (@file_content.nil?)
-         @doc_error = '{"status":"File error: Can\'t read the content of the file"}'
+         @doc_error = 'File error: Can\'t read the content of the file'
       elsif (@f_size.nil?)
-         @doc_error = '{"status":"File error: Can\'t obtain the file\'s size"}'     
+         @doc_error = 'File error: Can\'t obtain the file\'s size'     
       elsif (!is_valid_file_status)
-         @doc_error = '{"status":"File error: There was an error with the uploading. Please try again"}'
+         @doc_error = 'File error: There was an error with the uploading. Please try again'
       elsif (has_extension.nil?)
-         @doc_error = '{"status":"Format error: Can\'t obtain the File\'s extension"}'
+         @doc_error = 'Format error: Can\'t obtain the File\'s extension'
       elsif (@origin_format.nil?)
-         @doc_error = '{"status":"Format error: The format of the file is not a valid format for this version of DocumentConverted."}'         
+         @doc_error = 'Format error: The format of the file is not a valid format for this version of DocumentConverted.'         
       elsif (@destiny_format.nil?)      
-         @doc_error = '{"status":"Format error: Can\'t obtain the destiny format"}'
+         @doc_error = 'Format error: Can\'t obtain the destiny format'
       elsif (!@origin_format.destinies.include?(@destiny_format))
-         @doc_error = '{"status":"Format error: The format destination is not valid for the format\'s file"}'                   
+         @doc_error = 'Format error: The format destination is not valid for the format\'s file'                   
       elsif (@f_size > @current_user.max_document_size)
-         @doc_error = '{"status":"The uploaded file\'s size exceeds the maximum document\'s size permitted for this user"}'#"max_document_size"
+         @doc_error = 'The uploaded file\'s size exceeds the maximum document\'s size permitted for this user'#"max_document_size"
       elsif ((@current_user.used_storage + @f_size) > @current_user.total_storage_assigned)
-         @doc_error = '{"status":"The total storage\'s space permitted for this user is exceeded with the uploaded file\'s size"}'#"total_storage_assigned"
+         @doc_error = 'The total storage\'s space permitted for this user is exceeded with the uploaded file\'s size'#"total_storage_assigned"
       else
-          @doc_error = '{"status":"Unprocessable entity. Please contact with the technical\'s service"}'#"unprocessable_entity"
+          @doc_error = 'Unprocessable entity. Please contact with the technical\'s service'#"unprocessable_entity"
       end
 
       valid_parameters = false    
@@ -120,14 +120,13 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
          !@document.converted_document.nil? && @document.converted_document.save)         
         @doc_error = ''
       elsif valid_parameters #It means that the error is in @document.save or @document.converted_document.save     
-        @doc_error = '{"status":"File error: Couldn\'t save the file in the database. Please try again later"}'
+        @doc_error = 'File error: Couldn\'t save the file in the database. Please try again later'
       end
       
       if params[:document][:upload_method] == 'URL'
         FileUtils.rm_rf(temp_path)
       end
 
-      
       render json: @doc_error  
   end
   
