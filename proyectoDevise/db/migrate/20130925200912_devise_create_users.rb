@@ -48,7 +48,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.integer :documents_time_for_expiration,null:false, default: default_values[:documents_time_expiration].to_i
       t.integer :bandwidth_in_bytes_per_sec, null: false, default: 0
       t.integer :max_document_size, null: false, default: default_values[:max_document_size].to_i
-      t.integer :limit_of_conversions, null: false, default: 0
       t.timestamps
     end
 

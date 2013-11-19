@@ -1,5 +1,6 @@
 ActiveAdmin.register Document do
   config.sort_order = "user_id"
+  actions :all, except: [:edit]
   
   index do
     column :user_id

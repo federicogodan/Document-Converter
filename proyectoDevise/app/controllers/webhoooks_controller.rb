@@ -92,4 +92,24 @@ class WebhoooksController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def self.resend_notifications
+    max_attempts = 3
+    @whsents = Whsent.where(state:1)
+    @whsents.each do |s|
+      code, message, body = code, message, body = Webhook.post(s.url, :notification => s.notification.to_s, :data => s.urldoc)
+      
+      s.attempts = s.attempts + 1
+      
+      if code == '200'
+        s.state = 0
+      else
+        if s.attempts == max_attempts
+          s.state = 2 
+        end
+      end
+      s.save
+    end
+  end
+  
 end

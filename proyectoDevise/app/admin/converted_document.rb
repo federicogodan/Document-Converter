@@ -1,5 +1,7 @@
 ActiveAdmin.register ConvertedDocument do
   config.sort_order = "document_id"
+  actions :all, except: [:edit, :destroy, :new]
+  #actions :all, :except => [:new]
   
   index do
     column  "Document",:document_id
