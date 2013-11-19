@@ -97,7 +97,7 @@ class WebhoooksController < ApplicationController
     max_attempts = 3
     @whsents = Whsent.where(state:1)
     @whsents.each do |s|
-      code, message, body = code, message, body = Webhook.post(s.url, :notification => s.notification.to_s, :data => s.urldoc)
+      code, message, body = Webhook.post(s.url, :notification => s.notification.to_s, :data => s.urldoc)
       
       s.attempts = s.attempts + 1
       
