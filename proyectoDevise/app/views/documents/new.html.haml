@@ -36,7 +36,7 @@
               #form-to-ext2.form-group.col-sm-6
         .modal-footer
           %a.btn.cancel{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
-          =submit_tag "Upload", :class => 'btn btn-primary'
+          =submit_tag "Upload", :class => 'btn btn-primary', :id => 'btn_upload', :disabled => true
 
 :javascript
   $(document).ready(function() {
@@ -61,6 +61,7 @@
     $("#radio_file").click(function(){
       $(".form_file").fadeIn();
       $(".form_url").hide();
+      $('#btn_upload').prop('disabled', true);
       if ($("#document_file").val().length > 0) {
         $('#formats_panel').fadeIn();
       }
@@ -72,6 +73,7 @@
     $("#radio_url").click(function(){
       $(".form_file").hide();
       $(".form_url").fadeIn();
+      $('#btn_upload').prop('disabled', true);
       if ($("#document_url").val().length > 0) {
         $('#formats_panel').fadeIn();
       }
@@ -87,13 +89,14 @@
        function formats_file() {
         dot = $("#document_file").val().lastIndexOf(".");
         ext = $("#document_file").val().substring(dot+1);
+        $('#form-to-ext1').empty();
+        $('#form-to-ext2').empty();
+        $('#btn_upload').prop('disabled', true);
         $.get('/documents/get_formats', 
           { extension: ext },
           function(data) {
             parent1 = $('#form-to-ext1');
             parent2 = $('#form-to-ext2');
-            parent1.empty();
-            parent2.empty();
             checked = true;
             i = 1;
             data.forEach(function(entry) {
@@ -105,6 +108,7 @@
                 parent.append(to_radio(entry, checked));
                 checked = false;
                 i++;
+                $('#btn_upload').prop('disabled', false);
             });
           });
           $('#formats_panel').fadeIn();
@@ -117,6 +121,9 @@
       function formats_url() {
         dot = $("#document_url").val().lastIndexOf(".");
         ext = $("#document_url").val().substring(dot+1);
+        $('#form-to-ext1').empty();
+        $('#form-to-ext2').empty();
+        $('#btn_upload').prop('disabled', true);
         $.get('/documents/get_formats', 
           { extension: ext },
           function(data) {
@@ -135,6 +142,7 @@
                 parent.append(to_radio(entry, checked));
                 checked = false;
                 i++;
+                $('#btn_upload').prop('disabled', false);
             });
           });
           $('#formats_panel').fadeIn();  
