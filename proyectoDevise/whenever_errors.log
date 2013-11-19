@@ -270,3 +270,11 @@
 	from /home/pis2013/.rvm/gems/ruby-2.0.0-p247/gems/railties-3.2.13/lib/rails/commands.rb:64:in `<top (required)>'
 	from script/rails:6:in `require'
 	from script/rails:6:in `<main>'
+/home/pis2013/.rvm/gems/ruby-2.0.0-p247/gems/railties-3.2.13/lib/rails/commands/runner.rb:53:in `eval': undefined local variable or method `cds' for ConvertedDocumentController:Class (NameError)
+	from (eval):1:in `<top (required)>'
+	from /home/pis2013/.rvm/gems/ruby-2.0.0-p247/gems/railties-3.2.13/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/pis2013/.rvm/gems/ruby-2.0.0-p247/gems/railties-3.2.13/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/pis2013/.rvm/gems/ruby-2.0.0-p247/gems/railties-3.2.13/lib/rails/commands.rb:64:in `require'
+	from /home/pis2013/.rvm/gems/ruby-2.0.0-p247/gems/railties-3.2.13/lib/rails/commands.rb:64:in `<top (required)>'
+	from script/rails:6:in `require'
+	from script/rails:6:in `<main>'
