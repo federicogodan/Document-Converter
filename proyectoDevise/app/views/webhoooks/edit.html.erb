@@ -4,3 +4,14 @@
 
 <%= link_to 'Show', @webhoook %> |
 <%= link_to 'Back', webhoooks_path %>
+<br>
+<br>
+ webhook url | file url | notification type| notification state | attempts <br><br>
+<%  @webhoook.whsents.each do |w| %>
+<%= w.url%> | 
+<%= w.urldoc%> |
+<%= w.notification == 2? 'Convertion Successfull': 'Convertion Failed'%> | 
+<%= w.state==0 ? 'Recived': w.state==1? 'No recived' : 'No recived, exhausted attempts'%> | 
+<%= w.attempts %>
+<br>
+<%  end %>

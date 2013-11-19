@@ -32,7 +32,7 @@
             %li
               %a{href: "/documents/show_api_keys"} My API Keys
             %li
-              %a{href: "/webhoooks"} My Webhooks 
+              %a{id: 'dashboard_list_webhook'} My Webhooks 
             %li.divider{role: "presentation"}
             %li= link_to "sign out", destroy_user_session_path, :method => :delete
   / /.navbar-collapse
@@ -81,6 +81,16 @@
 
 :javascript
 $(document).ready(function() {
+
+  $('#dashboard_list_webhook').click(function(){
+      var dom = $("#create_document_modal");
+      dom.empty();
+      $.get('/webhoooks/',
+          function(data) {
+            dom.append(data);
+          });
+      $("#create_document_modal").modal(); 
+    });
   
   $('#create_document_button').click(function(){
       var dom = $("#create_document_modal");

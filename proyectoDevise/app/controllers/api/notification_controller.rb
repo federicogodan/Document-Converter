@@ -22,7 +22,7 @@ class Api::NotificationController < ApplicationController
     #message = JSON.parse(request_body["Message"])  
     document = Document.find(document_id)
     document.update_converted_document(status, document_url, size.to_i)
-    document.user.alertallwebhooks( document_url )
+    document.user.alertallwebhooks( status, document_url )
     #throws an exception but the method works
     begin
       document.remove_file!

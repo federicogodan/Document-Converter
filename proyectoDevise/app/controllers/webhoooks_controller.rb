@@ -16,7 +16,7 @@ class WebhoooksController < ApplicationController
     @webhoooks = @user.webhoooks
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { render :layout => false  } 
       format.json { render json: @webhoooks }
     end
   end
@@ -56,10 +56,10 @@ class WebhoooksController < ApplicationController
     
     respond_to do |format|
       if @webhoook.save
-        format.html { redirect_to @webhoook, notice: 'webhook was successfully created.' }
+        #format.html { redirect_to @webhoook, notice: 'webhook was successfully created.' }
         format.json { render json: @webhoook, status: :created, location: @webhoook }
       else
-        format.html { render action: "new" }
+        #format.html { render action: "new" }
         format.json { render json: @webhoook.errors, status: :unprocessable_entity }
       end
     end
@@ -92,4 +92,24 @@ class WebhoooksController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def self.resend_notifications
+    max_attempts = 3
+    @whsents = Whsent.where(state:1)
+    @whsents.each do |s|
+      code, message, body = Webhook.post(s.url, :notification => s.notification.to_s, :data => s.urldoc)
+      
+      s.attempts = s.attempts + 1
+      
+      if code == '200'
+        s.state = 0
+      else
+        if s.attempts == max_attempts
+          s.state = 2 
+        end
+      end
+      s.save
+    end
+  end
+  
 end

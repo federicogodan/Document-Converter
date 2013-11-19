@@ -1,5 +1,6 @@
 ActiveAdmin.register User do
   config.sort_order = "nick"
+  actions :all, :except => [:new]
   
   index do
     column :nick
