@@ -1,6 +1,8 @@
 class Webhoook < ActiveRecord::Base
   attr_accessible :deleted, :url, :user_id
   
+  has_many :whsents
+  
   def throwebhook( urldoc )
     if not self.deleted
       code, message, body = Webhook.post(self.url, :action => 'ConvertedDocument', :data => urldoc)

@@ -1,0 +1,29 @@
+<h1>Listing whsents</h1>
+
+<table>
+  <tr>
+    <th>Url</th>
+    <th>State</th>
+    <th>Attempts</th>
+    <th>Webhoook</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @whsents.each do |whsent| %>
+  <tr>
+    <td><%= whsent.url %></td>
+    <td><%= whsent.state %></td>
+    <td><%= whsent.attempts %></td>
+    <td><%= whsent.webhoook_id %></td>
+    <td><%= link_to 'Show', whsent %></td>
+    <td><%= link_to 'Edit', edit_whsent_path(whsent) %></td>
+    <td><%= link_to 'Destroy', whsent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Whsent', new_whsent_path %>
