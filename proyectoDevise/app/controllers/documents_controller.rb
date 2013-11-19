@@ -14,23 +14,24 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    @current_user = User.find_by_nick('userexample0')
-    @documents = @current_user.documents
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @documents }
-    end
+    #@documents = @current_user.documents
+    #respond_to do |format|
+    #  format.html {# index.html.erb}}
+    #  format.json { render json: @documents }
+    #end
+    redirect_to '/user/dashboard'
   end
 
   # GET /documents/1
   # GET /documents/1.json
   def show
-    @document = @user.documents.find(params[:id])
+    #@document = @user.documents.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @document }
-    end
+    #respond_to do |format|
+    #  format.html # show.html.erb
+    #  format.json { render json: @document }
+    #end
+    redirect_to '/user/dashboard'
   end
 
   # GET /documents/new
@@ -47,20 +48,7 @@ class DocumentsController < ApplicationController
 
   # POST /documents
   # POST /documents.json
-  def create    
-    
-  #   if params[:document][:upload_method] == 'URL'
-  #     @file_name =  File.basename(URI.parse(params[:document][:url]).path)
-  #     File.open(@file_name, 'wb') do |fo|
-  #        fo.write(open(params[:document][:url]).read)
-  #     end
-  #     @file_content = File.open("./" + @file_name)
-  #     #@f_size = @file_content.size if @file_content      
-   # else 
-     # @file_name = params[:document][:file].original_filename
-     # @file_content = params[:document][:file] 
-      # @f_size = @file_content.size if @file_content
-   # end
+  def create         
      
     api_key = @user.api_key
     secret_key = @user.secret_key
@@ -72,9 +60,7 @@ class DocumentsController < ApplicationController
     else  
        @content = params[:document][:url]
     end    
-        
-        
-    
+                   
     request = RestClient::Request.new(
           :method => :post,
           :url => url,
@@ -89,37 +75,10 @@ class DocumentsController < ApplicationController
           })      
 
     response = request.execute    
-    
-     puts "******************************************************************************************"
-    puts "******************************************************************************************"  
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"  
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"  
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"  
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"    
-    puts response.to_s
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"  
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"  
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"  
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"  
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"  
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"  
-    puts "******************************************************************************************"
-    puts "******************************************************************************************"  
-           
+        
+    @document_error = response
     respond_to do |format|
-      format.html { redirect_to '/user/dashboard'}
+      format.html { render 'user/dashboard'}
       format.json { head :no_content }
     end
     
