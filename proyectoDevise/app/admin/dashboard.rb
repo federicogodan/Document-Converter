@@ -44,7 +44,6 @@ ActiveAdmin.register_page "Dashboard" do
           ul do
             li "Default storage(bytes): " + get_default_storage.to_s
             li "Document max size(bytes): " + get_max_document_size.to_s 
-            li "Limit of conversions: " + get_limit_of_conversions.to_s
             li "Time for expiration(seconds): " + get_default_documents_time_expiration.to_s
           end
         end

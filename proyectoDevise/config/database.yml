@@ -12,7 +12,7 @@ development:
   #database: doconvtest
   username: root
   #password: pis2013pis
-  password: pis2013
+  password: nicolas
   pool: 5
   timeout: 5000
 
