@@ -1,8 +1,6 @@
 ProyectoDevise::Application.routes.draw do
- 
-  resources :webhoooks do
-    resources :whsents
-  end
+  
+  resources :webhoooks
   
   #map.resources :user, :has_many => [:webhoooks]  
     
