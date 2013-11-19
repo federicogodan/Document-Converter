@@ -41,7 +41,9 @@
     %h4
 
       %button.btn.btn-primary#create_document_button Convert document
-
+  -if !@document_error.nil?
+    .notice#doc_error= @document_error
+  
     %hr/
 .row
   .col-sm-2
