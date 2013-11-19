@@ -56,10 +56,10 @@ class WebhoooksController < ApplicationController
     
     respond_to do |format|
       if @webhoook.save
-        format.html { redirect_to @webhoook, notice: 'webhook was successfully created.' }
+        #format.html { redirect_to @webhoook, notice: 'webhook was successfully created.' }
         format.json { render json: @webhoook, status: :created, location: @webhoook }
       else
-        format.html { render action: "new" }
+        #format.html { render action: "new" }
         format.json { render json: @webhoook.errors, status: :unprocessable_entity }
       end
     end
