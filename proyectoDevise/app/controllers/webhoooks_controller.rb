@@ -16,7 +16,7 @@ class WebhoooksController < ApplicationController
     @webhoooks = @user.webhoooks
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { render :layout => false  } 
       format.json { render json: @webhoooks }
     end
   end
