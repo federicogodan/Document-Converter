@@ -1,5 +1,5 @@
 class ConvertedDocument < ActiveRecord::Base
-  STATUSES = {:converting => 0, :failed => 1, :ready => 2}
+  STATUSES = {:converting => 0, :failed => 1, :ready => 2,:expired => 3}
 
   validates :status, inclusion: {in: STATUSES.values}
 
@@ -21,6 +21,11 @@ class ConvertedDocument < ActiveRecord::Base
   #method to set the status to converting
   def set_to_ready
   	self.status = STATUSES[:ready]
+  end
+  
+  #method to set the status to converting
+  def set_to_expired
+    self.status = STATUSES[:expired]
   end
 
   def current_status
