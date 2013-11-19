@@ -10,7 +10,7 @@
 <%  @webhoook.whsents.each do |w| %>
 <%= w.url%> | 
 <%= w.urldoc%> | 
-<%= w.state==0 ? 'Recived': w.state==1? 'No recived' : 'No recived, exhausted attempts'%>
+<%= w.state==0 ? 'Recived': w.state==1? 'No recived' : 'No recived, exhausted attempts'%> | 
 <%= w.attempts %>
 <br>
 <%  end %>

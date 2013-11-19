@@ -93,7 +93,7 @@ class WebhoooksController < ApplicationController
     end
   end
   
-  def resend_notifications
+  def self.resend_notifications
     max_attempts = 3
     @whsents = Whsent.where(state:1)
     @whsents.each do |s|
