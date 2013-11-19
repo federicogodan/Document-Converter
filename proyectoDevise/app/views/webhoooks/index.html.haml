@@ -1,0 +1,69 @@
+/ Nav tabs
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close.cancel{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+      %h4.modal-title My Webhooks
+    .modal-body
+      / Tab panes
+      .row
+        .col-md-12{style: 'height:300px;overflow-y: scroll;'}
+          %table.table.table-hover.table-responsive{id: 'webook_list'}
+            %tr
+              %th Enabled
+              %th Url
+              %th Destroyed
+              %th
+
+            - @webhoooks.each do | webhoook |
+              %tr        
+                %td
+                  %input{name: "webhoook[enabled]", type: "checkbox", value: webhoook.id}
+                %td= webhoook.url
+                %td= link_to 'Destroy', webhoook, method: :delete, data: { confirm: 'Are you sure?' }
+                %td= link_to '+', webhoook_path(webhoook)    
+      .row
+        = form_tag({:action => 'create', :controller => 'webhoooks'}, {:id => 'form_new_webhook'}) do
+          /.field
+          .form_url.form-group
+            .col-md-offset-1.col-sm-8
+              %input#webhook_new.form-control{name: "webhoook[url]", placeholder: "Webhook URL", type: "url"}
+            .col-sm-1
+              =submit_tag "Upload", :class => 'btn btn-primary'
+
+
+
+:javascript
+$(document).ready(function() {
+
+  //callback handler for form submit
+  $("#form_new_webhook").submit(function(e)
+  {
+      var postData = $(this).serializeArray();
+      var formURL = $(this).attr("action");
+      $.ajax(
+      {
+          url : formURL,
+          type: "POST",
+          data : postData,
+          success:function(data, textStatus, jqXHR) 
+          {
+              console.log(data)
+              html_data = "<tr><td>" + data.url + "</td>"
+              html_data += '"<td><a href="/webhoooks/' + data.id +'"'
+              html_data += ' data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a>'
+              html_data += "</td></tr>"
+              $( "#webook_list tbody" ).append( html_data );
+              //data: return data from server
+          },
+          error: function(jqXHR, textStatus, errorThrown) 
+          {
+              //if fails      
+          }
+      });
+      e.preventDefault(); //STOP default action
+  });
+   
+  $("#ajaxform").submit(); //Submit  the FORM
+
+}

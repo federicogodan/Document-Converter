@@ -68,7 +68,8 @@ gem 'devise'
 gem "carrierwave", "~> 0.9.0"
 gem "fog"
 
-gem 'rest-client'
+#gem 'base64'
+#gem 'openssl'
 
 #gem 'unicorn-rails'
 #gem 'rspec-rails'

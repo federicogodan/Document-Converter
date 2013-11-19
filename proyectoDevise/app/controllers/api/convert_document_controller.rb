@@ -3,151 +3,131 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
   before_filter :restrict_access
   
   def read_api_key
-    #api_key = request.headers["X-API-KEY"]
-    api_key = params[:api_key] #if api_key.nil?
+    api_key = params[:api_key]
     api_key
   end
   
   def check_api_token(secret_key, string_to_convert, hash)
     hash_verification = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, string_to_convert)).strip
-    puts "el hash verificador es:" + hash_verification
     hash == hash_verification
   end
   
   def restrict_access
-    puts '***************ENTRO A restrict_access ***********************'
     api_key = read_api_key
-    puts "La llave es:"
-    puts api_key
-    puts "El hash es:"
     hash = params[:hash]
-    puts hash  
     user_access = User.find_by_api_key(api_key)
     if !user_access.nil? && !hash.nil?
-      access_error = false
       @current_user = user_access
-      puts "La secret key es:"
-      puts user_access.secret_key
-      puts formats
-      puts "Antes de entrar a check api token"
-      puts 'el string to convert [request.original_url] es: ' + request.original_url
-      matches = check_api_token(user_access.secret_key, request.original_url, hash)
-      puts 'El resultado de la comparacion fue'
-      puts matches
-      puts 'FIN restrict_access'
-      puts 'antes de json'
+      access_error = check_api_token(user_access.secret_key, request.original_url, hash)
     else
-      access_error = true
+      access_error = false
     end
-    puts 'antes de entrar a access_error'
-    puts 'access_error'
-    if access_error 
-      puts 'ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRRR'
+    if !access_error 
       render json: {:error => "401"}
     end
-    puts 'despues de error'
   end
     
-  def create
     
-    puts "$"*50
-    puts params
+  def create            
     
-    #RestClient.post 'http://localhost:3000/api/convert_document/', :document => { :file => params[:document][:file],   :destination_format => params[:document][:destination_format] }
-    #RestClient.post 'http://localhost:3000/api/convert_document/', :document => {  :destination_format => params[:document][:destination_format] }
+    #initializing variables
+    valid_parameters = true 
+    is_valid_file_status = true    
+    @file_name = nil
+    @file_content = nil
+    @f_size = nil    
+    @doc_error = ''
+    
+     #checking method of upload(Remote or local file)
      if params[:document][:upload_method] == 'URL'
-       @file_name =  File.basename(URI.parse(params[:document][:url]).path)
-       temp_path = "./" + Time.now.to_s
-       FileUtils.mkdir(temp_path)
-       puts temp_path
-       File.open(temp_path + '/' + @file_name, 'wb') do |fo|
-          fo.write(open(params[:document][:url]).read)
-       end
-       @file_content = File.open(temp_path + "/" + @file_name)
-       @f_size = @file_content.size if @file_content      
-    else 
-      @file_name = params[:document][:file].original_filename
-      @file_content = params[:document][:file] 
-      @f_size = @file_content.size if @file_content
-    end
-
-    puts "!"*50
-
-    #@current_user = User.find_by_nick('userexample1')    
-    puts "/"*50
-
-    #Previous checks to prevent null values 
-    #if params[:document][:file]
-    #  file_name = params[:document][:file].original_filename
-    #  file_content = params[:document][:file] 
-    #  f_size = file_content.size if file_content
-    #end    
-    has_extension = File.extname(@file_name).split('.')[1] if @file_name
-    ext = has_extension.upcase if has_extension        
-    origin_format = Format.find_by_name(ext) if ext
-  
+       begin
+          @file_name =  File.basename(URI.parse(params[:document][:file]).path)
+          temp_path = "./" + Time.now.to_s
+          FileUtils.mkdir(temp_path)
+          File.open(temp_path + '/' + @file_name, 'wb') do |fo|
+              fo.write(open(params[:document][:file]).read)
+          end
+          @file_content = File.open(temp_path + "/" + @file_name)
+          @f_size = @file_content.size if @file_content
+       rescue #Catch an exception, if File class fail
+          is_valid_file_status = false
+       end           
+    else
+      if !params[:document][:file].nil? && params[:document][:file]!=""
+        @file_name = params[:document][:file].original_filename
+        @file_content = params[:document][:file] 
+        @f_size = @file_content.size if @file_content
+      end  
+    end                                      
+    
+    
+    name_plus_extension = File.extname(@file_name) if !@file_name.nil?        
+    has_extension = name_plus_extension.split('.')[1] if (!name_plus_extension.nil? && (name_plus_extension.split('.').count > 1))
+    ext = has_extension.upcase if !has_extension.nil?        
+    @origin_format = Format.find_by_name(ext) if !ext.nil?
     destiny_format_name = params[:document][:destination_format]    
-    destiny_format = Format.find_by_name(destiny_format_name) if destiny_format_name # != nil
+    @destiny_format = Format.find_by_name(destiny_format_name) if !destiny_format_name.nil? 
+              
+     #Previous checks to prevent null values and variable controls
+    if (is_valid_file_status && !@file_name.nil? && !@file_content.nil? && !@f_size.nil? && !@origin_format.nil? && !@destiny_format.nil? && 
+      @origin_format.destinies.include?(@destiny_format) && !@current_user.nil? && !@current_user.max_document_size.nil?  && 
+      (@f_size <= @current_user.max_document_size) && !@current_user.total_storage_assigned.nil? && 
+      ((@current_user.used_storage + @f_size) <= @current_user.total_storage_assigned))
       
-    valid_parameters = true
-    @doc_error = nil
-    
-    puts "/"*50
-    puts @file_name
-    puts @file_content
-    puts @f_size
-    puts origin_format
-    puts destiny_format
-    puts @current_user
-    #puts (@f_size <= @current_user.max_document_size) && ((@current_user.used_storage + @f_size) <= @current_user.total_storage_assigned))
-    
-    
-    
-    
-   
-    
-    if (@file_name && @file_content && @f_size && origin_format && destiny_format && @current_user && 
-       (@f_size <= @current_user.max_document_size) && ((@current_user.used_storage + @f_size) <= @current_user.total_storage_assigned))
-      #Creating association between the user and the document uploaded. Also creating the converted document's object
-  
+      #Creating association between the user and the document uploaded. Also creating the converted document's object 
       @document = Document.new(name:@file_name,expired:false,size:@f_size)
       @document.file = @file_content      
-      
-
-      @document.format = origin_format
+      @document.format = @origin_format
       @document.user = @current_user
       @document.converted_document = ConvertedDocument.new
       @document.converted_document.set_to_converting
-      @document.converted_document.format = destiny_format
+      @document.converted_document.format = @destiny_format
     else
     
-      #obtains the data error
-      if (@f_size <= @current_user.max_document_size)
-         @doc_error = "max_document_size"
-      elsif (@current_user && ((@current_user.used_storage + @f_size) <= @current_user.total_storage_assigned))
-         @doc_error = "total_storage_assigned"
+      #obtains the data error           
+      if (@current_user.nil?)
+         @doc_error = 'Session error: The session has expired. Please sign in again'         
+      elsif (@current_user.max_document_size.nil? || @current_user.total_storage_assigned.nil?)
+         @doc_error = 'Null variables in the database. Please contact with the technical\'s service'
+      elsif (@file_name.nil?)
+         @doc_error = 'File error: Can\'t obtain the route of the file' 
+      elsif (@file_content.nil?)
+         @doc_error = 'File error: Can\'t read the content of the file'
+      elsif (@f_size.nil?)
+         @doc_error = 'File error: Can\'t obtain the file\'s size'     
+      elsif (!is_valid_file_status)
+         @doc_error = 'File error: There was an error with the uploading. Please try again'
+      elsif (has_extension.nil?)
+         @doc_error = 'Format error: Can\'t obtain the File\'s extension'
+      elsif (@origin_format.nil?)
+         @doc_error = 'Format error: The format of the file is not a valid format for this version of DocumentConverted.'         
+      elsif (@destiny_format.nil?)      
+         @doc_error = 'Format error: Can\'t obtain the destiny format'
+      elsif (!@origin_format.destinies.include?(@destiny_format))
+         @doc_error = 'Format error: The format destination is not valid for the format\'s file'                   
+      elsif (@f_size > @current_user.max_document_size)
+         @doc_error = 'The uploaded file\'s size exceeds the maximum document\'s size permitted for this user'#"max_document_size"
+      elsif ((@current_user.used_storage + @f_size) > @current_user.total_storage_assigned)
+         @doc_error = 'The total storage\'s space permitted for this user is exceeded with the uploaded file\'s size'#"total_storage_assigned"
       else
-          @doc_error = "unprocessable_entity"
+          @doc_error = 'Unprocessable entity. Please contact with the technical\'s service'#"unprocessable_entity"
+      end
+
+      valid_parameters = false    
+    end  
+
+      if (valid_parameters && !@document.nil? && @document.save && 
+         !@document.converted_document.nil? && @document.converted_document.save)         
+        @doc_error = ''
+      elsif valid_parameters #It means that the error is in @document.save or @document.converted_document.save     
+        @doc_error = 'File error: Couldn\'t save the file in the database. Please try again later'
       end
       
-      valid_parameters = false
-    end
-    
-    if params[:document][:upload_method] == 'URL'
-      FileUtils.rm_rf(temp_path)
-    end
-    
-    respond_to do |f|
-      if valid_parameters && @document.save && @document.converted_document.save
-        puts "Document created"
-        #f.html {redirect_to '/user/dashboard'}
-        f.json { render json: @document, status: :created }
-      else
-        puts "Error in the validation of the document's parameters"
-        #f.html {redirect_to '/user/dashboard'}
-        f.json { render json: @document.errors, status: :unprocessable_entity }
+      if params[:document][:upload_method] == 'URL'
+        FileUtils.rm_rf(temp_path)
       end
-    end
+
+      render json: @doc_error  
   end
   
    def index

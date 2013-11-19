@@ -1,5 +1,6 @@
 ActiveAdmin.register User do
   config.sort_order = "nick"
+  actions :all, :except => [:new]
   
   index do
     column :nick
@@ -24,12 +25,8 @@ ActiveAdmin.register User do
   
   form do |f|
     f.inputs "User Details" do
-      f.input :email
-      f.input :nick
-      f.input :name
-      #f.input :birth_date
-      f.input :surname
-      f.input :password
+      f.input :max_document_size
+      f.input :limit_of_conversions
       f.input :total_storage_assigned
       f.input :documents_time_for_expiration
     end

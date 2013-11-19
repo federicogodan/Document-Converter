@@ -1,4 +1,5 @@
 ProyectoDevise::Application.routes.draw do
+  
   resources :webhoooks
   
   #map.resources :user, :has_many => [:webhoooks]  
@@ -17,6 +18,8 @@ ProyectoDevise::Application.routes.draw do
   post "/admindefaultvalues", to: "admindefaultvalues#set_default_values"
 
   get "/documents/get_formats"
+  get "/documents/show_api_keys"
+  get "/documents/regenerate_keys"
     
   namespace :api do 
     resources :convert_document
