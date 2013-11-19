@@ -16,9 +16,11 @@ class Api::FreeSpaceController < ApplicationController
     api_key = read_api_key
     hash = params[:hash]
     user_access = User.find_by_api_key(api_key)
+    
     if !user_access.nil? && !hash.nil?
       @current_user = user_access
-      access_error = check_api_token(user_access.secret_key, request.original_url, hash)
+      parsed_request = request.original_url.split('?')[0]
+      access_error = check_api_token(user_access.secret_key, parsed_request, hash)
     else
       access_error = false
     end
