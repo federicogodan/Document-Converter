@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131103233354) do
+ActiveRecord::Schema.define(:version => 20131119020912) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -80,12 +80,12 @@ ActiveRecord::Schema.define(:version => 20131103233354) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                         :default => "",       :null => false
-    t.string   "encrypted_password",            :default => "",       :null => false
+    t.string   "email",                         :default => "",        :null => false
+    t.string   "encrypted_password",            :default => "",        :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                 :default => 0,        :null => false
+    t.integer  "sign_in_count",                 :default => 0,         :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -97,13 +97,12 @@ ActiveRecord::Schema.define(:version => 20131103233354) do
     t.datetime "birth_date"
     t.string   "api_key"
     t.string   "secret_key"
-    t.integer  "total_storage_assigned",        :default => 31457280, :null => false
-    t.integer  "documents_time_for_expiration", :default => 86400,    :null => false
-    t.integer  "bandwidth_in_bytes_per_sec",    :default => 0,        :null => false
-    t.integer  "max_document_size",             :default => 20971520, :null => false
-    t.integer  "limit_of_conversions",          :default => 0,        :null => false
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
+    t.integer  "total_storage_assigned",        :default => 200000000, :null => false
+    t.integer  "documents_time_for_expiration", :default => 200000000, :null => false
+    t.integer  "bandwidth_in_bytes_per_sec",    :default => 0,         :null => false
+    t.integer  "max_document_size",             :default => 200000000, :null => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -115,6 +114,17 @@ ActiveRecord::Schema.define(:version => 20131103233354) do
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "whsents", :force => true do |t|
+    t.string   "url"
+    t.string   "urldoc"
+    t.integer  "state"
+    t.integer  "attempts"
+    t.integer  "webhoook_id"
+    t.integer  "notification"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
 end
