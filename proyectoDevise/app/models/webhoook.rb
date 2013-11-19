@@ -3,13 +3,14 @@ class Webhoook < ActiveRecord::Base
   
   has_many :whsents
   
-  def throwebhook( urldoc )
+  def throwebhook( status, urldoc )
     if not self.deleted
-      code, message, body = Webhook.post(self.url, :action => 'ConvertedDocument', :data => urldoc)
+
+      code, message, body = Webhook.post(self.url, :notification => status.to_s, :data => urldoc)
       
       if code == '200'
         #puts "Success: #{body}"
-        whs = Whsent.new(:url => self.url, :urldoc => urldoc, :state => 0, :attempts => 1)
+        whs = Whsent.new(:url => self.url, :urldoc => urldoc, :notification => status, :state => 0, :attempts => 1)
         self.whsents.push(whs)
         self.save
       else

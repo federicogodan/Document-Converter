@@ -97,13 +97,14 @@ class WebhoooksController < ApplicationController
     max_attempts = 3
     @whsents = Whsent.where(state:1)
     @whsents.each do |s|
-      code, message, body = Webhook.post(s.url, :action => 'ConvertedDocument', :data => s.urldoc)
+      code, message, body = code, message, body = Webhook.post(s.url, :notification => s.notification.to_s, :data => s.urldoc)
+      
       s.attempts = s.attempts + 1
       
       if code == '200'
         s.state = 0
       else
-        if attempts == max_attempts
+        if s.attempts == max_attempts
           s.state = 2 
         end
       end

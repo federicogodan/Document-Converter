@@ -6,6 +6,7 @@ class CreateWhsents < ActiveRecord::Migration
       t.integer :state
       t.integer :attempts
       t.integer :webhoook_id
+      t.integer :notification 
 
       t.timestamps
     end
