@@ -26,7 +26,6 @@ ActiveAdmin.register User do
   form do |f|
     f.inputs "User Details" do
       f.input :max_document_size
-      f.input :limit_of_conversions
       f.input :total_storage_assigned
       f.input :documents_time_for_expiration
     end

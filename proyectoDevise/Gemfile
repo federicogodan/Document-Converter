@@ -73,3 +73,4 @@ gem "fog"
 
 #gem 'unicorn-rails'
 #gem 'rspec-rails'
+gem 'minitest'
