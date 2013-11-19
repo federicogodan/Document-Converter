@@ -14,8 +14,6 @@ class User::RegistrationController < Devise::RegistrationsController
     sign_up_params[:documents_time_for_expiration] = default_values[:documents_time_expiration]
     #set the max document size
     sign_up_params[:max_document_size] = default_values[:max_document_size]
-    #set the limit of conversiones
-    sign_up_params[:limit_of_conversions] = default_values[:limit_of_conversions]
     
     build_resource(sign_up_params)
     if resource.save
