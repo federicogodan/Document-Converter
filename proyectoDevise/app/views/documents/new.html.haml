@@ -119,7 +119,7 @@
       function formats_url() {
         dot = $("#document_url").val().lastIndexOf(".");
         ext = $("#document_url").val().substring(dot+1);
-        $.get('/api/convert_document', 
+        $.get('/documents/get_formats', 
           { extension: ext },
           function(data) {
             parent1 = $('#form-to-ext1');
