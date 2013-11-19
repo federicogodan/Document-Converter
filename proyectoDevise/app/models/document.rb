@@ -49,7 +49,7 @@ class Document < ActiveRecord::Base
     diff_time = 0    
     #conv_doc = ConvertedDocument.find_by_document_id(self.id)
     conv_doc = self.converted_document    
-    if !conv_doc.nil?      
+    if !(conv_doc.nil? || conv_doc.conversion_end_date.nil? || self.created_at.nil?)      
         diff_time = conv_doc.conversion_end_date - self.created_at
     end
     (diff_time/60).round(4)

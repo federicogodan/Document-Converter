@@ -70,7 +70,6 @@ gem "fog"
 
 #gem 'base64'
 #gem 'openssl'
-gem 'rest-client'
 
 #gem 'unicorn-rails'
 #gem 'rspec-rails'

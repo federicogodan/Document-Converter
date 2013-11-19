@@ -24,11 +24,9 @@
             %label.col-sm-1.control-label{for: "document_url"}URL
             .col-sm-7
               %input#document_url.form-control{name: "document[url]", placeholder: "Document URL", type: "url"}
-            %label.col-sm-1.control-label{for: "document_url_ext"}Format
+            %label.col-sm-1.control-label{for: "document_url_ext"}
             .col-sm-3
-              %select.form-control{name: "document[url_ext]"}
-                =Format.all.each do |f|
-                  %option=f.name
+
           %br
           %br
           #formats_panel.panel.panel-default{hidden: true}
@@ -119,7 +117,7 @@
       function formats_url() {
         dot = $("#document_url").val().lastIndexOf(".");
         ext = $("#document_url").val().substring(dot+1);
-        $.get('/api/convert_document', 
+        $.get('/documents/get_formats', 
           { extension: ext },
           function(data) {
             parent1 = $('#form-to-ext1');
