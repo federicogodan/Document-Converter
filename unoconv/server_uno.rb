@@ -74,6 +74,8 @@ Thread.start do
 		@state = "ok"
 		puts "to send: "
 		puts @pending_work[:to_send]
+		FileUtils.rm_rf ('dir')
+		FileUtils.mkdir ('dir')
 		system(@pending_work[:to_send])
 		puts "try open file"  
 		puts @pending_work[:converted_file]
@@ -83,7 +85,7 @@ Thread.start do
 		    puts "open converted file"
 		    file = open(@pending_work[:converted_file])
 		    #puts 'renaming original file'
-		    File.rename('dir', @pending_work[:original_name])
+		    #File.rename('dir', @pending_work[:original_name])
 		    #FileUtils.mv(@pending_work[:converted_file], 'dir/' + @pending_work[:original_name] + '.html')
 		    tar_dir = 'tar -czvf ' + tar_name +  @pending_work[:id] +  '.tar ' + @pending_work[:original_name]
 		    puts tar_dir
