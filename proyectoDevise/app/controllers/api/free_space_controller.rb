@@ -20,11 +20,17 @@ class Api::FreeSpaceController < ApplicationController
     if !user_access.nil? && !hash.nil?
       @current_user = user_access
       parsed_request = request.original_url.split('?')[0]
+
+      puts '***free_space**'*90 + parsed_request 
+
       access_error = check_api_token(user_access.secret_key, parsed_request, hash)
+
+      puts ' access_error free_space' + access_error
     else
       access_error = false
     end
     if !access_error 
+      puts ' FAIL free_space '*100
       render json: {:error => "401"}
     end
   end
