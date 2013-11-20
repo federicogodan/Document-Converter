@@ -1,0 +1,37 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close.cancel{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+      %h4.modal-title My API Keys
+    .modal-body{style: "min-height:300px;"}
+      .row{style: "margin-top:70px"}
+        %h5
+          .col-md-offset-2.col-md-3 API Key
+          .col-md-7
+            %small{id: 'keys-api-label'}= @user.api_key
+      .row
+        %h5
+          .col-md-offset-2.col-md-3 Secret Key
+          .col-md-7
+            %small{id: 'keys-secret-label'}= @user.secret_key
+    .modal-footer
+      %button.pull-right.btn.btn-DEFAULT{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} Done
+      %button.pull-right.btn.btn-primary{id: 'keys-generate-btn', type: "button"} Generate new keys
+
+:javascript
+$(document).ready(function() {
+
+  $('#keys-generate-btn').click(function() {
+    $.get('/documents/regenerate_keys', function(data){
+        console.log(data)
+        console.log()
+        console.log(data['secret_key'])
+        $('#keys-api-label').text(data['public_key'])
+        $('#keys-secret-label').text(data['secret_key'])
+
+    })
+  });
+
+
+
+});

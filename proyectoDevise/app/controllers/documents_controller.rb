@@ -134,9 +134,12 @@ class DocumentsController < ApplicationController
   end
 
   def show_api_keys
+    respond_to do |format|
+      format.html { render :layout => false  } 
+    end
   end
 
-  def regenerate_keys    
+  def regenerate_keys
     #creates the public key
     begin
       token = SecureRandom.urlsafe_base64(nil, false)
@@ -153,6 +156,7 @@ class DocumentsController < ApplicationController
     @user.secret_key = secret_key
 
     @user.save
+    render :json => {public_key: @user.api_key, secret_key: @user.secret_key}
   end
 
 end

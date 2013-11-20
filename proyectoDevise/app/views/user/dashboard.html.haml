@@ -27,12 +27,10 @@
             %b.caret
           %ul.dropdown-menu
             %li.dropdown-header{role: "presentation"} Account Settings
-            %li
-              %a{href: "#"} My profile
-            %li
-              %a{href: "/documents/show_api_keys"} My API Keys
-            %li
-              %a{id: 'dashboard_list_webhook'} My Webhooks 
+            %li{id: 'dashboard_show_keys'}
+              %a My API Keys
+            %li{id: 'dashboard_list_webhook'}
+              %a My Webhooks 
             %li.divider{role: "presentation"}
             %li= link_to "sign out", destroy_user_session_path, :method => :delete
   / /.navbar-collapse
@@ -102,6 +100,15 @@ $(document).ready(function() {
       $("#create_document_modal").modal(); 
     });
 
+  $('#dashboard_show_keys').click(function(){
+      var dom = $("#create_document_modal");
+      dom.empty();
+      $.get('/documents/show_api_keys',
+          function(data) {
+            dom.append(data);
+          });
+      $("#create_document_modal").modal(); 
+    });
 
   getStatus();
 
