@@ -7,8 +7,11 @@ Gem::Specification.new do |s|
   s.authors     = ["Gonzalo Avila"]
   s.email       = ["gonzaloavila16@gmail.com"]
   s.files       = ["lib/doc_converter.rb"]
-  #REVISAR DEPENDENCIAS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  #s.add_dependency('base64')
-  #s.add_dependency('openssl')
-  #s.add_dependency('rest_client')
+  
+  #s.add_runtime_dependency 'base64',[">= 0"]
+  #s.add_development_dependency 'base64',[">= 0"]
+  #s.add_runtime_dependency 'openssl',[">= 0"]
+  #s.add_development_dependency 'openssl',[">= 0"]
+  s.add_runtime_dependency 'rest-client',[">= 0"]
+  s.add_development_dependency 'rest-client',[">= 0"]	
 end
