@@ -121,9 +121,11 @@
       function formats_url() {
         dot = $("#document_url").val().lastIndexOf(".");
         ext = $("#document_url").val().substring(dot+1);
+        
         $('#form-to-ext1').empty();
         $('#form-to-ext2').empty();
         $('#btn_upload').prop('disabled', true);
+
         $.get('/documents/get_formats', 
           { extension: ext },
           function(data) {

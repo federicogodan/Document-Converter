@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, 
                   :remember_me, :name, :nick, :surname, :birth_date, :profile_type,
                   :api_key, :secret_key, :total_storage_assigned, :documents_time_for_expiration, 
-                  :bandwidth_in_bytes_per_sec,:max_document_size, :limit_of_conversions
+                  :bandwidth_in_bytes_per_sec,:max_document_size
   
   # A user has many documents to be converted.
   has_many :documents
