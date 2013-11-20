@@ -113,7 +113,8 @@ class DocumentsController < ApplicationController
   def get_formats
     api_key = @user.api_key
     secret_key = @user.secret_key
-    url = 'http://localhost:3000/api/convert_document/'
+    splited_url = request.original_url.split('/') #'http://localhost:3000/api/convert_document'
+    url = splited_url[0]+'//'+splited_url[1]+splited_url[2]+'/api/convert_document'
     hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip
     ext = params[:extension]
     request = RestClient::Request.new(
