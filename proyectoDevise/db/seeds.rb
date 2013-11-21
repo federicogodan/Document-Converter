@@ -161,12 +161,12 @@ f14.destinies.push(f13)
 f14.save
 
 #Create users
-#for i in 0..10
-#  em = "user" + i.to_s + "@pruebap.com" 
-#  nik = "userexample" + i.to_s 
-#  pass = "passuser" + i.to_s 
-#  User.create(email: em, nick: nik, password: pass) 
-#end
+for i in 0..10
+  em = "user" + i.to_s + "@pruebap.com" 
+  nik = "userexample" + i.to_s 
+  pass = "passuser" + i.to_s 
+  User.create(email: em, nick: nik, password: pass) 
+end
 
 #Create Document for user
 #for i in 0..10

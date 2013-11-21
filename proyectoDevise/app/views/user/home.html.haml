@@ -1,3 +1,6 @@
+- content_for :head
+-   stylesheet_link_tag '/assets/home.css'
+
 %nav.navbar.navbar-inverse{role: "navigation"}
   .container
     %a.navbar-brand{href: "#"} Document Converter
@@ -27,10 +30,6 @@
             %label.col-lg-4.control-label{for: "surname"} Last name
             .col-lg-8
               %input#surname.form-control{name: "user[surname]", placeholder: "Last name", type: "text"}/
-          .form-group.input-append.date{"data-date" => "12-02-2012", "data-date-format" => "mm-dd-yyyy"}
-            %label.col-lg-4.control-label{for: "birth_date"} Birth Date
-            .col-lg-8
-              %input#birth_date.form-control.datepicker{name: "user[birth_date]", placeholder: "Birth Date", type: "text"}/
           .form-group.input-password
             %label.col-lg-4.control-label{for: "password"} Password
             .col-lg-8
@@ -43,7 +42,7 @@
           %a.btn.cancel{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
           %button#btnRegister.btn.btn-primary{name: "commit", type: "submit"} Register
 /Main page
-.header
+.home-header
   .container
     .row
       /Left row, shows description about the product, it disappears when the page is displayed on a small device
@@ -127,10 +126,6 @@
         required: true,
         email: true
       },
-      "user[birth_date]": {
-        required: true,
-        date: true
-      },
       "user[nick]": {
         minlength: 6,
         required: true,
@@ -148,10 +143,6 @@
         required: "We need your email address to create your account",
         email: "Your email address must be in the format of name@domain.com"
       },
-      "user[birth_date]": {
-        required: "We need your birth date to create your account",
-        date: "Your birth date must be in the format of DD-MM-YYYY"
-      },
       "user[nick]": {
         minlength: "Your nickname must be at least 6 characters long",
         required: "We need a nickname to create your account"
@@ -161,7 +152,7 @@
         minlength: "Your password must be at least 8 characters long"
       },
       "user[password_confirmation]": {
-        equalTo: "Passwords doesn't match, please try again"
+        equalTo: "Passwords don't match, please try again"
       },
     },
   
