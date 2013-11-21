@@ -52,11 +52,15 @@ class DocumentsController < ApplicationController
      
     api_key = @user.api_key
     secret_key = @user.secret_key
+<<<<<<< HEAD
+    server = eval(File.open('server.properties') {|f| f.read })
+    url = 'http://'+ server[:ip_server] + '/api/convert_document/'
+=======
     
     splited_url = request.original_url.split('/') #url = 'http://localhost:3000/api/convert_document/'
     url = splited_url[0]+'//'+splited_url[1]+splited_url[2]+'/api/convert_document/'
-    
 
+>>>>>>> 80ec787925cd621e4cbacc490d513479444ebe80
     hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip    
         
     if params[:document][:upload_method] != 'URL'
@@ -78,13 +82,9 @@ class DocumentsController < ApplicationController
               }
           })      
 
-    begin
-       response = request.execute
-       @document_error = response
-    rescue #rescue the timeout error
-      @document_error = "Conexion failed. Please try again later"
-    end         
-            
+    response = request.execute    
+        
+    @document_error = response
     respond_to do |format|
       format.html { render 'user/dashboard'}
       format.json { head :no_content }
@@ -121,8 +121,18 @@ class DocumentsController < ApplicationController
   def get_formats
     api_key = @user.api_key
     secret_key = @user.secret_key
+<<<<<<< HEAD
+    server = eval(File.open('server.properties') {|f| f.read })
+    url = 'http://'+ server[:ip_server] + ':80/api/convert_document/'
+    
+    puts "*********************************************"
+    puts url
+    puts "*********************************************"
+    
+=======
     splited_url = request.original_url.split('/') #'http://localhost:3000/api/convert_document'
     url = splited_url[0]+'//'+splited_url[1]+splited_url[2]+'/api/convert_document/'
+>>>>>>> 80ec787925cd621e4cbacc490d513479444ebe80
     hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip
     ext = params[:extension]
     request = RestClient::Request.new(
