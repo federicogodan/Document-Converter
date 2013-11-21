@@ -1,3 +1,6 @@
+- content_for :head
+-   stylesheet_link_tag '/assets/home.css'
+
 %nav.navbar.navbar-inverse{role: "navigation"}
   .container
     %a.navbar-brand{href: "#"} Document Converter
@@ -43,7 +46,7 @@
           %a.btn.cancel{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
           %button#btnRegister.btn.btn-primary{name: "commit", type: "submit"} Register
 /Main page
-.header
+.home-header
   .container
     .row
       /Left row, shows description about the product, it disappears when the page is displayed on a small device
