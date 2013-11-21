@@ -1,7 +1,7 @@
 #create_document_modal.modal
 
 //Main Page
-%header.navbar.navbar-inverse{role: "navigation"}
+%header.navbar.navbar-inverse.header{role: "navigation"}
   .container
     / Brand and toggle get grouped for better mobile display
     .navbar-header
@@ -27,38 +27,43 @@
             %b.caret
           %ul.dropdown-menu
             %li.dropdown-header{role: "presentation"} Account Settings
-            %li{id: 'dashboard_show_keys'}
+            %li.dashboard_show_keys
               %a My API Keys
-            %li{id: 'dashboard_list_webhook'}
+            %li.dashboard_list_webhook
               %a My Webhooks 
             %li.divider{role: "presentation"}
-            %li= link_to "sign out", destroy_user_session_path, :method => :delete
+            %li= link_to "Sign Out", destroy_user_session_path, :method => :delete
   / /.navbar-collapse
-.row
-  .col-sm-12
-    %h4
+/.row
+/  .col-sm-12
+/    %h4
 
-      %button.btn.btn-primary#create_document_button Convert document
-  -if !@document_error.nil?
-    .notice#doc_error= @document_error
+/      %button.btn.btn-primary#create_document_button Convert document
+/  -if !@document_error.nil?
+/    .notice#doc_error= @document_error
   
-    %hr/
+/    %hr/
 .row
   .col-sm-2
-    .well.well-sm
-      %ul.nav.nav-list
-        %li.nav-header
-          General
-        %li.active
-          %a{href: "#"} Dashboard
-        %li.nav-header
-          Requests
-        %li
-          %a{href: "#"} Events Report
-        %li
-          %a{href: "#"} Webhooks Events
-        %li.divider
+    %ul.nav.nav-list
+
+      %li.nav-header General
+      %li
+        %button.btn.btn-primary#create_document_button Convert a document
+      %li.nav-header Dashboard
+      %li
+        %a.dashboard_show_keys{href: "#"} My API Keys
+      %li
+        %a.dashboard_list_webhook{href: "#"} My Webhooks
+      %li.divider
+    %div{style: "width:80%;height:10%; position:absolute; bottom:0px;padding-left:10px;margin-bottom:20px;text-align:center"}
+      .progress
+        .progress-bar.progress-bar-danger{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "40", role: "progressbar", style: "width: 62%"}
+          %span.sr-only 40% Complete (success)
+      %span.storage_label XXMb of YYMb used
   .col-sm-10
+    -if !@document_error.nil?
+      .notice#doc_error= @document_error
     %table.table.table-hover.table-responsive
       %tr
         %th Date
@@ -80,7 +85,7 @@
 :javascript
 $(document).ready(function() {
 
-  $('#dashboard_list_webhook').click(function(){
+  $('.dashboard_list_webhook').click(function(){
       var dom = $("#create_document_modal");
       dom.empty();
       $.get('/webhoooks/',
@@ -100,7 +105,7 @@ $(document).ready(function() {
       $("#create_document_modal").modal(); 
     });
 
-  $('#dashboard_show_keys').click(function(){
+  $('.dashboard_show_keys').click(function(){
       var dom = $("#create_document_modal");
       dom.empty();
       $.get('/documents/show_api_keys',
