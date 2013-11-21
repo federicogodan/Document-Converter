@@ -4,7 +4,7 @@ class ConvertedDocumentController < ApplicationController
   
   #remove expired documents from S3
   def self.delete_old_files
-    #cds =  ConvertedDocument.joins('INNER JOIN documents ON (converted_documents.document_id = documents.id) INNER JOIN users ON (documents.user_id = users.id) where converted_documents.created_at <= now() - users.documents_time_for_expiration')
+    cds =  ConvertedDocument.joins('INNER JOIN documents ON (converted_documents.document_id = documents.id) INNER JOIN users ON (documents.user_id = users.id) where converted_documents.created_at <= now() - users.documents_time_for_expiration')
     
     
     cds.each do |document|
@@ -12,7 +12,7 @@ class ConvertedDocumentController < ApplicationController
 #      AWS::S3::DEFAULT_HOST.replace 's3-website-sa-east-1.amazonaws.com' # "s3-website-us-west-2.amazonaws.com"
       AWS::S3::DEFAULT_HOST.replace 's3-sa-east-1.amazonaws.com'
       #AWS::S3::DEFAULT_HOST.replace 's3-us-west-2.amazonaws.com'
-      doc = Document.find(document.document_id)
+      doc = Document.find(document.document_id) 
       user = User.find(doc.user_id)
       AWS::S3::S3Object.delete('#{doc.name}'+'.'+'#{doc.format}','uploads/document/file'+'/#{user.id}/')
       
