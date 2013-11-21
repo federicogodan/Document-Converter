@@ -55,6 +55,7 @@ class DocumentsController < ApplicationController
     
     splited_url = request.original_url.split('/') #url = 'http://localhost:3000/api/convert_document/'
     url = splited_url[0]+'//'+splited_url[1]+splited_url[2]+'/api/convert_document/'
+    
 
     hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip    
         
@@ -77,9 +78,13 @@ class DocumentsController < ApplicationController
               }
           })      
 
-    response = request.execute    
-        
-    @document_error = response
+    begin
+       response = request.execute
+       @document_error = response
+    rescue #rescue the timeout error
+      @document_error = "Conexion failed. Please try again later"
+    end         
+            
     respond_to do |format|
       format.html { render 'user/dashboard'}
       format.json { head :no_content }
