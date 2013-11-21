@@ -19,8 +19,6 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     if !user_access.nil? && !hash.nil?
       @current_user = user_access
       parsed_request = request.original_url.split('?')[0]
-      puts '-.()'
-      puts request.original_url.split('?')[0]
       access_error = check_api_token(user_access.secret_key, parsed_request, hash)
     else
       access_error = false
@@ -40,13 +38,13 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     @f_size = nil    
     @doc_error = ''
     @aux_variable_file = params[:document][:file]    
-    
+
    #checking method of upload(Remote or local file)           
         #REMOTE METHOD                                 #checks that the url of the file be a valid one.(in ASCII format)
      if params[:document][:upload_method] == 'URL' && !@aux_variable_file.nil? && @aux_variable_file.gsub!(/\P{ASCII}/, '').nil?
        begin
           @file_name =  File.basename(URI.parse(@aux_variable_file).path)
-          temp_path = "./" + Time.now.to_s
+          temp_path = "./tmp/" + Time.now.to_s
           FileUtils.mkdir(temp_path)
           File.open(temp_path + '/' + @file_name, 'wb') do |fo|
               fo.write(open(@aux_variable_file).read)
@@ -62,8 +60,9 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
         @file_name = params[:document][:file].original_filename
         @file_content = params[:document][:file] 
         @f_size = @file_content.size if @file_content
-    end                                      
+    end                        
     
+
     #auxiliary variables
     name_plus_extension = File.extname(@file_name) if !@file_name.nil?        
     has_extension = name_plus_extension.split('.')[1] if (!name_plus_extension.nil? && (name_plus_extension.split('.').count > 1))
@@ -71,7 +70,6 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     @origin_format = Format.find_by_name(ext) if !ext.nil?
     destiny_format_name = params[:document][:destination_format]    
     @destiny_format = Format.find_by_name(destiny_format_name) if !destiny_format_name.nil? 
-    
     
              
      #Previous checks to prevent null values and variable controls
@@ -120,17 +118,21 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
 
       valid_parameters = false    
     end  
+    
 
       if (valid_parameters && !@document.nil? && @document.save && 
-         !@document.converted_document.nil? && @document.converted_document.save)         
-        @doc_error = ''
+         !@document.converted_document.nil? && @document.converted_document.save)          
+        @doc_error = ''      #There was no error
       elsif valid_parameters #It means that the error is in @document.save or @document.converted_document.save    
         @doc_error = 'File error: Couldn\'t save the file in the database. Please try again later'
       end
       
+      
       if params[:document][:upload_method] == 'URL' &&  !temp_path.nil?
         FileUtils.rm_rf(temp_path)
       end
+      
+      
       render json: @doc_error  
   end
   

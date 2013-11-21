@@ -12,10 +12,11 @@ class ConvertedDocumentController < ApplicationController
 #      AWS::S3::DEFAULT_HOST.replace 's3-website-sa-east-1.amazonaws.com' # "s3-website-us-west-2.amazonaws.com"
       AWS::S3::DEFAULT_HOST.replace 's3-sa-east-1.amazonaws.com'
       #AWS::S3::DEFAULT_HOST.replace 's3-us-west-2.amazonaws.com'
-      doc = Document.find(document.document_id)
+      doc = Document.find(document.document_id) 
       user = User.find(doc.user_id)
       AWS::S3::S3Object.delete('#{doc.name}'+'.'+'#{doc.format}','uploads/document/file'+'/#{user.id}/')
-      puts "borro el archivo"
+      puts "erased the file"
+      
       document.set_to_expired if document.status == 2
     end
   end
