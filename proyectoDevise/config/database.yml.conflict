@@ -20,9 +20,15 @@ development:
   encoding: utf8
   database: doconvdev
   username: root
+<<<<<<< HEAD
+  password: nicolas
+  pool: 5
+  timeout: 5000
+=======
   password: pis2013
   host: localhost
   port: 3306
+>>>>>>> 80ec787925cd621e4cbacc490d513479444ebe80
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
