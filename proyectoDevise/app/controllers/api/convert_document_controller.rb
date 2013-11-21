@@ -19,27 +19,17 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     if !user_access.nil? && !hash.nil?
       @current_user = user_access
       parsed_request = request.original_url.split('?')[0]
-      puts '>converted>>'*100 + parsed_request
       access_error = check_api_token(user_access.secret_key, parsed_request, hash)
-      if access_error
-        puts 'OK access_error converter '*100
-      else
-        puts 'ERROR access_error'*100
-#      puts ' access_error converter ' + access_error
-      end
-
     else
       access_error = false
     end
     if !access_error 
-      puts ' FAIL converter '*100
       render json: {:error => "401"}
     end
   end
     
     
   def create            
-    puts 'ENTRO A CONVERTIR'*100
     #initializing variables
     valid_parameters = true 
     is_valid_file_status = true    
@@ -81,8 +71,7 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     @destiny_format = Format.find_by_name(destiny_format_name) if !destiny_format_name.nil? 
     
     
-    
-    puts ' ANTES DEL IF '*100          
+             
      #Previous checks to prevent null values and variable controls
     if (is_valid_file_status && !@file_name.nil? && !@file_content.nil? && !@f_size.nil? && !@origin_format.nil? && !@destiny_format.nil? && 
       @origin_format.destinies.include?(@destiny_format) && !@current_user.nil? && !@current_user.max_document_size.nil?  && 
@@ -90,7 +79,6 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
       ((@current_user.used_storage + @f_size) <= @current_user.total_storage_assigned))
       
       #Creating association between the user and the document uploaded. Also creating the converted document's object 
-      puts ' OK - ENTRO AL IF '*100
       @document = Document.new(name:@file_name,expired:false,size:@f_size)
       @document.file = @file_content      
       @document.format = @origin_format
@@ -99,7 +87,6 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
       @document.converted_document.set_to_converting
       @document.converted_document.format = @destiny_format
     else
-      puts ' ERROR - ENTRO AL ELSE '*100
       #obtains the data error           
       if (@current_user.nil?)
          @doc_error = 'Session error: The session has expired. Please sign in again'         
@@ -133,19 +120,15 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     end  
 
       if (valid_parameters && !@document.nil? && @document.save && 
-         !@document.converted_document.nil? && @document.converted_document.save)
-         puts 'DOC ERROR VACIO'         
+         !@document.converted_document.nil? && @document.converted_document.save)         
         @doc_error = ''
-      elsif valid_parameters #It means that the error is in @document.save or @document.converted_document.save  
-        puts 'DOC ERROR NO VACIO'   
+      elsif valid_parameters #It means that the error is in @document.save or @document.converted_document.save    
         @doc_error = 'File error: Couldn\'t save the file in the database. Please try again later'
       end
       
       if params[:document][:upload_method] == 'URL' &&  !temp_path.nil?
-        puts 'ENTRO A IF FINAL'
         FileUtils.rm_rf(temp_path)
       end
-      puts "TERMINO EL CREATE"
       render json: @doc_error  
   end
   
