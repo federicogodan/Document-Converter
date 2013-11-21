@@ -25,19 +25,21 @@ Donde 'archivo' es el rpm bajado.
 
 2.2 
 
-* Move to the folder that is created when you unpack the tar file.
+* Move to the folder RPMS inside de directory created.
 
 * create a new directory : mkdir install
 
 * move to that directory : cd install
 
-* create a copy from all rpms : for i in ../RPMS/*.rpm; do rpm2cpio $i | cpio -id; done
+* install rpm2cpio : sudo apt-get install rpm2cpio
+
+* create a copy from all rpms : for i in ../*.rpm; do rpm2cpio $i | cpio -id; done
 
 * Edit the file 'bootstraprc', where the variable 'UserInstallation' must be fill with 
 different values to different instances.
 In this example, the field is completed with the value '$SYSUSERCONFIG/.libreoffice/4' 
 
-vim install/opt/libreoffice4.1/program/bootstraprc
+vim opt/libreoffice4.1/program/bootstraprc
 
 UserInstallation=$SYSUSERCONFIG/.libreoffice/4
 
@@ -54,17 +56,15 @@ Above steps are followed but creating another folder into the folder you unzippe
 * Edit the file 'bootstraprc', with another name. 
 At this example, the variable takes the value '$SYSUSERCONFIG/.libreoffice/3' changin the value 4 to 3.
 
-vim install2/opt/libreoffice4.1/program/bootstraprc
+vim opt/libreoffice4.1/program/bootstraprc
 UserInstallation=$SYSUSERCONFIG/.libreoffice/3
 
 4- Observations
   -------------
-* If you want to add more instances, must be continue repeating the steps before explained, 
+If you want to add more instances, must be continue repeating the steps before explained, 
 creating folders with different names ('installX' for example), and editing the file 'bootstraprc' 
 assigning different names to the variable 'UserInstallation'.
 
-* The first instance will be installed at install/opt/libreoffice4.1/program/soffice
-  The second, will be installed at install2/opt/libreoffice4.1/program/soffice
 
 Reference link: https://wiki.documentfoundation.org/Installing_in_parallel
 

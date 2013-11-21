@@ -10,6 +10,7 @@ The following steps describe the installation of one unoconv instance.
 3 - Move to directory created : cd unoconv-0.6/
 
 4 - sudo make install
+    In case of error, execute sudo install -p -m0755 unoconv /usr/bin/unoconv
 
 5 - Check libreoffice version : /usr/bin/libreoffice --version
     It must be version 4.1

@@ -1,13 +1,3 @@
-###
-#TODO: catch timeout exception (when the client shutdown by surprise,
-# the server must to recover and not explode)
-###
-###
-#TODO: put temporary names to the files because any problem during the convertion 
-#with the name of original file 
-###
-#TODO: filter through the format in function of the original one (for example txt:Text)
-
 
 require 'socket'
 require 'json'

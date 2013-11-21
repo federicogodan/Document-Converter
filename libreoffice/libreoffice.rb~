@@ -19,7 +19,7 @@ puts "Starting up server..."
 #the server takes the port as an argument
 
 #get parameters through a configuration file 
-configuration = eval(File.open('/home/ubuntu/proyecto-servers/configuration/libreoffice.properties') {|f| f.read })
+configuration = eval(File.open('configuration/libreoffice.properties') {|f| f.read })
 
 port = configuration[:port]
 ip = configuration[:ip] 
