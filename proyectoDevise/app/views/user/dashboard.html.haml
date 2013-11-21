@@ -58,12 +58,17 @@
       %li.divider
     %div{style: "width:80%;height:10%; position:absolute; bottom:0px;padding-left:10px;margin-bottom:20px;text-align:center"}
       .progress
-        .progress-bar.progress-bar-danger{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "40", role: "progressbar", style: "width: 62%"}
+        - used_percentage = (@user.used_storage*100)/@user.total_storage_assigned
+        .progress-bar.progress-bar-danger{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => used_percentage.to_s, role: "progressbar", style: "width: "+ used_percentage.to_s + "%"}
           %span.sr-only 40% Complete (success)
-      %span.storage_label XXMb of YYMb used
+      %span.storage_label= @user.used_storage.to_s+"Mb of "+@user.total_storage_assigned.to_s+"Mb used"
   .col-sm-10
-    -if !@document_error.nil?
-      .notice#doc_error= @document_error
+
+    -if !@document_error.nil? && !@document_error.blank?
+      .alert.alert-warning.alert-dismissable
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
+        %strong=@document_error
+
     %table.table.table-hover.table-responsive
       %tr
         %th Date
@@ -72,7 +77,7 @@
         %th Source Format
         %th Converted To
         %th Status
-      -@user.documents.each do |d|
+      -@user.documents.reverse.each do |d|
         %tr
           %td=d.created_at.strftime("%d/%m/%Y")
           %td=d.created_at.strftime("%H:%M")
