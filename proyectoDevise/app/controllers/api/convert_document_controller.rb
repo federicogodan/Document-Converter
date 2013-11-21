@@ -19,6 +19,8 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     if !user_access.nil? && !hash.nil?
       @current_user = user_access
       parsed_request = request.original_url.split('?')[0]
+      puts '-.()'
+      puts request.original_url.split('?')[0]
       access_error = check_api_token(user_access.secret_key, parsed_request, hash)
     else
       access_error = false

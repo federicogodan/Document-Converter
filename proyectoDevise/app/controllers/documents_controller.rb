@@ -52,7 +52,8 @@ class DocumentsController < ApplicationController
      
     api_key = @user.api_key
     secret_key = @user.secret_key
-    url = 'http://localhost:3000/api/convert_document/'
+    server = eval(File.open('server.properties') {|f| f.read })
+    url = 'http://'+ server[:ip_server] + '/api/convert_document/'
     hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip    
         
     if params[:document][:upload_method] != 'URL'
@@ -113,7 +114,13 @@ class DocumentsController < ApplicationController
   def get_formats
     api_key = @user.api_key
     secret_key = @user.secret_key
-    url = 'http://localhost:3000/api/convert_document/'
+    server = eval(File.open('server.properties') {|f| f.read })
+    url = 'http://'+ server[:ip_server] + ':80/api/convert_document/'
+    
+    puts "*********************************************"
+    puts url
+    puts "*********************************************"
+    
     hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip
     ext = params[:extension]
     request = RestClient::Request.new(
