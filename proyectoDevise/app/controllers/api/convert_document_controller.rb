@@ -32,7 +32,6 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     
     
   def create            
-    
     #initializing variables
     valid_parameters = true 
     is_valid_file_status = true    
@@ -40,37 +39,41 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     @file_content = nil
     @f_size = nil    
     @doc_error = ''
+    @aux_variable_file = params[:document][:file]    
     
-     #checking method of upload(Remote or local file)
-     if params[:document][:upload_method] == 'URL'
+   #checking method of upload(Remote or local file)           
+        #REMOTE METHOD                                 #checks that the url of the file be a valid one.(in ASCII format)
+     if params[:document][:upload_method] == 'URL' && !@aux_variable_file.nil? && @aux_variable_file.gsub!(/\P{ASCII}/, '').nil?
        begin
-          @file_name =  File.basename(URI.parse(params[:document][:file]).path)
+          @file_name =  File.basename(URI.parse(@aux_variable_file).path)
           temp_path = "./" + Time.now.to_s
           FileUtils.mkdir(temp_path)
           File.open(temp_path + '/' + @file_name, 'wb') do |fo|
-              fo.write(open(params[:document][:file]).read)
+              fo.write(open(@aux_variable_file).read)
           end
           @file_content = File.open(temp_path + "/" + @file_name)
           @f_size = @file_content.size if @file_content
        rescue #Catch an exception, if File class fail
           is_valid_file_status = false
        end           
-    else
-      if !params[:document][:file].nil? && params[:document][:file]!=""
+       #LOCAL METHOD                                 # checks that the  path and the name of the file be a valid one.(in ASCII format)       
+    elsif params[:document][:upload_method] != 'URL' && !@aux_variable_file.nil? && @aux_variable_file!="" && @aux_variable_file.path.gsub!(/\P{ASCII}/, '').nil? && @aux_variable_file.original_filename.gsub!(/\P{ASCII}/, '').nil? 
+      
         @file_name = params[:document][:file].original_filename
         @file_content = params[:document][:file] 
         @f_size = @file_content.size if @file_content
-      end  
     end                                      
     
-    
+    #auxiliary variables
     name_plus_extension = File.extname(@file_name) if !@file_name.nil?        
     has_extension = name_plus_extension.split('.')[1] if (!name_plus_extension.nil? && (name_plus_extension.split('.').count > 1))
     ext = has_extension.upcase if !has_extension.nil?        
     @origin_format = Format.find_by_name(ext) if !ext.nil?
     destiny_format_name = params[:document][:destination_format]    
     @destiny_format = Format.find_by_name(destiny_format_name) if !destiny_format_name.nil? 
-              
+    
+    
+             
      #Previous checks to prevent null values and variable controls
     if (is_valid_file_status && !@file_name.nil? && !@file_content.nil? && !@f_size.nil? && !@origin_format.nil? && !@destiny_format.nil? && 
       @origin_format.destinies.include?(@destiny_format) && !@current_user.nil? && !@current_user.max_document_size.nil?  && 
@@ -86,14 +89,13 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
       @document.converted_document.set_to_converting
       @document.converted_document.format = @destiny_format
     else
-    
       #obtains the data error           
       if (@current_user.nil?)
          @doc_error = 'Session error: The session has expired. Please sign in again'         
       elsif (@current_user.max_document_size.nil? || @current_user.total_storage_assigned.nil?)
          @doc_error = 'Null variables in the database. Please contact with the technical\'s service'
       elsif (@file_name.nil?)
-         @doc_error = 'File error: Can\'t obtain the route of the file' 
+         @doc_error = 'File error: Can\'t obtain the route or name of the file (please use ASCII characters)' 
       elsif (@file_content.nil?)
          @doc_error = 'File error: Can\'t read the content of the file'
       elsif (@f_size.nil?)
@@ -122,14 +124,13 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
       if (valid_parameters && !@document.nil? && @document.save && 
          !@document.converted_document.nil? && @document.converted_document.save)         
         @doc_error = ''
-      elsif valid_parameters #It means that the error is in @document.save or @document.converted_document.save     
+      elsif valid_parameters #It means that the error is in @document.save or @document.converted_document.save    
         @doc_error = 'File error: Couldn\'t save the file in the database. Please try again later'
       end
       
-      if params[:document][:upload_method] == 'URL'
+      if params[:document][:upload_method] == 'URL' &&  !temp_path.nil?
         FileUtils.rm_rf(temp_path)
       end
-
       render json: @doc_error  
   end
   

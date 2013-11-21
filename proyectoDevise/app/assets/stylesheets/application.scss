@@ -1,0 +1,30 @@
+@import "bootstrap.min.css";
+@import "datepicker.css";
+@import "dashboard.css";
+*
+{
+    margin:0;padding:0;
+}
+html,body,.container
+{
+    height:100%;
+}
+
+.row
+{
+    width: 100%;
+    margin-top: -64px;
+    padding-top: 45px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 100%;
+}
+.col-sm-2
+{
+	height: inherit;
+    background: #F5F5F5;
+    display:table-row;
+}
+.col-sm-10
+{
+}

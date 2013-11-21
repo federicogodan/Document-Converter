@@ -12,6 +12,7 @@ ProyectoDevise::Application.routes.draw do
 
   get "user/home"
   get "user/dashboard"
+  get "user/used_storage"
   get "posts/new"
   get "convert/get_status"
   post "posts/create"

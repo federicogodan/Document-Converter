@@ -15,5 +15,10 @@ class UserController < ApplicationController
      @user = User.find_by_nick(cookies[:nickname])
     #respond_with resource, :location => after_sign_in_path_for(resource)       
   end
+
+  def used_storage
+    @current_user = User.find_by_nick(cookies[:nickname])
+    render :json => {used_storage: @current_user.used_storage, total_storage: @current_user.total_storage_assigned }
+  end
 end
   

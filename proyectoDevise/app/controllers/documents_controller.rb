@@ -52,8 +52,10 @@ class DocumentsController < ApplicationController
      
     api_key = @user.api_key
     secret_key = @user.secret_key
-    server = eval(File.open('server.properties') {|f| f.read })
-    url = 'http://'+ server[:ip_server] + '/api/convert_document/'
+    
+    splited_url = request.original_url.split('/') #url = 'http://localhost:3000/api/convert_document/'
+    url = splited_url[0]+'//'+splited_url[1]+splited_url[2]+'/api/convert_document/'
+
     hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip    
         
     if params[:document][:upload_method] != 'URL'
@@ -114,13 +116,8 @@ class DocumentsController < ApplicationController
   def get_formats
     api_key = @user.api_key
     secret_key = @user.secret_key
-    server = eval(File.open('server.properties') {|f| f.read })
-    url = 'http://'+ server[:ip_server] + ':80/api/convert_document/'
-    
-    puts "*********************************************"
-    puts url
-    puts "*********************************************"
-    
+    splited_url = request.original_url.split('/') #'http://localhost:3000/api/convert_document'
+    url = splited_url[0]+'//'+splited_url[1]+splited_url[2]+'/api/convert_document/'
     hash = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, url)).strip
     ext = params[:extension]
     request = RestClient::Request.new(
@@ -137,9 +134,12 @@ class DocumentsController < ApplicationController
   end
 
   def show_api_keys
+    respond_to do |format|
+      format.html { render :layout => false  } 
+    end
   end
 
-  def regenerate_keys    
+  def regenerate_keys
     #creates the public key
     begin
       token = SecureRandom.urlsafe_base64(nil, false)
@@ -156,6 +156,7 @@ class DocumentsController < ApplicationController
     @user.secret_key = secret_key
 
     @user.save
+    render :json => {public_key: @user.api_key, secret_key: @user.secret_key}
   end
 
 end

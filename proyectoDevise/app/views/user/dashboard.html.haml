@@ -1,7 +1,7 @@
 #create_document_modal.modal
 
 //Main Page
-%header.navbar.navbar-inverse{role: "navigation"}
+%header.navbar.navbar-inverse.header{role: "navigation"}
   .container
     / Brand and toggle get grouped for better mobile display
     .navbar-header
@@ -27,40 +27,48 @@
             %b.caret
           %ul.dropdown-menu
             %li.dropdown-header{role: "presentation"} Account Settings
-            %li
-              %a{href: "#"} My profile
-            %li
-              %a{href: "/documents/show_api_keys"} My API Keys
-            %li
-              %a{id: 'dashboard_list_webhook'} My Webhooks 
+            %li.dashboard_show_keys
+              %a My API Keys
+            %li.dashboard_list_webhook
+              %a My Webhooks 
             %li.divider{role: "presentation"}
-            %li= link_to "sign out", destroy_user_session_path, :method => :delete
+            %li= link_to "Sign Out", destroy_user_session_path, :method => :delete
   / /.navbar-collapse
-.row
-  .col-sm-12
-    %h4
+/.row
+/  .col-sm-12
+/    %h4
 
-      %button.btn.btn-primary#create_document_button Convert document
-  -if !@document_error.nil?
-    .notice#doc_error= @document_error
+/      %button.btn.btn-primary#create_document_button Convert document
+/  -if !@document_error.nil?
+/    .notice#doc_error= @document_error
   
-    %hr/
+/    %hr/
 .row
   .col-sm-2
-    .well.well-sm
-      %ul.nav.nav-list
-        %li.nav-header
-          General
-        %li.active
-          %a{href: "#"} Dashboard
-        %li.nav-header
-          Requests
-        %li
-          %a{href: "#"} Events Report
-        %li
-          %a{href: "#"} Webhooks Events
-        %li.divider
+    %ul.nav.nav-list
+
+      %li.nav-header General
+      %li
+        %button.btn.btn-primary#create_document_button Convert a document
+      %li.nav-header Dashboard
+      %li
+        %a.dashboard_show_keys{href: "#"} My API Keys
+      %li
+        %a.dashboard_list_webhook{href: "#"} My Webhooks
+      %li.divider
+    %div{style: "width:80%;height:10%; position:absolute; bottom:0px;padding-left:10px;margin-bottom:20px;text-align:center"}
+      .progress
+        - used_percentage = (@user.used_storage*100)/@user.total_storage_assigned
+        .progress-bar.progress-bar-danger{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => used_percentage.to_s, role: "progressbar", style: "width: "+ used_percentage.to_s + "%"}
+          %span.sr-only 40% Complete (success)
+      %span.storage_label= @user.used_storage.to_s+"Mb of "+@user.total_storage_assigned.to_s+"Mb used"
   .col-sm-10
+
+    -if !@document_error.nil? && !@document_error.blank?
+      .alert.alert-warning.alert-dismissable
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
+        %strong=@document_error
+
     %table.table.table-hover.table-responsive
       %tr
         %th Date
@@ -69,7 +77,7 @@
         %th Source Format
         %th Converted To
         %th Status
-      -@user.documents.each do |d|
+      -@user.documents.reverse.each do |d|
         %tr
           %td=d.created_at.strftime("%d/%m/%Y")
           %td=d.created_at.strftime("%H:%M")
@@ -82,7 +90,7 @@
 :javascript
 $(document).ready(function() {
 
-  $('#dashboard_list_webhook').click(function(){
+  $('.dashboard_list_webhook').click(function(){
       var dom = $("#create_document_modal");
       dom.empty();
       $.get('/webhoooks/',
@@ -102,6 +110,15 @@ $(document).ready(function() {
       $("#create_document_modal").modal(); 
     });
 
+  $('.dashboard_show_keys').click(function(){
+      var dom = $("#create_document_modal");
+      dom.empty();
+      $.get('/documents/show_api_keys',
+          function(data) {
+            dom.append(data);
+          });
+      $("#create_document_modal").modal(); 
+    });
 
   getStatus();
 
@@ -121,12 +138,20 @@ $(document).ready(function() {
             if (new_html != $('#'+id).html())
               $('#'+id).html(new_html);
           }
+<<<<<<< HEAD
           else if (data.status == 'Failed') {
+=======
+          else if (data.status == 'Failed'){
+>>>>>>> 80ec787925cd621e4cbacc490d513479444ebe80
             new_html = data.status;
             if (new_html != $('#'+id).html())
               $('#'+id).html(new_html);
           }
+<<<<<<< HEAD
           else if (data.status == 'Expired') {
+=======
+          else if (data.status == 'Expired'){
+>>>>>>> 80ec787925cd621e4cbacc490d513479444ebe80
             new_html = data.status;
             if (new_html != $('#'+id).html())
               $('#'+id).html(new_html);
