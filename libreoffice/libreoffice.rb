@@ -1,4 +1,3 @@
-
 require 'socket'
 require 'json'
 require 'net/http'
@@ -212,7 +211,7 @@ Thread.start do
 	file = open(temp + name_temp_file + id  + format_origin)
       rescue
 	error = true
-	@message = "{\"status\":\"" + "error" + "\",\"id\":\"" + id + "\",\"size\":\"" + 0 + "\",\"url\":\"\"" + "" + "\"}"
+	@message = "{\"status\":\"" + "error" + "\",\"id\":\"" + id + "\",\"size\":\"0" + "\",\"url\":\"\"" + "" + "\"}"
       end
       if (!error)
 	if (format_dest=='txt') 
