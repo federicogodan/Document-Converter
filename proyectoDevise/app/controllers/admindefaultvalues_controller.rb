@@ -18,7 +18,7 @@ class AdmindefaultvaluesController < ApplicationController
       f.puts default_values
     end
     
-    render root
+    redirect_to "/admin/dashboard"
   end
   
 end

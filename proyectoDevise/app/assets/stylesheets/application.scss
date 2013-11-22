@@ -1,5 +1,4 @@
 @import "bootstrap.min.css";
-@import "datepicker.css";
 @import "dashboard.css";
 *
 {
@@ -10,21 +9,83 @@ html,body,.container
     height:100%;
 }
 
-.row
+
+
+.col-sm-2-fixed
 {
-    width: 100%;
-    margin-top: -64px;
-    padding-top: 45px;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    height: 100%;
+	padding-top:20px;
 }
-.col-sm-2
+
+.col-sm-10-fixed
 {
-	height: inherit;
+	text-align: center;
+}
+
+.col-sm-2-fixed
+{
     background: #F5F5F5;
-    display:table-row;
 }
-.col-sm-10
-{
+.row-colored{
+	padding-top: 50px;
+}
+
+@media screen and (min-width: 768px) {
+	.row-colored
+	{
+	    width: 100%;
+	    margin-top: 0px;
+	    
+	    -moz-box-sizing: border-box;
+	    box-sizing: border-box;
+	    height: 100%;
+	}
+	.col-sm-2-fixed
+	{
+		position:fixed;
+		height: inherit;
+	    display:table-column;
+
+	    li {
+	    	margin: 0 0 6px 0;
+	    }
+	}
+
+
+
+	.col-sm-10-fixed
+	{
+		float: right;
+		height: 100%;
+		text-align: center;
+	}
+	.bottom-storage
+	{
+		width:80%;
+		height:10%;
+		position:absolute;
+		bottom:0px;
+		padding-left:15px;
+		margin-bottom:70px;
+		text-align:center
+	}
+
+}
+
+#loading_img {
+	margin-right: 10px;
+	vertical-align: middle;
+}
+
+#doc_error {
+  margin-left: 20px;
+  color: red;
+}
+
+.home-header {
+	padding: 30px 15px 40px;
+	text-shadow: 0 1px 0 rgba(0,0,0,.15);
+	box-sizing: border-box;
+	display: block;
+	margin-top: -20px;
+	background: linear-gradient(0deg, #edf7ff 0%,#5d82c5 100%);
 }

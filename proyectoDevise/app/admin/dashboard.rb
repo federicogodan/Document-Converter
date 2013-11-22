@@ -66,7 +66,7 @@ end
     User.all.each do |u|
       total_average += u.average_time_to_convert
     end
-    total_average = (total_average/User.count).round(3)
+      total_average = (total_average/User.count).round(3) if User.count > 0
   end
   
   def total_percentage_of_converted_document
@@ -74,7 +74,7 @@ end
     User.all.each do |u|
       total_porcentage += u.percentage_of_converted_document
     end
-    total_porcentage = total_porcentage/User.count
+    total_porcentage = total_porcentage/User.count if User.count > 0
   end
   
   def total_converted_document
