@@ -95,3 +95,7 @@ We try not to reinvent the wheel, so Document Converter is built with other open
 | Rspec	               | Used for unit testing                     |
 | JMeter	       | Used for performance and load testing     |
 
+
+## Webhooks
+
+Use webhooks to be notified about the converted status of your documents. When you send a document to be converted, it may take a while. Webhooks let you register one o more URLs in which we will POST a json when your document is converted or the conversion fails. The json contains two fields: 'notification' and 'data'. Notification has two values: '1' means the conversion fails and '2' means the conversion was successful. The data field contains the url where you can download the converted file in case the conversion was successful. Each notification is sent to the URLs specified in your webhooks, which you can edit and get from your dashboard panel, by clicking on "My Webhooks". When a notification was successfully received, a "200 OK" message is sent back, and the notification status is changed to "Received". When no response is sent back after a notification is sent, the notification status is changed to "No Received: Yet". There will be three more retries to send the JSON every 10 minutes and if there is no response after these attempts, the notification status is changed to "No Received: Exhausted Attempts"
