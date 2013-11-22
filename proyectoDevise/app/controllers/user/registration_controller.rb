@@ -1,11 +1,12 @@
 class User::RegistrationController < Devise::RegistrationsController
+  
   def new
     super
   end
 
   def create
     #set up profile_type manually
-    puts sign_up_params[:profile_type] = "standard"
+    sign_up_params[:profile_type] = "standard"
     #set the default values, read default values from file    
     default_values = eval(File.open('default_values.properties') {|f| f.read })
     #set the storage assigned
@@ -43,7 +44,5 @@ class User::RegistrationController < Devise::RegistrationsController
   def update
     super
   end
-  
-  def home
-  end
+
 end 

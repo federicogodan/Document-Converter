@@ -39,24 +39,25 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     @doc_error = ''
     @aux_variable_file = params[:document][:file]    
 
-   #checking method of upload(Remote or local file)           
-        #REMOTE METHOD                                 #checks that the url of the file be a valid one.(in ASCII format)
-     if params[:document][:upload_method] == 'URL' && !@aux_variable_file.nil? && @aux_variable_file.gsub!(/\P{ASCII}/, '').nil?
-       begin
-          @file_name =  File.basename(URI.parse(@aux_variable_file).path)
-          temp_path = "./tmp/" + Time.now.to_s
-          FileUtils.mkdir(temp_path)
-          File.open(temp_path + '/' + @file_name, 'wb') do |fo|
-              fo.write(open(@aux_variable_file).read)
-          end
-          @file_content = File.open(temp_path + "/" + @file_name)
-          @f_size = @file_content.size if @file_content
-       rescue #Catch an exception, if File class fail
-          is_valid_file_status = false
-       end           
-       #LOCAL METHOD                                 # checks that the  path and the name of the file be a valid one.(in ASCII format)       
-    elsif params[:document][:upload_method] != 'URL' && !@aux_variable_file.nil? && @aux_variable_file!="" && @aux_variable_file.path.gsub!(/\P{ASCII}/, '').nil? && @aux_variable_file.original_filename.gsub!(/\P{ASCII}/, '').nil? 
-      
+    #checking method of upload(Remote or local file)           
+    #REMOTE METHOD                                 
+    #checks that the url of the file be a valid one.(in ASCII format)
+    if params[:document][:upload_method] == 'URL' && !@aux_variable_file.nil? && @aux_variable_file.gsub!(/\P{ASCII}/, '').nil?
+      begin
+         @file_name =  File.basename(URI.parse(@aux_variable_file).path)
+         temp_path = "./tmp/" + Time.now.to_s
+         FileUtils.mkdir(temp_path)
+         File.open(temp_path + '/' + @file_name, 'wb') do |fo|
+             fo.write(open(@aux_variable_file).read)
+         end
+         @file_content = File.open(temp_path + "/" + @file_name)
+         @f_size = @file_content.size if @file_content
+      rescue #Catch an exception, if File class fail
+         is_valid_file_status = false
+      end           
+    #LOCAL METHOD
+    #checks that the  path and the name of the file be a valid one.(in ASCII format)       
+    elsif params[:document][:upload_method] != 'URL' && !@aux_variable_file.nil? && @aux_variable_file!="" && @aux_variable_file.path.gsub!(/\P{ASCII}/, '').nil? && @aux_variable_file.original_filename.gsub!(/\P{ASCII}/, '').nil?
         @file_name = params[:document][:file].original_filename
         @file_content = params[:document][:file] 
         @f_size = @file_content.size if @file_content
@@ -72,7 +73,7 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     @destiny_format = Format.find_by_name(destiny_format_name) if !destiny_format_name.nil? 
     
              
-     #Previous checks to prevent null values and variable controls
+    # Previous checks to prevent null values and variable controls
     if (is_valid_file_status && !@file_name.nil? && !@file_content.nil? && !@f_size.nil? && !@origin_format.nil? && !@destiny_format.nil? && 
       @origin_format.destinies.include?(@destiny_format) && !@current_user.nil? && !@current_user.max_document_size.nil?  && 
       (@f_size <= @current_user.max_document_size) && !@current_user.total_storage_assigned.nil? && 
@@ -87,7 +88,7 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
       @document.converted_document.set_to_converting
       @document.converted_document.format = @destiny_format
     else
-      #obtains the data error           
+      # obtains the data error           
       if (@current_user.nil?)
          @doc_error = 'Session error: The session has expired. Please sign in again'         
       elsif (@current_user.max_document_size.nil? || @current_user.total_storage_assigned.nil?)
@@ -119,30 +120,28 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
       valid_parameters = false    
     end  
     
-
-      if (valid_parameters && !@document.nil? && @document.save && 
-         !@document.converted_document.nil? && @document.converted_document.save)          
-        @doc_error = ''      #There was no error
-      elsif valid_parameters #It means that the error is in @document.save or @document.converted_document.save    
-        @doc_error = 'File error: Couldn\'t save the file in the database. Please try again later'
-      end
-      
-      
-      if params[:document][:upload_method] == 'URL' &&  !temp_path.nil?
-        FileUtils.rm_rf(temp_path)
-      end
-      
-      
-      render json: @doc_error  
+    if (valid_parameters && !@document.nil? && @document.save && 
+       !@document.converted_document.nil? && @document.converted_document.save)          
+      @doc_error = ''      #There was no error
+    elsif valid_parameters #It means that the error is in @document.save or @document.converted_document.save    
+      @doc_error = 'File error: Couldn\'t save the file in the database. Please try again later'
+    end
+          
+    FileUtils.rm_rf(temp_path) if params[:document][:upload_method] == 'URL' &&  !temp_path.nil? #removing temp_file
+    
+    render json: @doc_error  
   end
   
-   def index
+  def index
     ext = params[:extension]
     reg_filename = Format.find_by_name(ext)
     formats = []
+    
     reg_filename.destinies.each do |f|
       formats.push(f.name)
     end
+    
     render :json => formats
   end
+
 end

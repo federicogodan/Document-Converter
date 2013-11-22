@@ -1,6 +1,6 @@
 class Api::NotificationController < ApplicationController
 
- def create
+  def create
     request_body = request.body.read()
         
     message = JSON.parse(params[:message])
@@ -10,7 +10,6 @@ class Api::NotificationController < ApplicationController
     document_url = message["url"]
     require 'uri'
 
-    #message = JSON.parse(request_body["Message"])  
     document = Document.find(document_id)
     document.update_converted_document(status, URI.escape(document_url), size.to_i)
     document.user.alertallwebhooks( status, document_url )
