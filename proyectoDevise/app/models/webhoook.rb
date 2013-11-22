@@ -3,6 +3,8 @@ class Webhoook < ActiveRecord::Base
   
   has_many :whsents
   
+  validates_uniqueness_of :url, :scope => :user_id
+  
   def throwebhook( status, urldoc )
     if self.enabled
 
