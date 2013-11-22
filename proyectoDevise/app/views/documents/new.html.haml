@@ -26,9 +26,9 @@
               %input#document_url.form-control{name: "document[url]", placeholder: "Document URL", type: "url"}
             %label.col-sm-1.control-label{for: "document_url_ext"}
             .col-sm-3
-
           %br
-          %br
+          %p.pull-right= 'maximum ' + number_to_human_size(@user.max_document_size)
+          %br 
           #formats_panel.panel.panel-default{hidden: true}
             .panel-heading Destination Format
             .panel-body
