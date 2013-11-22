@@ -1,7 +1,5 @@
 class ConvertController < ApplicationController
   
-  #before_filter :authenticate_user!
-  
   def get_formats
     ext = params[:extension]
     reg_filename = Format.find_by_name(ext)

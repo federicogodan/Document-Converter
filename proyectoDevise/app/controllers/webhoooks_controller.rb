@@ -1,6 +1,5 @@
 class WebhoooksController < ApplicationController
-  # GET /webhoooks
-  # GET /webhoooks.json
+
   before_filter :find_user
   
   def find_user
