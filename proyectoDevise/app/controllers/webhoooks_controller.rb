@@ -51,7 +51,8 @@ class WebhoooksController < ApplicationController
   # POST /webhoooks.json
   def create
     #@webhoook = webhoook.new(params[:webhoook])
-    @webhoook = @user.webhoooks.build(params[:webhoook], :enabled => true)
+    @webhoook = @user.webhoooks.build(params[:webhoook])
+    @webhoook.enabled = 1
     
     respond_to do |format|
       if @webhoook.save

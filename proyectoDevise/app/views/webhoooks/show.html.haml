@@ -1,27 +1,26 @@
-<p id="notice"><%= notice %></p>
+/ Nav tabs
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close.cancel{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+      %h4.modal-title My Webhook Notifications
+    .modal-body
+      -webhoook = @webhoook
+      / Tab panes
+      .row
+        .col-md-12{style: 'height:300px;overflow-y: scroll;'}
+          %table.table.table-hover.table-responsive{id: 'whsent_list'}
+            %tr
+              %th Webhook URL
+              %th Type
+              %th State
+              %th Attempts
 
-<p>
-  <b>Url:</b>
-  <%= @webhoook.url %>
-</p>
-
-<p>
-  <b>Deleted:</b>
-  <%= @webhoook.deleted %>
-</p>
-
-
-<%= link_to 'Edit', edit_webhoook_path(@webhoook) %> |
-<%= link_to 'Back', webhoooks_path %>
-
-<br>
-<br>
- webhook url | file url | notification type| notification state | attempts <br><br>
-<%  @webhoook.whsents.each do |w| %>
-<%= w.url%> | 
-<%= w.urldoc%> |
-<%= w.notification == 2? 'Convertion Successfull': 'Convertion Failed'%> | 
-<%= w.state==0 ? 'Recived': w.state==1? 'No recived' : 'No recived, exhausted attempts'%> | 
-<%= w.attempts %>
-<br>
-<%  end %>
+            - webhoook.whsents.each do | whsent |
+              %tr        
+                %td= whsent.url
+                %td= whsent.notification==2? 'Converted' : 'Failed' 
+                %td= whsent.state == 0? 'Received': whsent.state == 1? 'Not Received: Yet' : 'Not Received: Exhausted Attempts'  
+                %td= whsent.attempts
+                -if whsent.notification==2
+                  %td= link_to 'Document', whsent.urldoc  
