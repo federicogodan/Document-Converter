@@ -161,31 +161,31 @@ f14.destinies.push(f13)
 f14.save
 
 #Create users
-for i in 0..10
-  em = "user" + i.to_s + "@pruebap.com" 
-  nik = "userexample" + i.to_s 
-  pass = "passuser" + i.to_s 
-  User.create(email: em, nick: nik, password: pass) 
-end
+#for i in 0..10
+#  em = "user" + i.to_s + "@pruebap.com" 
+#  nik = "userexample" + i.to_s 
+#  pass = "passuser" + i.to_s 
+#  User.create(email: em, nick: nik, password: pass) 
+#end
 
 #Create Document for user
-for i in 0..10
-  usr_id = 1
-  ft_id = 1
-  fl = "file_" + i.to_s
-  nm = "file_name" + i.to_s
-  sz = i
-  Document.create(user_id: usr_id, format_id: ft_id, file: fl, name: nm, size: sz, expired:false)
+#for i in 0..10
+  #usr_id = 1
+#  ft_id = 1
+#  fl = "file_" + i.to_s
+#  nm = "file_name" + i.to_s
+#  sz = i
+#  Document.create(user_id: usr_id, format_id: ft_id, file: fl, name: nm, size: sz, expired:false)
   
-end
+#end
 
 #Create ConvertedDocument for user
-Document.all.each do |d|
-  d.converted_document = ConvertedDocument.new(status: 2)
-  d.converted_document.format = d.format.destinies.first
-  d.converted_document.save
-  d.update_converted_document("OK","www.algo.com.uy",10)  
-end
+#Document.all.each do |d|
+#  d.converted_document = ConvertedDocument.new(status: 2)
+#  d.converted_document.format = d.format.destinies.first
+#  d.converted_document.save
+#  d.update_converted_document("OK","www.algo.com.uy",10)  
+#end
 
 
  
