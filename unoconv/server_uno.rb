@@ -87,7 +87,7 @@ Thread.start do
 		    #puts 'renaming original file'
 		    #File.rename('dir', @pending_work[:original_name])
 		    #FileUtils.mv(@pending_work[:converted_file], 'dir/' + @pending_work[:original_name] + '.html')
-		    tar_dir = 'tar -czvf ' + tar_name +  @pending_work[:id] +  '.tar ' + @pending_work[:original_name]
+		    tar_dir = 'tar -czvf ' + tar_name +  @pending_work[:id] +  '.tar dir' 
 		    puts tar_dir
 		    system(tar_dir)
 		rescue
@@ -109,6 +109,7 @@ Thread.start do
 			 
 		else
 			 @message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + 0 + "\",\"url\":\"" + "" + "\"}"
+			 puts @message
 
 		end
                 puts "deleting temp file"
