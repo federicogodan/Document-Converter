@@ -99,11 +99,11 @@ Thread.start do
 		        #send error to the client
 		@state = "error"   
 		#end
-		puts "before if"
+		
 		if (File.exists?  @pending_work[:converted_file])
-			puts "then"
+			
 			@state="ok"
-			puts "opened"
+			puts "ok"
 			tar_dir = 'tar -czvf ' + tar_name +  @pending_work[:id] +  '.tar dir'
 			 puts tar_dir
                          system(tar_dir)
@@ -120,7 +120,7 @@ Thread.start do
 			FileUtils.rm(tar_name + @pending_work[:id] + '.tar')
 			 
 		else
-			puts "else" 
+			 
 			@message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"0" + "\",\"url\":\"" + "" + "\"}"
 			 puts @message
 
