@@ -1,0 +1,4 @@
+#Configuration
+libreoffice/configuration/libreoffice.properties
+unoconv/configuration/server_uno.properties
+redirect/configuation/redirect.properties
