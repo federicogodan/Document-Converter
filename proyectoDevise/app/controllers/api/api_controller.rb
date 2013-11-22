@@ -13,15 +13,13 @@ module Api
 
       private
 
-      def render_not_found(exception)
-        # logger.info(exception) # for logging 
+      def render_not_found(exception) 
         respond_to do |format|
           render json: {:error => "404"}, status: 404
         end    
       end
 
       def render_error(exception)
-        # logger.info(exception) # for logging
         respond_to do |format|
           render json: {:error => "500"}, status: 500
         end
@@ -87,7 +85,7 @@ module Api
 
       if !api_id.nil?
         user = User.find_by_api_key(api_id)
-        #todo agregar validacion de secret key
+        #TODO agregar validacion de secret key
         if user.secret_key == read_user_token
           @current_user = user
         else 

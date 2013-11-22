@@ -37,9 +37,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :profile_type
       t.string :name
       t.string :nick
-      t.string :surname
-      t.datetime :birth_date
-      
+      t.string :surname 
       t.string :api_key
       t.string :secret_key
       

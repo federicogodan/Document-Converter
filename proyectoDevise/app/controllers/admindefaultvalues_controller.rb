@@ -19,7 +19,6 @@ class AdmindefaultvaluesController < ApplicationController
     end
     
     render root
-    #redirect_to "/admin/dashboard"
   end
   
 end

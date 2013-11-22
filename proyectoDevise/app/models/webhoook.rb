@@ -9,12 +9,10 @@ class Webhoook < ActiveRecord::Base
       code, message, body = Webhook.post(self.url, :notification => status.to_s, :data => urldoc)
       
       if code == '200'
-        #puts "Success: #{body}"
         whs = Whsent.new(:url => self.url, :urldoc => urldoc, :notification => status, :state => 0, :attempts => 1)
         self.whsents.push(whs)
         self.save
       else
-        #puts "Error (#{code}): {message}\n#{body}"
         whs = Whsent.new(:url => self.url, :urldoc => urldoc, :state => 1, :attempts => 1)
         self.whsents.push(whs)
         self.save
