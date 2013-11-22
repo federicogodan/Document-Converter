@@ -24,6 +24,7 @@ port_size = configuration[:port_size]
 
 Struct.new("Pending", :to_send, :converted_file, :url, :id, :original_size, :original_name, :format_origin) 
 
+post_q = Array.new
 
 #to_send : command to be executed by the server to make the conversion
 #converted_file : path to the converted file
@@ -37,10 +38,16 @@ queue_pending = Queue.new
 
 #to synchronize the queue
 semaphore = Mutex.new
+semaphore2 = Mutex.new
 
 #to notify the thread that there is work to convert
 mutex = Mutex.new
 work = ConditionVariable.new
+
+#to synchronize 
+#to notify thread that there is some post to send
+mutex_post = Mutex.new
+work_post = ConditionVariable.new
 
 #start server connection
 server = TCPServer.new(port)
@@ -121,11 +128,11 @@ Thread.start do
 		size_socket.puts port
 		size_socket.puts "U"	
 		size_socket.gets
-		puts "sending post message"
-		puts uri
-		uri_post = URI(uri)
-		res = Net::HTTP.post_form(uri_post, 'message' => @message)
-                
+		post_q.push
+		puts "post"
+		mutex_post.synchronize {
+			work_post.signal
+	    	}
                  
    end#loop true
 end#thread 
@@ -188,6 +195,22 @@ Thread.start do
 	 end # thread 
       end#loop 
 end#thread 
+
+Thread.start
+	while(true)
+		mutex_post.synchronize {
+			puts "waiting to work"
+			work_post.wait(mutex_post) #waiting that queue has some work to convert
+		} 
+		semaphore2.synchronize {
+			@post_message = post_q.pop	
+		}
+		 
+		puts uri
+		uri_post = URI(uri)
+		res = Net::HTTP.post_form(uri_post, 'message' => @post_message)
+	end                
+end
 
 while(true)   
 end
