@@ -130,7 +130,10 @@ Thread.start do
 		size_socket.puts port
 		size_socket.puts "U"	
 		size_socket.gets
-		post_q.push
+		semaphore.synchronize {
+			 post_q.push @message
+		}
+	
 		puts "post"
 		mutex_post.synchronize {
 			work_post.signal
@@ -198,7 +201,7 @@ Thread.start do
       end#loop 
 end#thread 
 
-Thread.start
+Thread.start do
 	while(true)
 		mutex_post.synchronize {
 			puts "waiting to work"
