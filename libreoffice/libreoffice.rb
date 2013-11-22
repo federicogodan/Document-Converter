@@ -1,13 +1,3 @@
-###
-#TODO: catch timeout exception (when the client shutdown by surprise,
-# the server must to recover and not explode)
-###
-###
-#TODO: put temporary names to the files because any problem during the convertion 
-#with the name of original file 
-###
-#TODO: filter through the format in function of the original one (for example txt:Text)
-
 
 require 'socket'
 require 'json'
@@ -60,10 +50,17 @@ queue_pending = Queue.new
 
 #to synchronize the queue
 semaphore = Mutex.new
+semaphore2 = Mutex.new
 
 #to notify the thread that there is work to convert
 mutex = Mutex.new
 work = ConditionVariable.new
+
+#to synchronize 
+#to notify thread that there is some post to send
+mutex_post = Mutex.new
+work_post = ConditionVariable.new
+
 
 #start server connection
 server = TCPServer.new(port)
@@ -175,11 +172,12 @@ Thread.start do
 		size_socket.puts port
 		size_socket.puts "L"	
 		size_socket.gets
+		post_q.push
 		puts "post"
-		puts uri
-		uri_post = URI(uri)
-		res = Net::HTTP.post_form(uri_post, 'message' => @message)
-   end#loop true
+		mutex_post.synchronize {
+			work_post.signal
+	    	}   
+	end#
 end#thread 
 
 #thread that is charged on attending clients and add into queue pending work
@@ -236,6 +234,24 @@ Thread.start do
     end # thread 
   end#loop 
 end#thread 
+
+
+Thread.start
+	while(true)
+		mutex_post.synchronize {
+			puts "waiting to work"
+			work_post.wait(mutex_post) #waiting that queue has some work to convert
+		} 
+		semaphore2.synchronize {
+			@post_message = post_q.pop	
+		}
+		 
+		puts uri
+		uri_post = URI(uri)
+		res = Net::HTTP.post_form(uri_post, 'message' => @post_message)
+	end                
+end
+
 
 while(true)   
 end

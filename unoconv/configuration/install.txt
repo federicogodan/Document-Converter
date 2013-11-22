@@ -1,0 +1,27 @@
+unoconv instance  
+================
+
+The following steps describe the installation of one unoconv instance.
+
+1 - Download unoconv tar unoconv-0.6.tar.gz
+
+2 - unpack tar file : tar -vxzf unoconv-0.6.tar.gz
+
+3 - Move to directory created : cd unoconv-0.6/
+
+4 - sudo make install
+    In case of error, execute sudo install -p -m0755 unoconv /usr/bin/unoconv
+
+5 - Check libreoffice version : /usr/bin/libreoffice --version
+    It must be version 4.1
+
+In case have another version continue with steps 6 and 7 
+
+6 - Uninstall libreoffice : sudo apt-get remove libreoffice 
+
+7 - Update repositry and install libreoffice 4.1
+    sudo add-apt-repository ppa:libreoffice/libreoffice-4-1
+    sudo apt-get update  
+    sudo apt-get install libreoffice
+
+8 - unoconv will be installed at : /usr/bin/unoconv  
