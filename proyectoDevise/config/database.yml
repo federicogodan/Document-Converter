@@ -20,7 +20,7 @@ development:
   encoding: utf8
   database: doconvdev
   username: root
-  password: pis2013
+  password: nicolas
   host: localhost
   port: 3306
 

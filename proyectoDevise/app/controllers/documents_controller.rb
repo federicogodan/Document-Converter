@@ -24,7 +24,7 @@ class DocumentsController < ApplicationController
    @document = Document.new 
 
     respond_to do |format|
-      format.html { render :layout => false  } 
+      format.html  { render :layout => false  } 
       format.json { render json: @document }
     end
   end
@@ -64,7 +64,7 @@ class DocumentsController < ApplicationController
        response = request.execute
        @document_error = response
     rescue #rescue the timeout error
-      @document_error = "Conexion failed. Please try again later"
+      @document_error = "Connection failed. Please try again later"
     end         
             
     respond_to do |format|
