@@ -61,7 +61,8 @@ work = ConditionVariable.new
 mutex_post = Mutex.new
 work_post = ConditionVariable.new
 
-
+#queue pending post
+post_q = Array.new
 #start server connection
 server = TCPServer.new(port)
 redirect_socket = TCPSocket.new(redirect_ip, redirect_port)
@@ -172,8 +173,12 @@ Thread.start do
 		size_socket.puts port
 		size_socket.puts "L"	
 		size_socket.gets
-		post_q.push
-		puts "post"
+		puts "push post"
+		semaphore2.synchronize {
+			post_q.push @message
+
+		}
+		puts "signal post"
 		mutex_post.synchronize {
 			work_post.signal
 	    	}   
@@ -236,17 +241,17 @@ Thread.start do
 end#thread 
 
 
-Thread.start
+Thread.start do
 	while(true)
 		mutex_post.synchronize {
 			puts "waiting to work"
 			work_post.wait(mutex_post) #waiting that queue has some work to convert
 		} 
+		puts "pop post"
 		semaphore2.synchronize {
 			@post_message = post_q.pop	
 		}
-		 
-		puts uri
+		puts "sending post" 
 		uri_post = URI(uri)
 		res = Net::HTTP.post_form(uri_post, 'message' => @post_message)
 	end                
