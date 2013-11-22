@@ -19,7 +19,8 @@
                 %td
                   %input.webhoook-enabled-button{name: "webhoook[enabled]", type: "checkbox", value: webhoook.id, checked: webhoook.enabled}
                 %td= webhoook.url
-                %td= link_to '+', webhoook_path(webhoook)    
+                %td
+                  %a.dashboard_list_whsents{href: "#", value: webhoook.id} +    
       .row
         = form_tag({:action => 'create', :controller => 'webhoooks'}, {:id => 'form_new_webhook'}) do
           /.field
@@ -33,6 +34,16 @@
 
 :javascript
 $(document).ready(function() {
+
+    $('.dashboard_list_whsents').click(function(){
+      var dom2 = $("#create_document_modal");
+      dom2.empty();
+      $.get('/webhoooks/'+$(this).attr('value'),
+          function(data) {
+            dom2.append(data);
+          });
+      $("#create_document_modal").modal(); 
+    });
 
   //callback handler for form submit
   $("#form_new_webhook").submit(function(e)
