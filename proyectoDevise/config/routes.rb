@@ -1,5 +1,7 @@
 ProyectoDevise::Application.routes.draw do
   
+  get "docs/", to: "docs#index"
+
   resources :webhoooks
   
   #map.resources :user, :has_many => [:webhoooks]
@@ -21,6 +23,8 @@ ProyectoDevise::Application.routes.draw do
   get "/documents/get_formats"
   get "/documents/show_api_keys"
   get "/documents/regenerate_keys"
+
+  #get "/docs/"
     
   namespace :api do
     resources :convert_document
