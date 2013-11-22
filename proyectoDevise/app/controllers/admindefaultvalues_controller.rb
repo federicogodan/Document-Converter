@@ -1,5 +1,5 @@
 class AdmindefaultvaluesController < ApplicationController
-  
+  include AbstractController::Rendering
   def set_default_values
     default_values = eval(File.open('default_values.properties') {|f| f.read })
     if !params[:storage].nil?
@@ -18,6 +18,7 @@ class AdmindefaultvaluesController < ApplicationController
       f.puts default_values
     end
     
+    #render :template => active_admin/resource/index
     redirect_to "/admin/dashboard"
   end
   

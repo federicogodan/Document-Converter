@@ -1,6 +1,5 @@
 class WebhoooksController < ApplicationController
-  # GET /webhoooks
-  # GET /webhoooks.json
+
   before_filter :find_user
   
   def find_user
@@ -69,13 +68,12 @@ class WebhoooksController < ApplicationController
   # PUT /webhoooks/1.json
   def update
     @webhoook = @user.webhoooks.find(params[:id])
+    puts params.to_json
 
     respond_to do |format|
-      if @webhoook.update_attributes(params[:webhoook])
-        format.html { redirect_to @webhoook, notice: 'webhook was successfully updated.' }
+      if @webhoook.update_attributes({id: params[:id],enabled: params[:enabled]})
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
         format.json { render json: @webhoook.errors, status: :unprocessable_entity }
       end
     end

@@ -16,6 +16,7 @@
 /tmp
 /public/tmp
 /public/upload
+/config/database.yml
 
 # Ignore .project file
 .project

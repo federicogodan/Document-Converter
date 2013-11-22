@@ -18,7 +18,7 @@
             - @webhoooks.each do | webhoook |
               %tr        
                 %td
-                  %input{name: "webhoook[enabled]", type: "checkbox", value: webhoook.id}
+                  %input.webhoook-enabled-button{name: "webhoook[enabled]", type: "checkbox", value: webhoook.id}
                 %td= webhoook.url
                 %td= link_to 'Destroy', webhoook, method: :delete, data: { confirm: 'Are you sure?' }
                 %td= link_to '+', webhoook_path(webhoook)    
@@ -49,10 +49,14 @@ $(document).ready(function() {
           success:function(data, textStatus, jqXHR) 
           {
               console.log(data)
-              html_data = "<tr><td>" + data.url + "</td>"
+              html_data = '<tr><td><input type="checkbox" value="'+ data.id +'" name="webhoook[enabled]"></td>'
+              html_data += "<td>" + data.url + "</td>"
               html_data += '"<td><a href="/webhoooks/' + data.id +'"'
               html_data += ' data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a>'
-              html_data += "</td></tr>"
+              html_data += "</td>"
+              html_data += '<td><a href="/webhoooks/' + data.id + '">+</a></tr></tr>'
+
+
               $( "#webook_list tbody" ).append( html_data );
               //data: return data from server
           },
@@ -65,5 +69,19 @@ $(document).ready(function() {
   });
    
   $("#ajaxform").submit(); //Submit  the FORM
+  
 
-}
+  $('.webhoook-enabled-button').click(function () {
+    console.log(this.value)
+    $.ajax({
+      url: '/webhoooks/' + this.value + '?enabled='+this.checked,
+      type: 'PUT',
+      success: function(result) {
+          // Do something with the result
+       }
+    })
+  })
+
+
+})
+

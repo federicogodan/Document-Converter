@@ -28,9 +28,9 @@
           %ul.dropdown-menu
             %li.dropdown-header{role: "presentation"} Account Settings
             %li.dashboard_show_keys
-              %a My API Keys
+              %a{href: "#"} My API Keys
             %li.dashboard_list_webhook
-              %a My Webhooks 
+              %a{href: "#"} My Webhooks 
             %li.divider{role: "presentation"}
             %li= link_to "Sign Out", destroy_user_session_path, :method => :delete
   / /.navbar-collapse
@@ -138,12 +138,7 @@ $(document).ready(function() {
             if (new_html != $('#'+id).html())
               $('#'+id).html(new_html);
           }
-          else if (data.status == 'Failed') {
-            new_html = data.status;
-            if (new_html != $('#'+id).html())
-              $('#'+id).html(new_html);
-          }
-          else if (data.status == 'Expired'){
+          else {
             new_html = data.status;
             if (new_html != $('#'+id).html())
               $('#'+id).html(new_html);
@@ -154,4 +149,3 @@ $(document).ready(function() {
     setTimeout('getStatus()',5000);
   }
 });
-
