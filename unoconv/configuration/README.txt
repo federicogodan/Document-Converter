@@ -17,3 +17,18 @@ Here's a list of configurable variables for the Unoconv server.
 - tar_name => tar_name + id it's the way the folder dir is compressed in the VM, because of this there can't be duplicated tar file
 	      names.  
 - port_size => Port used to notify redirect_server that a convertion ended (so it can update the server's load)
+
+Execute
+=======
+
+To execute the unoconv server
+
+- screen
+- cd Document-Converter/unoconv
+- ruby server_uno.rb
+
+To detach screen session press ctr+alt+a and then press d.
+
+To resume the screen, execute screen -r
+
+To scroll into the screen, press crtl+a then press esc.
