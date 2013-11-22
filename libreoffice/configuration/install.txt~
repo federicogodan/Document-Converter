@@ -72,14 +72,14 @@ s3cmd
 
 Follow these steps to install s3cmd to use s3 repository 
 
-* install s3cmd : sudo apt-get install s3cmd
+1- install s3cmd : sudo apt-get install s3cmd
 
-* configure it : s3cmd --configure
+2- configure it : s3cmd --configure
 there you have to put the API access-key and the API secret-key of your backet
 
-* get file from a backet : s3cmd get s3://bucket/file, where 'file' is the name of the file that you want download
+3- get file from a backet : s3cmd get s3://bucket/file, where 'file' is the name of the file that you want download
 
-* put file into a s3 mucket : s3cmd put file s3://bucket , where 'file' is the name of the file that you want to put 
+4- put file into a s3 mucket : s3cmd put file s3://bucket , where 'file' is the name of the file that you want to put 
 
 
 Reference link: http://blog.celingest.com/2013/09/03/herramientas-gestion-s3/
