@@ -4,7 +4,7 @@ class Webhoook < ActiveRecord::Base
   has_many :whsents
   
   def throwebhook( status, urldoc )
-    if not self.deleted
+    if self.enabled
 
       code, message, body = Webhook.post(self.url, :notification => status.to_s, :data => urldoc)
       
