@@ -69,10 +69,6 @@
                   %input#user_email.form-control{autofocus: "autofocus", name: "user[email]", placeholder: "Enter email or nick", type: "text"}/
                   %label{for: "user_password"} Password
                   %input#user_password.form-control{name: "user[password]", placeholder: "Password", type: "password"}/
-                  .checkbox
-                    %label.checkbox
-                      %input{type: "checkbox", value: "remember-me"}/
-                      Remember me
                 %button#btnLogin.btn.btn-primary.pull-right{type: "submit"} Sign in
                 /Shows wrong user or password when login fails
                 - if @invalid_user != nil
@@ -83,7 +79,7 @@
    $('#user_login').validate(
    {
     errorClass: "text-danger",
-    errorElement: "span",
+    errorElement: "p",
     rules: {
       "user[email]": {
         required: true,
@@ -119,7 +115,7 @@
     errorPlacement: function(error, element) {
       error.appendTo( element.closest('.col-lg-8') );
     },
-    errorElement: "span",
+    errorElement: "p",
     errorClass: "text-danger",
     rules: {
       "user[email]": {
