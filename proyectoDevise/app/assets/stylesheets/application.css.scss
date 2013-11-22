@@ -15,17 +15,10 @@ html,body,.container
 .col-sm-2-fixed
 {
 	padding-top:20px;
-}
-
-.col-sm-10-fixed
-{
-	text-align: center;
-}
-
-.col-sm-2-fixed
-{
+    text-align: center;
     background: #F5F5F5;
 }
+
 .row-colored{
 	padding-top: 50px;
 }
@@ -45,9 +38,10 @@ html,body,.container
 		position:fixed;
 		height: inherit;
 	    display:table-column;
-
+		
 	    li {
-	    	margin: 0 0 6px 0;
+	        text-align: left;
+	    	margin: 0 0 6px 10px;
 	    }
 	}
 

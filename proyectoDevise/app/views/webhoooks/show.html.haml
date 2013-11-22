@@ -1,0 +1,26 @@
+/ Nav tabs
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close.cancel{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+      %h4.modal-title My Webhook Notifications
+    .modal-body
+      -webhoook = @webhoook
+      / Tab panes
+      .row
+        .col-md-12{style: 'height:300px;overflow-y: scroll;'}
+          %table.table.table-hover.table-responsive{id: 'whsent_list'}
+            %tr
+              %th Webhook URL
+              %th Type
+              %th State
+              %th Attempts
+
+            - webhoook.whsents.each do | whsent |
+              %tr        
+                %td= whsent.url
+                %td= whsent.notification==2? 'Converted' : 'Failed' 
+                %td= whsent.state == 0? 'Received': whsent.state == 1? 'Not Received: Yet' : 'Not Received: Exhausted Attempts'  
+                %td= whsent.attempts
+                -if whsent.notification==2
+                  %td= link_to 'Document', whsent.urldoc  

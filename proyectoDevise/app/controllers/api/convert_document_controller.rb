@@ -136,7 +136,8 @@ class Api::ConvertDocumentController < ApplicationController#ApiController
     ext = params[:extension]
     reg_filename = Format.find_by_name(ext)
     formats = []
-    
+    puts ">"*50
+    puts ext
     reg_filename.destinies.each do |f|
       formats.push(f.name)
     end

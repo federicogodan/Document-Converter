@@ -17,7 +17,7 @@
         %li.active
           %a{href: "#"} Dashboard
         %li
-          %a{href: "#"} Documentation
+          %a{href: "/docs"} Documentation
       %ul.nav.navbar-nav.navbar-right
         %li
           %a="Hello, " + @user.nick.capitalize + "!"
@@ -68,24 +68,29 @@
       .alert.alert-warning.alert-dismissable
         %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
         %strong=@document_error
-
-    %table.table.table-hover.table-responsive
-      %tr
-        %th Date
-        %th Hour
-        %th Name
-        %th Source Format
-        %th Converted To
-        %th Status
-      -@user.documents.reverse.each do |d|
+    -if (!@user.documents.empty?)
+      %table.table.table-hover.table-responsive
         %tr
-          %td=d.created_at.strftime("%d/%m/%Y")
-          %td=d.created_at.strftime("%H:%M")
-          %td=d.name
-          %td=d.format.name
-          %td=d.converted_document.format.name
+          %th Date
+          %th Hour
+          %th Name
+          %th Source Format
+          %th Converted To
+          %th Status
+        -@user.documents.reverse.each do |d|
+          %tr
+            %td=d.created_at.strftime("%d/%m/%Y")
+            %td=d.created_at.strftime("%H:%M")
+            %td=d.name
+            %td=d.format.name
+            %td=d.converted_document.format.name
 
-          %td{'class'=>"status",'id'=>"#{d.id}"}=d.converted_document.current_status.capitalize
+            %td{'class'=>"status",'id'=>"#{d.id}"}=d.converted_document.current_status.capitalize
+    -else
+      %br
+      .jumbotron
+        %h2="No documents uploaded yet"
+        %p="Click on convert button to get started"       
 
 :javascript
 $(document).ready(function() {
