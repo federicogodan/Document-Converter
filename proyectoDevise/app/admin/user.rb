@@ -27,7 +27,7 @@ ActiveAdmin.register User do
     f.inputs "User Details" do
       f.input :max_document_size
       f.input :total_storage_assigned
-      f.input "documents expiration time", :documents_time_for_expiration
+      f.input :documents_time_for_expiration
     end
     f.buttons
   end
