@@ -23,4 +23,23 @@
                 %td= whsent.state == 0? 'Received': whsent.state == 1? 'Not Received: Yet' : 'Not Received: Exhausted Attempts'  
                 %td= whsent.attempts
                 -if whsent.notification==2
-                  %td= link_to 'Document', whsent.urldoc  
+                  %td= link_to 'Document', whsent.urldoc
+      .row
+        %tr
+          %td
+            %a.dashboard_list_webhooksb{href: "#", value: webhoook.id} Back 
+                  
+:javascript
+$(document).ready(function() {
+
+    $('.dashboard_list_webhooksb').click(function(){
+      var dom2 = $("#create_document_modal");
+      dom2.empty();
+      $.get('/webhoooks/',
+          function(data) {
+            dom2.append(data);
+          });
+      $("#create_document_modal").modal(); 
+    });
+    
+})    
