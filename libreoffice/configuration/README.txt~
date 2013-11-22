@@ -15,16 +15,10 @@ Here's a list of configurable variables for the Libreoffice server.
 - url_bucket_post => URL of the S3 bucket (in the format a browser would use). It's sent to the API as a link to the 
 	             uploaded file.
 - uri => Route for the notification controller.
-<<<<<<< HEAD
 - name_temp_file => name_temp_file + id .It's the way the temp file is stored in the VM, this way there can't be duplicated 
 		    temp file names.  
 - port_size => Port used to notify redirect_server that a conversion ended (so it can update the server's load)
 - retries => Number of retries when a conversion fails.
-=======
-- name_temp_file => name_temp_file + id it's the way the temp file is stored in the VM, this way there can't be duplicated 
-		    temp files names.  
-- port_size => Port used to notify redirect_server that a convertion ended (so it can update the server's load)
-- retries => Number of retries when a convertion fails.
 
 Execute
 =======

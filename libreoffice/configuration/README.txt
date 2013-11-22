@@ -36,4 +36,3 @@ To resume the screen, execute screen -r
 To scroll into the screen, press crtl+a then press esc.
 
 
->>>>>>> 0f2af4d199291fb5c8d922242e462df59bfbaaca
