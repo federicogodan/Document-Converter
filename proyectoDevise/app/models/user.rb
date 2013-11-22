@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  before_validation :check_birthdate
   
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -33,14 +32,6 @@ class User < ActiveRecord::Base
   def self.find_for_database_authentication(conditions={})
     self.where("nick = ?", conditions[:email]).limit(1).first ||
     self.where("email = ?", conditions[:email]).limit(1).first
-  end
-  
-  #checks that the birth_date be lesser than today.
-  def check_birthdate
-    if (self.birth_date != nil) and (self.birth_date > Date.today)
-       errors.add(:user,"Birthdate is in the future.")
-       false
-    end
   end
   
   #function that return the used storage for one user

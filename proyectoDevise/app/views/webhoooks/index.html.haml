@@ -18,7 +18,7 @@
             - @webhoooks.each do | webhoook |
               %tr        
                 %td
-                  %input{name: "webhoook[enabled]", type: "checkbox", value: webhoook.id}
+                  %input.webhoook-enabled-button{name: "webhoook[enabled]", type: "checkbox", value: webhoook.id}
                 %td= webhoook.url
                 %td= link_to 'Destroy', webhoook, method: :delete, data: { confirm: 'Are you sure?' }
                 %td= link_to '+', webhoook_path(webhoook)    
@@ -69,5 +69,19 @@ $(document).ready(function() {
   });
    
   $("#ajaxform").submit(); //Submit  the FORM
+  
 
-}
+  $('.webhoook-enabled-button').click(function () {
+    console.log(this.value)
+    $.ajax({
+      url: '/webhoooks/' + this.value + '?enabled='+this.checked,
+      type: 'PUT',
+      success: function(result) {
+          // Do something with the result
+       }
+    })
+  })
+
+
+})
+
