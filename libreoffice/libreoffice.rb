@@ -1,14 +1,3 @@
-###
-#TODO: catch timeout exception (when the client shutdown by surprise,
-# the server must to recover and not explode)
-###
-###
-#TODO: put temporary names to the files because any problem during the convertion 
-#with the name of original file 
-###
-#TODO: filter through the format in function of the original one (for example txt:Text)
-
-
 require 'socket'
 require 'json'
 require 'net/http'
@@ -209,7 +198,7 @@ Thread.start do
 	file = open(temp + name_temp_file + id  + format_origin)
       rescue
 	error = true
-	@message = "{\"status\":\"" + "error" + "\",\"id\":\"" + id + "\",\"size\":\"" + 0 + "\",\"url\":\"\"" + "" + "\"}"
+	@message = "{\"status\":\"" + "error" + "\",\"id\":\"" + id + "\",\"size\":\"0" + "\",\"url\":\"\"" + "" + "\"}"
       end
       if (!error)
 	if (format_dest=='txt') 
