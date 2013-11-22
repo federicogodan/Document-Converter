@@ -11,9 +11,9 @@ class DocConverter
   
   # Configuration defaults
   @config = {
-             :server_adress => "http://54.207.22.171",
-             :api_key => 'tKLLzh7q9O-6xx6rpsZmpQ',
-             :secret_key => 'kPAWDA9Dsqkb9JtyO1YYNg'
+             :server_adress => "http://documentconverter.elasticbeanstalk.com",
+             :api_key => 'my_api_key',
+             :secret_key => 'my_secret_key'
             }
 
   @valid_config_keys = @config.keys
