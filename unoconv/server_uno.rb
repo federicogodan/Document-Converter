@@ -78,7 +78,7 @@ Thread.start do
 			  @pending_work = queue_pending.pop
 		}
 
-		@state = "ok"
+		
 		puts "to send: "
 		puts @pending_work[:to_send]
 		FileUtils.rm_rf ('dir')
@@ -86,23 +86,27 @@ Thread.start do
 		system(@pending_work[:to_send])
 		puts "try open file"  
 		puts @pending_work[:converted_file]
-		
+		puts "converted"
 		#try open file  
-		begin
-		    puts "open converted file"
-		    file = open(@pending_work[:converted_file])
+		#begin
+		   # puts "open converted file"
+		    #file = open(@pending_work[:converted_file])
 		    #puts 'renaming original file'
 		    #File.rename('dir', @pending_work[:original_name])
 		    #FileUtils.mv(@pending_work[:converted_file], 'dir/' + @pending_work[:original_name] + '.html')
-
-		    tar_dir = 'tar -czvf ' + tar_name +  @pending_work[:id] +  '.tar dir'
-		    puts tar_dir
-		    system(tar_dir)
-		rescue
+		    
+		#rescue
 		        #send error to the client
-			@state = "error"   
-		end
-		if (@state!="error")
+		@state = "error"   
+		#end
+		puts "before if"
+		if (File.exists?  @pending_work[:converted_file])
+			puts "then"
+			@state="ok"
+			puts "opened"
+			tar_dir = 'tar -czvf ' + tar_name +  @pending_work[:id] +  '.tar dir'
+			 puts tar_dir
+                         system(tar_dir)
                 	size = File.size(tar_name + @pending_work[:id] + '.tar') 
                 	puts size
                 	url_converted = url_backet_put + @pending_work[:id]
@@ -116,7 +120,8 @@ Thread.start do
 			FileUtils.rm(tar_name + @pending_work[:id] + '.tar')
 			 
 		else
-			 @message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"" + 0 + "\",\"url\":\"" + "" + "\"}"
+			puts "else" 
+			@message = "{\"status\":\"" + @state + "\",\"id\":\"" + @pending_work[:id] + "\",\"size\":\"0" + "\",\"url\":\"" + "" + "\"}"
 			 puts @message
 
 		end
