@@ -51,7 +51,7 @@ class WebhoooksController < ApplicationController
   # POST /webhoooks.json
   def create
     #@webhoook = webhoook.new(params[:webhoook])
-    @webhoook = @user.webhoooks.build(params[:webhoook])
+    @webhoook = @user.webhoooks.build(params[:webhoook], :enabled => true)
     
     respond_to do |format|
       if @webhoook.save
@@ -87,7 +87,7 @@ class WebhoooksController < ApplicationController
     @webhoook.destroy
 
     respond_to do |format|
-      format.html { redirect_to webhoooks_url }
+      format.html { redirect_to '/user/dashboard' }
       format.json { head :no_content }
     end
   end
