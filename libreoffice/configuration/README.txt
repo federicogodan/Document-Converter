@@ -19,3 +19,20 @@ Here's a list of configurable variables for the Libreoffice server.
 		    temp files names.  
 - port_size => Port used to notify redirect_server that a convertion ended (so it can update the server's load)
 - retries => Number of retries when a convertion fails.
+
+Execute
+=======
+
+To execute the libreoffice server
+
+- screen
+- cd Document-Converter/libreoffice
+- ruby libreoffice.rb
+
+To detach screen session press ctr+alt+a and then press d.
+
+To resume the screen, execute screen -r
+
+To scroll into the screen, press crtl+a then press esc.
+
+
