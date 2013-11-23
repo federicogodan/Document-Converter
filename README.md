@@ -18,7 +18,7 @@ Some of the extensions supported are: TXT, ODS, ODP, PDF, HTML, etc.
 
 ## Before using the gem…
 
-Before using the gem for the first time it is necessary to Access to the Document Converter web page ([documentconverter.elasticbeanstalk.com](documentconverter.elasticbeanstalk.com)) and register a new user. After registering, the users dashboard is displayed and you can see My Api Keys link on the left. By clicking on that link you can get your api and secret key, which are required to validate the user in the system and allow him to use the gem´s functionalities.
+Before using the gem for the first time it is necessary to Access to the Document Converter web page ([http://documentconverter.elasticbeanstalk.com/](http://documentconverter.elasticbeanstalk.com/)) and register a new user. After registering, the users dashboard is displayed and you can see My Api Keys link on the left. By clicking on that link you can get your api and secret key, which are required to validate the user in the system and allow him to use the gem´s functionalities.
 The gem will be notified once a conversion is finished through a specific webhook the user configured in his dashboard. Afterwards, the system will notify the application through the configured URL (or URL’s) by sending a JSON containing the conversion status and the download link of the converted file.
 For see details about Webhooks: 
 
