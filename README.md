@@ -5,8 +5,6 @@
 This gem provides the functionality of convert files between diferents extensions by using the services of the aplication Document Converter located in the cloud.
 It is a Ruby on Rails application which, through the services of LibreOffice and UNO converter allows you to improve your application.
 Some of the extensions supported are: TXT, ODS, ODP, PDF, HTML, etc.
-For more information about supported formats and its dependencies go to:
-LINK
 
 ## Install
 
@@ -20,7 +18,7 @@ LINK
 
 ## Before using the gem…
 
-Before using the gem for the first time it is necessary to Access to the Document Converter web page ([documentconverter-env.elasticbeanstalk.com](documentconverter-env.elasticbeanstalk.com)) and register a new user. After registering, the users dashboard is displayed and you can see My Api Keys link on the left. By clicking on that link you can get your api and secret key, which are required to validate the user in the system and allow him to use the gem´s functionalities.
+Before using the gem for the first time it is necessary to Access to the Document Converter web page ([documentconverter.elasticbeanstalk.com](documentconverter.elasticbeanstalk.com)) and register a new user. After registering, the users dashboard is displayed and you can see My Api Keys link on the left. By clicking on that link you can get your api and secret key, which are required to validate the user in the system and allow him to use the gem´s functionalities.
 The gem will be notified once a conversion is finished through a specific webhook the user configured in his dashboard. Afterwards, the system will notify the application through the configured URL (or URL’s) by sending a JSON containing the conversion status and the download link of the converted file.
 For see details about Webhooks: 
 
@@ -34,7 +32,7 @@ DocConverter.configure({:server_address => '<API_addres>', :api_key => '<your_pu
                   :secret_key => '<your_secret_key>'})`
 ```
 
-The actual server address is:  [http://documentconverter-env.elasticbeanstalk.com/](http://documentconverter-env.elasticbeanstalk.com/)
+The actual server address is:  [http://documentconverter.elasticbeanstalk.com/](http://documentconverter.elasticbeanstalk.com/)
 
 Now you can use the convert files using the gem.
 Notice that this messages are sent through a JSON format.  
@@ -69,6 +67,8 @@ The gem has three functionalities, which are:
 ## Example
 
 ```ruby
+#Configure your api and secret key, this is neccessary only once
+DocConverter.configure({:api_key => 'your api key', :secret_key => 'your secret key'})
 
 #This examples converts example.txt file to all the possible conversions formats
 destinies_formats = DocConverter.get_formats("txt")
