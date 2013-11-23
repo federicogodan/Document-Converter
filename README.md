@@ -71,11 +71,11 @@ The gem has three functionalities, which are:
 DocConverter.configure({:api_key => 'your api key', :secret_key => 'your secret key'})
 
 #This examples converts example.txt file to all the possible conversions formats
-destinies_formats = DocConverter.get_formats("txt")
+destinies_formats = DocConverter.get_formats('txt')
 
 destinies_formats.each do |f|
     #convert example.txt to one of the possible conversion formats
-    DocConverter.convert("/home/example.txt", f, "FILE")
+    DocConverter.convert('/home/example.txt', f, 'FILE')
 end
 
 remaining_space = DocConverter.get_free_space
