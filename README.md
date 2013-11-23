@@ -29,7 +29,10 @@ For see details about Webhooks:
 Before starting to use the gem you will need to configure it. To do this you will need the pair of keys mentioned before, which will allow you to configure the gem.
 To do this you will have to enter the following ruby code:
 
-`DocConverter.configure({:server_address => “<API_addres>”; :api_key => “<your_public_key>”; :secret_key => “<your_secret_key>”})`
+```
+DocConverter.configure({:server_address => '<API_addres>', :api_key => '<your_public_key>', 
+                  :secret_key => '<your_secret_key>'})`
+```
 
 The actual server address is:  [http://documentconverter-env.elasticbeanstalk.com/](http://documentconverter-env.elasticbeanstalk.com/)
 
@@ -42,19 +45,19 @@ The gem has three functionalities, which are:
 
 1.  Get conversion formats for a specific format
 
- `DocConverter.get_formats(“formato”)`
+ `DocConverter.get_formats('formato')`
 
 2.  There are two posible options to convert a file
 
   2.1. Convert a file to one of the possible destination formats 
 
- `DocConverter.convert_document(“file_path”,”destiny_format”, “FILE”)`
+ `DocConverter.convert_document('file_path','destiny_format', 'FILE')`
 
  Where file_path is the path where the file is located and destiny_format is the format to which the file                  will be converted.
 
   2.2. Convert a file from an URL
 
- `DocConverter.convert_document(“file_url”,”destiny_format”,”URL”)`
+ `DocConverter.convert_document('file_url','destiny_format','URL')`
 
   Where file_url is the URL where the file is located and destiny_format is the format to which the file      will be converted.
 
