@@ -50,7 +50,7 @@ class DocConverter
     RestClient.post config[:server_adress]+'/api/convert_document/', :document => { :file => File.new(file_path), :destination_format => destiny_format, 
                               :upload_method => upload_method }, :api_key => config[:api_key], :hash => hash, :content_type => :json, :accept => :json  
    else
-    RestClient.post config[:server_adress]+'/api/convert_document/', :document => { :url => file_path, :destination_format => destiny_format, 
+    RestClient.post config[:server_adress]+'/api/convert_document/', :document => { :file => file_path, :destination_format => destiny_format, 
                               :upload_method => upload_method }, :api_key => config[:api_key], :hash => hash, :content_type => :json, :accept => :json
    end
   end
