@@ -8,8 +8,6 @@ Some of the extensions supported are: TXT, ODS, ODP, PDF, HTML, etc.
 
 ## Install
 
-`gem install rest_client`
-
 `gem install doc_converter`
 
 ## Requirements
