@@ -36,6 +36,7 @@ html,body,.container
 	.col-sm-2-fixed
 	{
 		position:fixed;
+		min-width:200px;
 		height: inherit;
 	    display:table-column;
 		
@@ -50,8 +51,9 @@ html,body,.container
 	.col-sm-10-fixed
 	{
 		float: right;
-		height: 100%;
-		text-align: center;
+		height: 100px;
+		display:block;
+		width: 78%;
 	}
 	.bottom-storage
 	{

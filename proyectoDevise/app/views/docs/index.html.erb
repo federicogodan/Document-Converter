@@ -104,54 +104,31 @@ Notice that this messages are sent through a JSON format.  </p>
 </pre></div>
 
 <h2>
-<a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h2>
-
-<p>We try not to reinvent the wheel, so Document Converter is built with other open source projects:</p>
-
-<table>
-<thead><tr>
-<th>Tools</th>
-<th align="center">Use</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>Devise</td>
-<td align="center">Handles users</td>
-</tr>
-<tr>
-<td>Active Admin</td>
-<td align="center">Handles administrators</td>
-</tr>
-<tr>
-<td>Whenever</td>
-<td align="center">Executes functions periodically</td>
-</tr>
-<tr>
-<td>Aws-S3</td>
-<td align="center">Allows communication with amazon service</td>
-</tr>
-<tr>
-<td>Rest-client</td>
-<td align="center">Forms the http messages</td>
-</tr>
-<tr>
-<td>Capybara</td>
-<td align="center">Used to test the interface</td>
-</tr>
-<tr>
-<td>Rspec</td>
-<td align="center">Used for unit testing</td>
-</tr>
-<tr>
-<td>JMeter</td>
-<td align="center">Used for performance and load testing</td>
-</tr>
-</tbody>
-</table><h2>
 <a name="webhooks" class="anchor" href="#webhooks"><span class="octicon octicon-link"></span></a>Webhooks</h2>
 
 <p>Use webhooks to be notified about the converted status of your documents. When you send a document to be converted, it may take a while. Webhooks let you register one o more URLs in which we will POST a json when your document is converted or the conversion fails. The json contains two fields: 'notification' and 'data'. Notification has two values: '1' means the conversion fails and '2' means the conversion was successful. The data field contains the url where you can download the converted file in case the conversion was successful. Each notification is sent to the URLs specified in your webhooks, which you can edit and get from your dashboard panel, by clicking on "My Webhooks". When a notification was successfully received, a "200 OK" message is sent back, and the notification status is changed to "Received". When no response is sent back after a notification is sent, the notification status is changed to "No Received: Yet". There will be three more retries to send the JSON every 10 minutes and if there is no response after these attempts, the notification status is changed to "No Received: Exhausted Attempts"</p></article>
-<br>
-<br>
-<br>
+<h2>
+<a name="webhooks" class="anchor" href="#webhooks"><span class="octicon octicon-link"></span></a>The webservices</h2>
+
+<pre>
+Get Status
+Url: /api/convert/get_status
+Method: GET
+Input: id
+Ouput: { status: “Converting”/”Ready”/”Failed”/”Expired”, url: “http://...” }
+</pre>
+<pre>
+Get Format
+Url: /api/document/get_formats
+Method: GET
+Input: extensión
+Output: [format1, format2, …]
+</pre>
+<pre>
+Free Space
+Url: /free_space/
+Method: GET
+Input:
+Ouput: { free_space }
+</pre>
 </div>

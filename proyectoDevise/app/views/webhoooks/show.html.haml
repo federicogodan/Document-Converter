@@ -19,10 +19,10 @@
             - webhoook.whsents.each do | whsent |
               %tr        
                 %td= whsent.url
-                %td= whsent.notification==2? 'Converted' : 'Failed' 
+                %td= whsent.notification=='OK'? 'Converted' : 'Failed' 
                 %td= whsent.state == 0? 'Received': whsent.state == 1? 'Not Received: Yet' : 'Not Received: Exhausted Attempts'  
                 %td= whsent.attempts
-                -if whsent.notification==2
+                -if whsent.notification=='OK'
                   %td= link_to 'Document', whsent.urldoc
       .row
         %tr
