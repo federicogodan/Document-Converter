@@ -12,7 +12,7 @@ class Api::NotificationController < ApplicationController
 
     document = Document.find(document_id)
     document.update_converted_document(status, URI.escape(document_url), size.to_i)
-    document.user.alertallwebhooks( status, document_url )
+    document.user.alertallwebhooks( status.upcase=='OK'? 2 : 1, document_url )
 
     begin
       document.remove_file!

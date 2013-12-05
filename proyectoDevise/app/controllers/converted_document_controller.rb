@@ -22,8 +22,10 @@ class ConvertedDocumentController < ApplicationController
         length = doc.name.split('.').length
         doc_name = doc.name.split('.')[0..length-2].join
         
-        format_name = Format.find(doc.converted_document.format_id).name.downcase
-        
+        format_name = Format.find(doc.converted_document.format_id).name.downcase        
+        if format_name=='html'
+          format_name = 'tar'
+        end
         doc_name += '.' + format_name
         
         cd.set_to_expired

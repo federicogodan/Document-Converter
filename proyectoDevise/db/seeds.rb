@@ -23,7 +23,7 @@ f11 = Format.new(name:"PDF")
 f12 = Format.new(name:"HTML")
 f13 = Format.new(name:"JPG")
 f14 = Format.new(name:"PNG")
-f15 = Format.new(name:"RFT")
+f15 = Format.new(name:"RTF")
 f1.save
 f2.save
 f3.save
